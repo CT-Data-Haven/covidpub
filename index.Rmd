@@ -1,0 +1,92 @@
+---
+title: "COVID-19"
+---
+
+```{r setup, message=FALSE, echo=FALSE}
+knitr::opts_chunk$set(
+  warning = FALSE, 
+  message = FALSE,
+  echo = FALSE,
+  dpi = 300,
+  fig.showtext = TRUE
+)
+```
+
+```{r}
+library(tidyverse)
+library(showtext)
+library(lubridate)
+library(kableExtra)
+
+source("scripts/plotting_utils.R")
+```
+
+
+# Home page
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque in lorem neque. Fusce eget justo sed risus condimentum ultricies vitae sit amet est. Nullam justo nisl, vestibulum sit amet nisl cursus, varius efficitur justo. Sed eu dui vitae est malesuada sodales non et leo. Sed cursus, tortor eget rhoncus ultrices, ante nunc volutpat nisl, ut gravida quam velit vel sem. Sed molestie ligula auctor urna sollicitudin tempus.
+
+## A chart
+
+```{r county_line_plot, fig.width=7, fig.height=5}
+county <- read_csv("input_data/covid_ct_county_detailed.csv") %>%
+  mutate(date = mdy(date))
+
+pal <- rcartocolor::carto_pal(9, "Bold")
+
+county_to_plot <- county %>%
+  semi_join(
+    tidycensus::fips_codes %>%
+      filter(state == "CT") %>%
+      mutate(county = str_remove(county, " County")),
+    by = c("name" = "county")
+  ) %>%
+  mutate(name = as_factor(name) %>% fct_reorder2(date, cases, .desc = FALSE),
+         lbl = str_glue("{name}: {scales::comma(cases)}")) 
+
+date_range <- range(county_to_plot$date)
+date_range_fmt <- format(date_range, "%m/%d/%Y")
+
+mondays <- seq(date_range[1], date_range[2], by = 1) %>%
+  floor_date(unit = "week", week_start = 1) %>%
+  unique()
+
+
+ggplot(county_to_plot, aes(x = date, y = cases, fill = name, color = name)) +
+  geom_area(alpha = 0.8) +
+  geom_line(position = "stack") +
+  geom_point(data = . %>% filter(date == max(date)), position = "stack", size = 1) +
+  ggrepel::geom_text_repel(aes(label = lbl, x = date + 1),
+                           data = . %>% filter(date == max(date)),
+                           direction = "y", hjust = 0, position = "stack", family = "source", size = 3.2, min.segment.length = 10) +
+  scale_x_date(expand = expansion(add = c(1, 6)), breaks = mondays, date_labels = "%m/%d") +
+  scale_y_continuous(labels = scales::comma, expand = expansion(mult = c(0, 0.1))) +
+  scale_fill_manual(values = pal) +
+  scale_color_manual(values = pal) +
+  theme(legend.position = "none",
+        axis.title.y = element_text(hjust = 0.98),
+        panel.grid.major.x = element_line(color = "gray90"),
+        axis.ticks.x = element_line(color = "gray20")) +
+  labs(x = NULL, y = "Total confirmed cases",
+       title = "Confirmed Connecticut COVID-19 cases by county",
+       subtitle = str_glue("{date_range_fmt[1]} to {date_range_fmt[2]}, with {date_range_fmt[2]} count shown"))
+```
+
+## A table
+
+### CT statewide totals per week
+
+```{r}
+county %>%
+  filter(name == "Connecticut") %>%
+  group_by(as_of = format(floor_date(date, unit = "week", week_start = 1), "%a %b %e, %Y")) %>%
+  top_n(-1, date) %>%
+  ungroup() %>%
+  slice(-1) %>%
+  select(as_of, cases, deaths) %>%
+  mutate_if(is.numeric, scales::comma) %>%
+  set_names(camiller::clean_titles) %>%
+  knitr::kable(format = "html", align = "lrr") %>%
+  kable_styling()
+```
+

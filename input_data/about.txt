@@ -1,0 +1,1 @@
+For now, assuming anything in this folder either comes from the CT-Data-Haven/covid repo or is downloaded/called from API in a script here
