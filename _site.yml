@@ -1,4 +1,5 @@
 name: "dh-covid"
+output_dir: "docs"
 navbar:
   title: "COVID-19"
   left:
@@ -12,4 +13,4 @@ output:
   html_document:
     theme: cosmo
     css: styles.css
-exclude: ["scripts"]
+exclude: ["scripts", "input_data"]
