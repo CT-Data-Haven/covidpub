@@ -11,7 +11,7 @@
 
 
 
-<title>COVID-19</title>
+<title>COVID-19 – DRAFT Apr 2020</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -22,6 +22,12 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<script src="site_libs/d3-format-1.4.2/d3-format.min.js"></script>
+<script src="site_libs/billboarder-binding-0.2.8/billboarder.js"></script>
+<link href="site_libs/billboard-1.11.1/billboard/insight.min.css" rel="stylesheet" />
+<link href="site_libs/billboard-1.11.1/billboarder.css" rel="stylesheet" />
+<script src="site_libs/billboard-1.11.1/billboard/billboard.pkgd.min.js"></script>
 <script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -294,84 +300,309 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">COVID-19</h1>
+<h1 class="title toc-ignore">COVID-19 – DRAFT Apr 2020</h1>
 
 </div>
 
 
-<div id="home-page" class="section level1">
-<h1>Home page</h1>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque in lorem neque. Fusce eget justo sed risus condimentum ultricies vitae sit amet est. Nullam justo nisl, vestibulum sit amet nisl cursus, varius efficitur justo. Sed eu dui vitae est malesuada sodales non et leo. Sed cursus, tortor eget rhoncus ultrices, ante nunc volutpat nisl, ut gravida quam velit vel sem. Sed molestie ligula auctor urna sollicitudin tempus.</p>
-<div id="a-chart" class="section level2">
-<h2>A chart</h2>
-<p><img src="index_files/figure-html/county_line_plot-1.png" width="2100" /></p>
+<div id="latest-data-04022020" class="section level2">
+<h2 class="font-italic">Latest data: 04/02/2020</h2>
+<p>This webpage provides graphics that are intended to communicate what we know about Covid-19 (also known as SARS-CoV-2) in Connecticut. These charts are not intended to predict any scenarios about the disease or the people affected by it. They merely reflect data we have already collected at the town, county, and state levels. To the extent possible, this webpage is update daily.</p>
+<p>For the latest information from the Connecticut Department of Public Health, visit <a href="http://portal.ct.gov/Coronavirus" class="uri">http://portal.ct.gov/Coronavirus</a></p>
+<div id="important-data-notes" class="section level3">
+<h3>Important data notes:</h3>
+<ul>
+<li><p><strong>Cases</strong> refer to individuals who tested positive for Covid-19 as confirmed by the State of Connecticut. Due to current testing protocols, this number likely underestimates—possibly to a very large degree—the number of people who may currently have or have recovered from the disease.</p></li>
+<li><p><strong>Hospitalizations</strong> refer to patients who have been admitted to a hospital for complications arising from Covid-19. These are reported at the county level only and represent the county where the hospital is located, not the patient’s home county. On March 29, 2020, the State reported a change to the way hospitalizations were recorded and acknowledged that hospitalization counts prior to that date were underestimated.</p></li>
+<li><p><strong>Deaths</strong> refer to individuals who died due to complications of Covid-19.</p></li>
+<li><p>In some instances, data is <strong>log-transformed</strong>. This is a method often applied to values that grow exponentially as a way to more accurately reflect trends in those data.</p></li>
+<li><p>Some values, such as cumulative cases, are <strong>normalized</strong>—divided by population in order to meaningfully compare the relative magnitude of cases across areas.</p></li>
+</ul>
 </div>
-<div id="a-table" class="section level2">
-<h2>A table</h2>
-<div id="ct-statewide-totals-per-week" class="section level3">
-<h3>CT statewide totals per week</h3>
-<table class="table" style="margin-left: auto; margin-right: auto;">
+<div id="statewide" class="section level3">
+<h3>Statewide</h3>
+<div class="billboarder html-widget" style="width:700px;height:400px; position: relative;">
+<a id="htmlwidget-d1ba32e0541469b5ed49-export" style="position:absolute; top:0; right:0; display:none; z-index:50;"></a>
+<div id="htmlwidget-d1ba32e0541469b5ed49" class="billboarder html-widget" style="width:700px;height:400px;" width="700" height="400"></div>
+</div>
+<script type="application/json" data-for="htmlwidget-d1ba32e0541469b5ed49">{"x":{"bb_opts":{"data":{"order":"asc","x":"bb-x","json":{"bb-x":["2020-03-08","2020-03-09","2020-03-10","2020-03-11","2020-03-12","2020-03-13","2020-03-14","2020-03-15","2020-03-16","2020-03-17","2020-03-18","2020-03-19","2020-03-20","2020-03-21","2020-03-22","2020-03-23","2020-03-24","2020-03-25","2020-03-26","2020-03-27","2020-03-28","2020-03-29","2020-03-30","2020-03-31","2020-04-01","2020-04-02"],"Windham":[0,0,0,0,0,0,0,0,0,0,0,2,2,1,1,2,2,2,3,3,3,7,10,11,19,21],"New London":[0,0,0,0,0,0,0,0,0,0,0,0,1,1,3,4,6,9,13,15,19,20,24,27,29,29],"Tolland":[0,0,0,0,0,0,0,0,0,0,0,4,4,5,14,16,19,27,33,33,37,40,50,56,61,67],"Middlesex":[0,0,0,0,0,0,0,0,0,0,1,3,5,6,6,8,8,15,18,25,28,38,50,56,66,74],"Litchfield":[0,0,0,1,1,3,3,4,4,5,5,7,8,11,12,13,22,33,44,52,65,87,113,121,131,141],"Hartford":[0,0,0,0,0,0,1,3,4,7,11,18,29,35,54,61,88,116,138,189,228,276,330,393,469,539],"New Haven":[0,0,0,0,0,0,1,3,4,8,10,23,23,24,29,41,89,127,156,222,236,280,373,517,611,647],"Fairfield":[1,1,1,2,4,5,15,16,29,48,69,102,122,140,208,270,384,546,607,752,908,1245,1445,1870,1986,2132]},"type":"bar","groups":[["Windham","New London","Tolland","Middlesex","Litchfield","Hartford","New Haven","Fairfield"]],"colors":{"Connecticut":"gray20","Fairfield":"#E58606","Hartford":"#99C945","Litchfield":"#2F8AC4","Middlesex":"#5D69B1","New Haven":"#24796C","New London":"#52BCA3","Tolland":"#DAA51B","Windham":"#CC61B0"}},"interaction":{"inputType":{"touch":false}},"bar":[],"axis":{"x":{"type":"timeseries","label":{"text":null},"tick":{"format":"%m/%d","values":["2020-03-02","2020-03-09","2020-03-16","2020-03-23","2020-03-30"]}},"rotated":false,"y":{"label":{"text":"Cases","position":"outer-top"},"tick":{"format":"d3.format(',')"}}},"grid":{"x":{"show":true},"y":{"show":true}},"billboarderspecials":{"opacity":1},"legend":{"position":"right"},"tooltip":{"grouped":false},"title":{"text":"Confirmed COVID-19 cases by county, 03/08/2020 to 04/02/2020","padding":{"bottom":20,"top":10},"position":"top-left"}},"data":{"name":["Windham","New London","Tolland","Middlesex","Litchfield","Hartford","New Haven","Fairfield","Windham","New London","Tolland","Middlesex","Litchfield","Hartford","New Haven","Fairfield","Windham","New London","Tolland","Middlesex","Litchfield","Hartford","New Haven","Fairfield","Windham","New London","Tolland","Middlesex","Litchfield","Hartford","New Haven","Fairfield","Windham","New London","Tolland","Middlesex","Litchfield","Hartford","New Haven","Fairfield","Windham","New London","Tolland","Middlesex","Litchfield","Hartford","New Haven","Fairfield","Windham","New London","Tolland","Middlesex","Litchfield","Hartford","New Haven","Fairfield","Windham","New London","Tolland","Middlesex","Litchfield","Hartford","New Haven","Fairfield","Windham","New London","Tolland","Middlesex","Litchfield","Hartford","New Haven","Fairfield","Windham","New London","Tolland","Middlesex","Litchfield","Hartford","New Haven","Fairfield","Windham","New London","Tolland","Middlesex","Litchfield","Hartford","New Haven","Fairfield","Windham","New London","Tolland","Middlesex","Litchfield","Hartford","New Haven","Fairfield","Windham","New London","Tolland","Middlesex","Litchfield","Hartford","New Haven","Fairfield","Windham","New London","Tolland","Middlesex","Litchfield","Hartford","New Haven","Fairfield","Windham","New London","Tolland","Middlesex","Litchfield","Hartford","New Haven","Fairfield","Windham","New London","Tolland","Middlesex","Litchfield","Hartford","New Haven","Fairfield","Windham","New London","Tolland","Middlesex","Litchfield","Hartford","New Haven","Fairfield","Windham","New London","Tolland","Middlesex","Litchfield","Hartford","New Haven","Fairfield","Windham","New London","Tolland","Middlesex","Litchfield","Hartford","New Haven","Fairfield","Windham","New London","Tolland","Middlesex","Litchfield","Hartford","New Haven","Fairfield","Windham","New London","Tolland","Middlesex","Litchfield","Hartford","New Haven","Fairfield","Windham","New London","Tolland","Middlesex","Litchfield","Hartford","New Haven","Fairfield","Windham","New London","Tolland","Middlesex","Litchfield","Hartford","New Haven","Fairfield","Windham","New London","Tolland","Middlesex","Litchfield","Hartford","New Haven","Fairfield","Windham","New London","Tolland","Middlesex","Litchfield","Hartford","New Haven","Fairfield","Windham","New London","Tolland","Middlesex","Litchfield","Hartford","New Haven","Fairfield"],"date":["2020-03-08","2020-03-08","2020-03-08","2020-03-08","2020-03-08","2020-03-08","2020-03-08","2020-03-08","2020-03-09","2020-03-09","2020-03-09","2020-03-09","2020-03-09","2020-03-09","2020-03-09","2020-03-09","2020-03-10","2020-03-10","2020-03-10","2020-03-10","2020-03-10","2020-03-10","2020-03-10","2020-03-10","2020-03-11","2020-03-11","2020-03-11","2020-03-11","2020-03-11","2020-03-11","2020-03-11","2020-03-11","2020-03-12","2020-03-12","2020-03-12","2020-03-12","2020-03-12","2020-03-12","2020-03-12","2020-03-12","2020-03-13","2020-03-13","2020-03-13","2020-03-13","2020-03-13","2020-03-13","2020-03-13","2020-03-13","2020-03-14","2020-03-14","2020-03-14","2020-03-14","2020-03-14","2020-03-14","2020-03-14","2020-03-14","2020-03-15","2020-03-15","2020-03-15","2020-03-15","2020-03-15","2020-03-15","2020-03-15","2020-03-15","2020-03-16","2020-03-16","2020-03-16","2020-03-16","2020-03-16","2020-03-16","2020-03-16","2020-03-16","2020-03-17","2020-03-17","2020-03-17","2020-03-17","2020-03-17","2020-03-17","2020-03-17","2020-03-17","2020-03-18","2020-03-18","2020-03-18","2020-03-18","2020-03-18","2020-03-18","2020-03-18","2020-03-18","2020-03-19","2020-03-19","2020-03-19","2020-03-19","2020-03-19","2020-03-19","2020-03-19","2020-03-19","2020-03-20","2020-03-20","2020-03-20","2020-03-20","2020-03-20","2020-03-20","2020-03-20","2020-03-20","2020-03-21","2020-03-21","2020-03-21","2020-03-21","2020-03-21","2020-03-21","2020-03-21","2020-03-21","2020-03-22","2020-03-22","2020-03-22","2020-03-22","2020-03-22","2020-03-22","2020-03-22","2020-03-22","2020-03-23","2020-03-23","2020-03-23","2020-03-23","2020-03-23","2020-03-23","2020-03-23","2020-03-23","2020-03-24","2020-03-24","2020-03-24","2020-03-24","2020-03-24","2020-03-24","2020-03-24","2020-03-24","2020-03-25","2020-03-25","2020-03-25","2020-03-25","2020-03-25","2020-03-25","2020-03-25","2020-03-25","2020-03-26","2020-03-26","2020-03-26","2020-03-26","2020-03-26","2020-03-26","2020-03-26","2020-03-26","2020-03-27","2020-03-27","2020-03-27","2020-03-27","2020-03-27","2020-03-27","2020-03-27","2020-03-27","2020-03-28","2020-03-28","2020-03-28","2020-03-28","2020-03-28","2020-03-28","2020-03-28","2020-03-28","2020-03-29","2020-03-29","2020-03-29","2020-03-29","2020-03-29","2020-03-29","2020-03-29","2020-03-29","2020-03-30","2020-03-30","2020-03-30","2020-03-30","2020-03-30","2020-03-30","2020-03-30","2020-03-30","2020-03-31","2020-03-31","2020-03-31","2020-03-31","2020-03-31","2020-03-31","2020-03-31","2020-03-31","2020-04-01","2020-04-01","2020-04-01","2020-04-01","2020-04-01","2020-04-01","2020-04-01","2020-04-01","2020-04-02","2020-04-02","2020-04-02","2020-04-02","2020-04-02","2020-04-02","2020-04-02","2020-04-02"],"cases":[0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,2,0,0,0,0,1,0,0,4,0,0,0,0,3,0,0,5,0,0,0,0,3,1,1,15,0,0,0,0,4,3,3,16,0,0,0,0,4,4,4,29,0,0,0,0,5,7,8,48,0,0,0,1,5,11,10,69,2,0,4,3,7,18,23,102,2,1,4,5,8,29,23,122,1,1,5,6,11,35,24,140,1,3,14,6,12,54,29,208,2,4,16,8,13,61,41,270,2,6,19,8,22,88,89,384,2,9,27,15,33,116,127,546,3,13,33,18,44,138,156,607,3,15,33,25,52,189,222,752,3,19,37,28,65,228,236,908,7,20,40,38,87,276,280,1245,10,24,50,50,113,330,373,1445,11,27,56,56,121,393,517,1870,19,29,61,66,131,469,611,1986,21,29,67,74,141,539,647,2132],"hospitalizations":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,0,0,2,3,2,12,9,15,0,1,2,3,3,13,9,20,0,1,2,4,2,13,12,20,0,1,4,4,3,17,19,23,0,2,5,4,3,24,28,47,0,2,5,5,3,27,34,49,0,2,7,5,9,36,46,68,0,2,7,5,12,41,50,88,1,4,0,1,5,67,137,189,0,5,2,1,7,96,176,230,0,8,1,5,7,110,202,275,0,10,1,8,11,126,251,359,3,9,2,11,11,136,274,381],"deaths":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,4,0,0,1,0,0,0,0,4,0,0,2,0,0,1,0,5,0,0,2,0,0,2,0,6,0,0,3,0,0,2,0,7,0,0,3,0,0,2,2,12,0,0,3,1,0,2,2,13,0,0,3,1,0,2,6,15,0,0,4,1,0,2,6,20,0,0,4,1,0,2,6,21,0,0,4,1,1,3,6,21,0,1,7,1,1,7,12,38,0,1,7,2,1,11,15,46,0,1,10,3,2,13,17,65],"level":["county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county","county"],"lbl":["Windham: 0","New London: 0","Tolland: 0","Middlesex: 0","Litchfield: 0","Hartford: 0","New Haven: 0","Fairfield: 1","Windham: 0","New London: 0","Tolland: 0","Middlesex: 0","Litchfield: 0","Hartford: 0","New Haven: 0","Fairfield: 1","Windham: 0","New London: 0","Tolland: 0","Middlesex: 0","Litchfield: 0","Hartford: 0","New Haven: 0","Fairfield: 1","Windham: 0","New London: 0","Tolland: 0","Middlesex: 0","Litchfield: 1","Hartford: 0","New Haven: 0","Fairfield: 2","Windham: 0","New London: 0","Tolland: 0","Middlesex: 0","Litchfield: 1","Hartford: 0","New Haven: 0","Fairfield: 4","Windham: 0","New London: 0","Tolland: 0","Middlesex: 0","Litchfield: 3","Hartford: 0","New Haven: 0","Fairfield: 5","Windham: 0","New London: 0","Tolland: 0","Middlesex: 0","Litchfield: 3","Hartford: 1","New Haven: 1","Fairfield: 15","Windham: 0","New London: 0","Tolland: 0","Middlesex: 0","Litchfield: 4","Hartford: 3","New Haven: 3","Fairfield: 16","Windham: 0","New London: 0","Tolland: 0","Middlesex: 0","Litchfield: 4","Hartford: 4","New Haven: 4","Fairfield: 29","Windham: 0","New London: 0","Tolland: 0","Middlesex: 0","Litchfield: 5","Hartford: 7","New Haven: 8","Fairfield: 48","Windham: 0","New London: 0","Tolland: 0","Middlesex: 1","Litchfield: 5","Hartford: 11","New Haven: 10","Fairfield: 69","Windham: 2","New London: 0","Tolland: 4","Middlesex: 3","Litchfield: 7","Hartford: 18","New Haven: 23","Fairfield: 102","Windham: 2","New London: 1","Tolland: 4","Middlesex: 5","Litchfield: 8","Hartford: 29","New Haven: 23","Fairfield: 122","Windham: 1","New London: 1","Tolland: 5","Middlesex: 6","Litchfield: 11","Hartford: 35","New Haven: 24","Fairfield: 140","Windham: 1","New London: 3","Tolland: 14","Middlesex: 6","Litchfield: 12","Hartford: 54","New Haven: 29","Fairfield: 208","Windham: 2","New London: 4","Tolland: 16","Middlesex: 8","Litchfield: 13","Hartford: 61","New Haven: 41","Fairfield: 270","Windham: 2","New London: 6","Tolland: 19","Middlesex: 8","Litchfield: 22","Hartford: 88","New Haven: 89","Fairfield: 384","Windham: 2","New London: 9","Tolland: 27","Middlesex: 15","Litchfield: 33","Hartford: 116","New Haven: 127","Fairfield: 546","Windham: 3","New London: 13","Tolland: 33","Middlesex: 18","Litchfield: 44","Hartford: 138","New Haven: 156","Fairfield: 607","Windham: 3","New London: 15","Tolland: 33","Middlesex: 25","Litchfield: 52","Hartford: 189","New Haven: 222","Fairfield: 752","Windham: 3","New London: 19","Tolland: 37","Middlesex: 28","Litchfield: 65","Hartford: 228","New Haven: 236","Fairfield: 908","Windham: 7","New London: 20","Tolland: 40","Middlesex: 38","Litchfield: 87","Hartford: 276","New Haven: 280","Fairfield: 1,245","Windham: 10","New London: 24","Tolland: 50","Middlesex: 50","Litchfield: 113","Hartford: 330","New Haven: 373","Fairfield: 1,445","Windham: 11","New London: 27","Tolland: 56","Middlesex: 56","Litchfield: 121","Hartford: 393","New Haven: 517","Fairfield: 1,870","Windham: 19","New London: 29","Tolland: 61","Middlesex: 66","Litchfield: 131","Hartford: 469","New Haven: 611","Fairfield: 1,986","Windham: 21","New London: 29","Tolland: 67","Middlesex: 74","Litchfield: 141","Hartford: 539","New Haven: 647","Fairfield: 2,132"]}},"evals":["bb_opts.axis.y.tick.format"],"jsHooks":[]}</script>
+<p>The highest rates of confirmed cases per capita are in Fairfield County towns, but these numbers are affected by current testing protocols.</p>
+<div class="billboarder html-widget" style="width:600px;height:400px; position: relative;">
+<a id="htmlwidget-06484ed42468d86de4a4-export" style="position:absolute; top:0; right:0; display:none; z-index:50;"></a>
+<div id="htmlwidget-06484ed42468d86de4a4" class="billboarder html-widget" style="width:600px;height:400px;" width="600" height="400"></div>
+</div>
+<script type="application/json" data-for="htmlwidget-06484ed42468d86de4a4">{"x":{"bb_opts":{"interaction":{"inputType":{"touch":false}},"data":{"x":"bb-x","json":{"bb-x":["Tests","Confirmed cases","Hospitalizations","Deaths"],"Tests":[18300,null,null,null],"Confirmed cases":[null,3824,null,null],"Hospitalizations":[null,null,827,null],"Deaths":[null,null,null,112]},"type":"bar","groups":[["Tests","Confirmed cases","Hospitalizations","Deaths"]],"colors":{"Tests":"#f58670","Confirmed cases":"#e34f6f","Hospitalizations":"#d72d7c","Deaths":"#7c1d6f"}},"bar":{"width":{"ratio":0.5}},"axis":{"x":{"type":"category","tick":{"width":120}},"rotated":false,"y":{"label":{"text":"Cases","position":"outer-top"},"tick":{"format":"d3.format(',')"}}},"grid":{"y":{"show":true}},"billboarderspecials":{"opacity":1},"legend":{"hide":true},"tooltip":{"grouped":false},"title":{"text":"Statewide totals as of 04/02/2020","padding":{"bottom":20,"top":10},"position":"top-left"}},"data":{"name":["Connecticut","Connecticut","Connecticut","Connecticut"],"date":["2020-04-02","2020-04-02","2020-04-02","2020-04-02"],"measure":["Tests","Confirmed cases","Hospitalizations","Deaths"],"value":[18300,3824,827,112]}},"evals":["bb_opts.axis.y.tick.format"],"jsHooks":[]}</script>
+<p>Summarizing the past five days of trends helps to smooth out daily jumps or drops in the number of reported cases. Looking at the five days before that helps contextualize the most recent five-day period. Doubling time is defined as the rate of time it takes confirmed cases to double within that five-day window.</p>
+<table class="table table-hover table-responsive" style="margin-left: auto; margin-right: auto;">
+<caption>
+Change in number of new cases over 5-day periods
+</caption>
 <thead>
 <tr>
 <th style="text-align:left;">
-As of
+Name
 </th>
 <th style="text-align:right;">
-Cases
+New cases, 03/23 to 03/28
 </th>
 <th style="text-align:right;">
-Deaths
+New cases, 03/28 to 04/02
+</th>
+<th style="text-align:right;">
+Pct change
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:left;">
-Mon Mar 9, 2020
+Connecticut
+</td>
+<td style="text-align:right;">
+1109
+</td>
+<td style="text-align:right;">
+2300
+</td>
+<td style="text-align:right;">
+107%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Fairfield County
+</td>
+<td style="text-align:right;">
+638
+</td>
+<td style="text-align:right;">
+1224
+</td>
+<td style="text-align:right;">
+92%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Hartford County
+</td>
+<td style="text-align:right;">
+167
+</td>
+<td style="text-align:right;">
+311
+</td>
+<td style="text-align:right;">
+86%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Litchfield County
+</td>
+<td style="text-align:right;">
+52
+</td>
+<td style="text-align:right;">
+76
+</td>
+<td style="text-align:right;">
+46%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Middlesex County
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+46
+</td>
+<td style="text-align:right;">
+130%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+New Haven County
+</td>
+<td style="text-align:right;">
+195
+</td>
+<td style="text-align:right;">
+411
+</td>
+<td style="text-align:right;">
+111%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+New London County
+</td>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+-33%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Tolland County
+</td>
+<td style="text-align:right;">
+21
+</td>
+<td style="text-align:right;">
+30
+</td>
+<td style="text-align:right;">
+43%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Windham County
 </td>
 <td style="text-align:right;">
 1
 </td>
 <td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Mon Mar 16, 2020
+18
 </td>
 <td style="text-align:right;">
-41
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Mon Mar 23, 2020
-</td>
-<td style="text-align:right;">
-415
-</td>
-<td style="text-align:right;">
-10
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Mon Mar 30, 2020
-</td>
-<td style="text-align:right;">
-2,571
-</td>
-<td style="text-align:right;">
-36
+1,700%
 </td>
 </tr>
 </tbody>
 </table>
 </div>
+<div id="greater-new-haven" class="section level3">
+<h3>Greater New Haven</h3>
+<table class="table table-hover table-responsive" style="margin-left: auto; margin-right: auto;">
+<caption>
+Cases by location as of 04/02/2020
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Level
+</th>
+<th style="text-align:left;">
+Name
+</th>
+<th style="text-align:right;">
+Cases
+</th>
+<th style="text-align:right;">
+Cases per 10k residents
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+State
+</td>
+<td style="text-align:left;">
+Connecticut
+</td>
+<td style="text-align:right;">
+3,824
+</td>
+<td style="text-align:right;">
+10.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+County
+</td>
+<td style="text-align:left;">
+New Haven County
+</td>
+<td style="text-align:right;">
+647
+</td>
+<td style="text-align:right;">
+7.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Region
+</td>
+<td style="text-align:left;">
+Greater New Haven
+</td>
+<td style="text-align:right;">
+348
+</td>
+<td style="text-align:right;">
+7.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Town
+</td>
+<td style="text-align:left;">
+New Haven
+</td>
+<td style="text-align:right;">
+133
+</td>
+<td style="text-align:right;">
+10.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Town
+</td>
+<td style="text-align:left;">
+Hamden
+</td>
+<td style="text-align:right;">
+55
+</td>
+<td style="text-align:right;">
+9.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Town
+</td>
+<td style="text-align:left;">
+West Haven
+</td>
+<td style="text-align:right;">
+50
+</td>
+<td style="text-align:right;">
+9.1
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; border:0;" colspan="100%">
+<sup></sup> Of local areas with at least 50 cases
+</td>
+</tr>
+</tfoot>
+</table>
+<hr />
+<footer>
+<p>Page last updated 04/03/2020</p>
+</footer>
 </div>
 </div>
 

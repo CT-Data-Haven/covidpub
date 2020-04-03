@@ -13,4 +13,5 @@ output:
   html_document:
     theme: cosmo
     css: styles.css
+    md_extensions: +raw_html
 exclude: ["scripts", "input_data"]

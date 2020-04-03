@@ -1,5 +1,5 @@
 ---
-title: "COVID-19"
+title: "COVID-19 -- DRAFT Apr 2020"
 ---
 
 ```{r setup, message=FALSE, echo=FALSE}
@@ -12,81 +12,228 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r}
+```{r prep}
 library(tidyverse)
 library(showtext)
 library(lubridate)
+library(billboarder)
+library(knitr)
 library(kableExtra)
 
 source("scripts/plotting_utils.R")
 ```
 
 
-# Home page
+```{r main_vars}
+counties <- tidycensus::fips_codes %>%
+  filter(state == "CT") %>%
+  mutate(county = str_remove(county, " County")) %>%
+  pull(county)
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque in lorem neque. Fusce eget justo sed risus condimentum ultricies vitae sit amet est. Nullam justo nisl, vestibulum sit amet nisl cursus, varius efficitur justo. Sed eu dui vitae est malesuada sodales non et leo. Sed cursus, tortor eget rhoncus ultrices, ante nunc volutpat nisl, ut gravida quam velit vel sem. Sed molestie ligula auctor urna sollicitudin tempus.
+county <- read_csv("input_data/covid_ct_county_detailed.csv") %>%
+  mutate(date = mdy(date),
+         name = as_factor(name),
+         level = name %>% 
+           fct_collapse(state = "Connecticut", county = counties, other_level = "noid") %>%
+           fct_relevel("state"))
 
-## A chart
+town <- read_csv("input_data/covid_ct_town.csv") %>%
+  pivot_longer(-Town, names_to = "Date", values_to = "Cases") %>%
+  mutate(Date = mdy(Date))
+
+date_range <- range(county$date)
+date_range_fmt <- format(date_range, "%m/%d/%Y")
+
+pops <- read_csv("input_data/total_pop_2018.csv")
+
+```
+
+## Latest data: `r date_range_fmt[2]` {.font-italic}
+
+
+This webpage provides graphics that are intended to communicate what we know about Covid-19 (also known as SARS-CoV-2) in Connecticut. These charts are not intended to predict any scenarios about the disease or the people affected by it. They merely reflect data we have already collected at the town, county, and state levels. To the extent possible, this webpage is update daily. 
+
+For the latest information from the Connecticut Department of Public Health, visit http://portal.ct.gov/Coronavirus
+
+### Important data notes:
+
+- **Cases** refer to individuals who tested positive for Covid-19 as confirmed by the State of Connecticut. Due to current testing protocols, this number likely underestimates—possibly to a very large degree—the number of people who may currently have or have recovered from the disease.
+
+- **Hospitalizations** refer to patients who have been admitted to a hospital for complications arising from Covid-19. These are reported at the county level only and represent the county where the hospital is located, not the patient’s home county. On March 29, 2020, the State reported a change to the way hospitalizations were recorded and acknowledged that hospitalization counts prior to that date were underestimated.
+
+- **Deaths** refer to individuals who died due to complications of Covid-19.
+
+- In some instances, data is **log-transformed**. This is a method often applied to values that grow exponentially as a way to more accurately reflect trends in those data.
+
+- Some values, such as cumulative cases, are **normalized**—divided by population in order to meaningfully compare the relative magnitude of cases across areas.
+
+
 
 ```{r county_line_plot, fig.width=7, fig.height=5}
-county <- read_csv("input_data/covid_ct_county_detailed.csv") %>%
-  mutate(date = mdy(date))
-
-pal <- rcartocolor::carto_pal(9, "Bold")
+set.seed(1)
+pal <- c("gray20", rcartocolor::carto_pal(9, "Vivid")[sample.int(8)]) %>%
+  set_names(c("Connecticut", counties))
+seq_pal <- rcartocolor::carto_pal(5, "SunsetDark")[-1]
 
 county_to_plot <- county %>%
-  semi_join(
-    tidycensus::fips_codes %>%
-      filter(state == "CT") %>%
-      mutate(county = str_remove(county, " County")),
-    by = c("name" = "county")
-  ) %>%
+  filter(name %in% c("Connecticut", counties)) %>%
   mutate(name = as_factor(name) %>% fct_reorder2(date, cases, .desc = FALSE),
          lbl = str_glue("{name}: {scales::comma(cases)}")) 
-
-date_range <- range(county_to_plot$date)
-date_range_fmt <- format(date_range, "%m/%d/%Y")
 
 mondays <- seq(date_range[1], date_range[2], by = 1) %>%
   floor_date(unit = "week", week_start = 1) %>%
   unique()
-
-
-ggplot(county_to_plot, aes(x = date, y = cases, fill = name, color = name)) +
-  geom_area(alpha = 0.8) +
-  geom_line(position = "stack") +
-  geom_point(data = . %>% filter(date == max(date)), position = "stack", size = 1) +
-  ggrepel::geom_text_repel(aes(label = lbl, x = date + 1),
-                           data = . %>% filter(date == max(date)),
-                           direction = "y", hjust = 0, position = "stack", family = "source", size = 3.2, min.segment.length = 10) +
-  scale_x_date(expand = expansion(add = c(1, 6)), breaks = mondays, date_labels = "%m/%d") +
-  scale_y_continuous(labels = scales::comma, expand = expansion(mult = c(0, 0.1))) +
-  scale_fill_manual(values = pal) +
-  scale_color_manual(values = pal) +
-  theme(legend.position = "none",
-        axis.title.y = element_text(hjust = 0.98),
-        panel.grid.major.x = element_line(color = "gray90"),
-        axis.ticks.x = element_line(color = "gray20")) +
-  labs(x = NULL, y = "Total confirmed cases",
-       title = "Confirmed Connecticut COVID-19 cases by county",
-       subtitle = str_glue("{date_range_fmt[1]} to {date_range_fmt[2]}, with {date_range_fmt[2]} count shown"))
 ```
 
-## A table
+### Statewide
 
-### CT statewide totals per week
+```{r county_bars_ply}
+set_theme("insight")
+county_to_plot %>%
+  filter(name != "Connecticut") %>%
+  arrange(date, name) %>%
+  billboarder(list(data = list(order = "asc")), 
+              data = ., width = 700, height = 400) %>%
+  bb_barchart(mapping = bbaes(x = date, y = cases, group = name), stacked = TRUE) %>%
+  bb_x_axis(label = list(text = NULL), type = "timeseries", 
+            tick = list(format = "%m/%d", values = mondays)) %>%
+  bb_y_axis(label = list(text = "Cases", position = "outer-top"),
+            tick = list(format = htmlwidgets::JS("d3.format(',')"))) %>%
+  bb_x_grid(show = TRUE) %>%
+  bb_y_grid(show = TRUE) %>%
+  bb_colors_manual(pal) %>%
+  bb_legend(position = "right") %>%
+  bb_tooltip(grouped = FALSE) %>%
+  bb_title(text = str_glue("Confirmed COVID-19 cases by county, {date_range_fmt[1]} to {date_range_fmt[2]}"), padding = list(bottom = 20, top = 10), position = "top-left")
+```
+
+
+The highest rates of confirmed cases per capita are in Fairfield County towns, but these numbers are affected by current testing protocols.
+
+```{r state_stats}
+tests <- read_csv("input_data/covid_tests.csv") %>%
+  mutate(date = mdy(date),
+         name = "Connecticut")
+
+test_x_cases <- county %>%
+  inner_join(tests, by = c("name", "date")) %>%
+  filter(date == date_range[2]) %>%
+  select(-level) %>%
+  pivot_longer(-c(date, name), names_to = "measure") %>%
+  mutate(measure = as_factor(measure) %>%
+           fct_relevel("tests", "cases", "hospitalizations") %>%
+           fct_recode("confirmed cases" = "cases") %>%
+           fct_relabel(str_to_sentence)) %>%
+  arrange(measure)
+
+billboarder(data = test_x_cases, width = 600, height = 400) %>%
+  bb_barchart(mapping = bbaes(x = measure, y = value, group = measure), stack = TRUE, width = list(ratio = 0.5)) %>%
+  bb_y_axis(label = list(text = "Cases", position = "outer-top"),
+            tick = list(format = htmlwidgets::JS("d3.format(',')"))) %>%
+  bb_x_axis(tick = list(width = 120)) %>%
+  bb_y_grid(show = TRUE) %>%
+  bb_colors_manual(set_names(seq_pal, levels(test_x_cases$measure))) %>%
+  bb_legend(hide = TRUE) %>%
+  bb_tooltip(grouped = FALSE) %>%
+  bb_title(text = str_glue("Statewide totals as of {date_range_fmt[2]}"), padding = list(bottom = 20, top = 10), position = "top-left")
+```
+
+Summarizing the past five days of trends helps to smooth out daily jumps or drops in the number of reported cases. Looking at the five days before that helps contextualize the most recent five-day period. Doubling time is defined as the rate of time it takes confirmed cases to double within that five-day window.
 
 ```{r}
-county %>%
-  filter(name == "Connecticut") %>%
-  group_by(as_of = format(floor_date(date, unit = "week", week_start = 1), "%a %b %e, %Y")) %>%
-  top_n(-1, date) %>%
-  ungroup() %>%
-  slice(-1) %>%
-  select(as_of, cases, deaths) %>%
-  mutate_if(is.numeric, scales::comma) %>%
-  set_names(camiller::clean_titles) %>%
-  knitr::kable(format = "html", align = "lrr") %>%
-  kable_styling()
+elapsed <- county %>%
+  mutate(days_ago = (date_range[2] - date) %>%
+           str_pad(width = 2, side = "left", pad = "0") %>%
+           paste0("t", .))
+
+dates_elapsed <- elapsed %>%
+  distinct(days_ago, date) %>%
+  mutate(date = format(date, "%m/%d")) %>%
+  deframe()
+
+case_change <- elapsed %>%
+  filter(level != "noid", days_ago %in% c("t00", "t05", "t10")) %>%
+  select(days_ago, level, name, cases) %>%
+  pivot_wider(names_from = days_ago, values_from = cases) %>%
+  mutate(new_cases_t05_t10 = t05 - t10,
+         new_cases_t00_t05 = t00 - t05,
+         pct_change = (new_cases_t00_t05 - new_cases_t05_t10) / new_cases_t05_t10)
+
+case_change %>%
+  arrange(level, name) %>%
+  select(-matches("^t\\d")) %>%
+  pivot_longer(-c(level, name), names_to = "variable") %>%
+  extract(variable, into = c("type", "end", "start"), "(^\\w+)_(t\\d{2})_(t\\d{2}$)", remove = FALSE) %>%
+  mutate_at(vars(end, start), recode, !!!dates_elapsed) %>%
+  mutate(type = coalesce(type, variable),
+         lbl = ifelse(is.na(end), type, str_glue("{type}, {start} to {end}")) %>%
+           camiller::clean_titles(),
+         name = ifelse(level == "county", paste(name, "County"), as.character(name))) %>%
+  select(Name = name, lbl, value) %>%
+  pivot_wider(names_from = lbl) %>%
+  mutate(`Pct change` = scales::percent(`Pct change`, accuracy = 1, big.mark = ",")) %>%
+  kable(format = "html", align = "lrrr", caption = "Change in number of new cases over 5-day periods") %>%
+  kable_styling(bootstrap_options = c("hover", "responsive"))
 ```
 
+### Greater New Haven
+
+```{r}
+# only showing places with at least X number of cases
+thresh <- 50
+gnh_trend <- county %>%
+  filter(name %in% c("Connecticut", "New Haven")) %>%
+  mutate(name = fct_recode(name, "New Haven County" = "New Haven")) %>%
+  select(level, name, date, cases) %>%
+  rename_all(str_to_sentence) %>%
+  bind_rows(
+    town %>%
+      filter(Town %in% cwi::regions$`Greater New Haven`) %>%
+      rename(Name = Town) %>%
+      camiller::bind_self(group = Name, new_value = "Greater New Haven") %>%
+      mutate(Level = fct_collapse(Name, region = "Greater New Haven", other_level = "town"))
+  ) %>%
+  mutate(Level = as_factor(Level) %>% 
+           fct_relevel("state", "county", "region") %>%
+           fct_relabel(str_to_title)) %>%
+  group_by_at(vars(-Cases)) %>%
+  summarise(Cases = sum(Cases)) %>%
+  ungroup()
+
+gnh_trend %>%
+  left_join(pops %>% select(-level), by = c("Name" = "name")) %>%
+  mutate(`Cases per 10k residents` = round(Cases / total_pop * 1e4, digits = 1)) %>%
+  arrange(-Cases) %>%
+  filter(Date == date_range[2], Cases >= thresh) %>%
+  select(-Date, -total_pop) %>%
+  kable(format = "html", align = "llrr", format.args = list(big.mark = ","), caption = str_glue("Cases by location as of {date_range_fmt[2]}")) %>%
+  kable_styling(bootstrap_options = c("hover", "responsive")) %>%
+  add_footnote(str_glue("Of local areas with at least {thresh} cases"), notation = "none")
+```
+
+
+
+
+```{r eval=FALSE, include=FALSE}
+pops <- cwi::multi_geo_acs("B01003") %>%
+  filter(str_detect(level, "(state|counties)")) %>%
+  select(name = NAME, pop = estimate)
+
+case_change %>%
+  select(-matches("^t\\d")) %>%
+  pivot_longer(starts_with("new_cases"), names_to = "variable") %>%
+  mutate(variable = as_factor(variable)) %>%
+  left_join(pops %>% mutate(name = str_remove(name, " County")), by = "name") %>%
+  mutate(rate_10k = value / pop * 1e4) %>%
+  ggplot(aes(x = variable, y = rate_10k, color = level, group = name)) +
+  geom_line()
+```
+
+
+---
+
+<footer>
+
+Page last updated `r format(today(), "%m/%d/%Y")`
+
+</footer>

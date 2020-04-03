@@ -1,0 +1,21 @@
+table.table caption {
+  color: black;
+  font-size: 1.1em;
+}
+
+table.table tfoot td {
+  color: #555;
+  padding-top: 1em !important;
+}
+
+text.bb-title {
+  font-size: 1.1em;
+}
+
+footer {
+  margin-top: 2em;
+}
+
+h1, h2, h3 {
+  margin-top: 2em;
+}
