@@ -130,7 +130,7 @@ billboarder(data = test_x_cases, width = 600, height = 400) %>%
   bb_barchart(mapping = bbaes(x = measure, y = value, group = measure), stack = TRUE, width = list(ratio = 0.5)) %>%
   bb_y_axis(label = list(text = "Cases", position = "outer-top"),
             tick = list(format = htmlwidgets::JS("d3.format(',')"))) %>%
-  bb_x_axis(tick = list(width = 120)) %>%
+  bb_x_axis(tick = list(width = 200)) %>%
   bb_y_grid(show = TRUE) %>%
   bb_colors_manual(set_names(seq_pal, levels(test_x_cases$measure))) %>%
   bb_legend(hide = TRUE) %>%
@@ -172,6 +172,7 @@ case_change %>%
   select(Name = name, lbl, value) %>%
   pivot_wider(names_from = lbl) %>%
   mutate(`Pct change` = scales::percent(`Pct change`, accuracy = 1, big.mark = ",")) %>%
+  mutate_at(vars(starts_with("New cases")), scales::comma, accuracy = 1) %>%
   kable(format = "html", align = "lrrr", caption = "Change in number of new cases over 5-day periods") %>%
   kable_styling(bootstrap_options = c("hover", "responsive"))
 ```
