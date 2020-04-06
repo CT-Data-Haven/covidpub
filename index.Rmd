@@ -24,6 +24,7 @@ library(billboarder)
 library(knitr)
 library(kableExtra)
 library(leaflet)
+library(DT)
 
 # source("scripts/plotting_utils.R")
 ```
@@ -34,6 +35,12 @@ counties <- tidycensus::fips_codes %>%
   filter(state == "CT") %>%
   mutate(county = str_remove(county, " County")) %>%
   pull(county)
+
+town_county <- cwi::xwalk %>%
+  mutate(county_code = substr(town_fips, 3, 5)) %>%
+  distinct(county_code, town) %>%
+  left_join(tidycensus::fips_codes %>% filter(state == "CT"), by = "county_code") %>% 
+  select(county, town)
 
 county <- read_csv("input_data/covid_ct_county_detailed.csv") %>%
   mutate(date = mdy(date),
@@ -62,7 +69,7 @@ pops <- read_csv("input_data/total_pop_2018.csv")
 
 ```
 
-## Latest data: `r date_range_fmt[2]` {.font-italic}
+## Latest statewide data: `r date_range_fmt[2]` {.font-italic}
 
 
 This webpage provides graphics that are intended to communicate what we know about COVID-19 (also known as SARS-CoV-2) in Connecticut. These charts are not intended to predict any scenarios about the disease or the people affected by it. They merely reflect data we have already collected at the town, county, and state levels. To the extent possible, this webpage is updated daily. 
@@ -71,13 +78,15 @@ For the latest information from the Connecticut Department of Public Health, vis
 
 ### Important data notes:
 
-- **Cases** refer to individuals who tested positive for COVID-19 as confirmed by the State of Connecticut. Due to current testing protocols, this number likely underestimates—possibly to a very large degree—the number of people who may currently have or have recovered from the disease.
+- Current testing protocols restrict tests to contact tracing and specimen sampling of individuals exhibiting severe symptoms. Test results also take several days to return after a specimen is collected and received. As such, counts of detected cases almost certainly underestimate the true number of people infected with COVID-19.
 
-- **Hospitalizations** refer to patients who have been admitted to a hospital for complications arising from COVID-19. These are reported at the county level only and represent the county where the hospital is located, not the patient’s home county. On March 29, 2020, the State reported a change to the way hospitalizations were recorded and acknowledged that hospitalization counts prior to that date were underestimated.
+- **Detected cases** refer to individuals who tested positive for COVID-19 as confirmed by the State of Connecticut. *Due to current testing protocols, this number likely underestimates—possibly to a very large degree—the number of people who may currently have or have recovered from the disease.*
 
-- **Deaths** refer to individuals who died due to complications of COVID-19.
+- **Hospitalizations** refer to patients who have been admitted to a hospital for complications arising from COVID-19. These are reported at the county level only and represent the county where the hospital is located, not the patient’s home county. On March 29, 2020, the State reported a change to the way hospitalizations were recorded and acknowledged that hospitalization counts prior to that date were underestimated. Hospitalization counts are only available starting on March 21.
 
-- Some values are given as rates and marked as such, where the number of cases is divided by population in order to meaningfully compare the relative magnitude of cases across areas.
+- **Deaths** refer to individuals who tested positive for COVID-19 around the time of their death. This doesn't necessarily mean COVID-19 symptoms or complications specifically caused that person's death. *Because of testing protocols, this number is likely undercounted.*
+
+- Some values are given as rates and are marked as such, where the number of cases is divided by population in order to meaningfully compare the relative magnitude of cases across areas.
 
 
 
@@ -100,43 +109,43 @@ mondays <- seq(date_range[1], date_range[2], by = 1) %>%
 ```
 
 
-## Greater New Haven {.section-title}
 
-### Cases by location as of `r date_range_fmt[2]` {.viz-title}
-
-```{r region_cases}
+```{r}
 # only showing places with at least X number of cases
 reg_thresh <- 50
-gnh_trend <- county %>%
-  filter(name %in% c("Connecticut", "New Haven")) %>%
-  mutate(name = fct_recode(name, "New Haven County" = "New Haven")) %>%
-  select(level, name, date, cases) %>%
-  bind_rows(
-    town %>%
-      filter(town %in% cwi::regions$`Greater New Haven`) %>%
-      rename(name = town) %>%
-      camiller::bind_self(group = name, new_value = "Greater New Haven") %>%
-      mutate(level = fct_collapse(name, region = "Greater New Haven", other_level = "town"))
-  ) %>%
-  mutate(level = as_factor(level) %>% 
-           fct_relevel("state", "county", "region") %>%
-           fct_relabel(str_to_title)) %>%
-  group_by_at(vars(-cases)) %>%
-  summarise(cases = sum(cases)) %>%
-  ungroup()
-
-gnh_trend %>%
-  left_join(pops %>% select(-level), by = c("name")) %>%
-  select(-level) %>%
-  mutate(`Cases per 10k residents` = round(cases / total_pop * 1e4, digits = 1)) %>%
-  arrange(-cases) %>%
-  filter(date == date_range[2], cases >= reg_thresh) %>%
-  select(-date, -total_pop) %>%
-  rename_all(str_to_sentence) %>%
-  kable(format = "html", align = "lrr", format.args = list(big.mark = ",")) %>%
-  kable_styling(bootstrap_options = c("hover", "responsive")) %>%
-  add_footnote(str_glue("Of local areas with at least {reg_thresh} cases"), notation = "none")
 ```
+
+
+### Detected cases by location as of `r date_range_fmt[2]`, of locations with at least `r reg_thresh` cases {.viz-title}
+
+```{r region_cases}
+
+
+counts_table <- bind_rows(
+  county %>% 
+    select(level, name, date, cases) %>%
+    mutate(name = fct_relabel(name, ~ifelse(. %in% counties, paste(., "County"), .))),
+  town %>%
+    select(name = town, date, cases) %>%
+    mutate(level = "town")
+) %>%
+  filter(date == date_range[2], cases >= reg_thresh, level != "noid") %>%
+  mutate(level = as_factor(level) %>%
+           fct_relevel("state", "county", "town", "noid")) %>%
+  left_join(town_county, by = c("name" = "town")) %>%
+  left_join(pops %>% select(-level), by = "name") %>%
+  # replace_na(list(county = "N/A")) %>%
+  mutate(`Cases per 10k residents` = round(cases / total_pop * 1e4, digits = 1)) %>%
+  arrange(level, county, name) %>%
+  select(county, name, cases, `Cases per 10k residents`) %>%
+  rename_all(str_to_sentence)
+
+datatable(counts_table, 
+          options = list(searching = FALSE, rowGroup = list(dataSrc = 0, emptyDataGroup = "State / counties")),
+          rownames = FALSE) %>%
+  formatRound("Cases", digits = 0)
+```
+
 
 ```{r}
 exec_orders <- tibble::tribble(
@@ -190,9 +199,8 @@ billboarder(data = mob) %>%
   bb_tooltip()
 ```
 
-## Statewide {.section-title}
 
-### Counts of confirmed COVID-19 cases by county, `r date_range_fmt[1]` to `r date_range_fmt[2]` {.viz-title}
+### Counts of detected COVID-19 cases by county, `r date_range_fmt[1]` to `r date_range_fmt[2]` {.viz-title}
 
 ```{r county_bars, fig.width=7, fig.height=4}
 
@@ -214,18 +222,29 @@ county_to_plot %>%
   bb_title(padding = list(bottom = 20, top = 10), position = "top-left")
 ```
 
-### Confirmed cases by town, as of `r town_latest_fmt` {.viz-title}
+### Detected cases by town, as of `r town_latest_fmt` {.viz-title}
 
 ```{r case_map, fig.height=5, fig.width=7}
 rad_scale <- function(x, max_rad = 25) {
   s <- sqrt(x)
   s / max(s) * max_rad
 }
+map_lbllr <- function(name, rate_10k, cases) {
+  paste(
+    htmltools::h5(name),
+    htmltools::div(str_glue("Rate: {rate_10k} per 10k")),
+    htmltools::div(str_glue("{cases} cases"))
+  ) %>%
+    htmltools::htmlEscape()
+}
+map_thresh <- 10
 cases_sf <- cwi::town_sf %>%
   select(-GEOID) %>%
   sf::st_transform(4326) %>%
   # sf::st_centroid() %>%
-  left_join(town %>% filter(date == date_range[2]), by = c("name" = "town"))
+  left_join(town %>% filter(date == date_range[2]), by = c("name" = "town")) %>%
+  left_join(pops %>% select(name, total_pop), by = "name") %>%
+  mutate(rate_10k = round(cases / total_pop * 1e4, digits = 1))
 
 bbox <- cwi::town_sf %>%
   sf::st_transform(4326) %>%
@@ -233,7 +252,7 @@ bbox <- cwi::town_sf %>%
   sf::st_bbox() %>%
   as.numeric()
 
-color_scale <- colorBin(seq_pal, cases_sf$cases, bins = 5)
+# color_scale <- colorBin(seq_pal, cases_sf$rate_10k, bins = 5)
 
 leaflet(cases_sf, width = 700, height = 500, 
         options = leafletOptions(zoomSnap = 0.25, zoomDelta = 0.5, scrollWheelZoom = FALSE)) %>%
@@ -241,10 +260,11 @@ leaflet(cases_sf, width = 700, height = 500,
   addProviderTiles(providers$CartoDB.Positron) %>%
   addPolygons(color = "#999999", fillColor = "#aaaaaa", weight = 1, fillOpacity = 0.1) %>%
   addCircleMarkers(data = sf::st_centroid(cases_sf),
-                   radius = ~rad_scale(cases), color = seq_pal[5], 
-                   weight = 1, opacity = 0.8, fillOpacity = 0.4,
-                   label = ~str_glue("{name}: {cases}"),
-                   labelOptions = labelOptions(className = "tooltip", direction = "top", offset = c(0, 5))) 
+                   radius = ~rad_scale(rate_10k), color = seq_pal[5], 
+                   weight = 0, opacity = 0.8, fillOpacity = 0.4,
+                   # label = ~str_glue("{name}: {rate_10k}"),
+                   label = ~str_glue("{name}: {rate_10k} per 10k ({cases} cases)"),
+                   labelOptions = labelOptions(className = "tooltip", direction = "top", offset = c(0, -10))) 
 ```
 
 
@@ -261,7 +281,7 @@ test_x_cases <- county %>%
   pivot_longer(-c(date, name), names_to = "measure") %>%
   mutate(measure = as_factor(measure) %>%
            fct_relevel("tests", "cases", "hospitalizations") %>%
-           fct_recode("confirmed cases" = "cases") %>%
+           fct_recode("detected cases" = "cases") %>%
            fct_relabel(str_to_sentence)) %>%
   filter(!is.na(value)) %>%
   arrange(measure)
@@ -287,7 +307,7 @@ Note that counts of COVID-19-related hospitalizations are only available from Ma
 
 Summarizing the past five days of trends helps to smooth out daily jumps or drops in the number of reported cases. Looking at the five days before that helps contextualize the most recent five-day period. 
 
-### Change in number of confirmed new cases over 5-day periods {.viz-title}
+### Change in number of detected new cases over 5-day periods {.viz-title}
 
 ```{r case_5day}
 # only including if each 5-day period involves more than N cases; otherwise have things like increases of 1700%
