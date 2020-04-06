@@ -1,0 +1,48 @@
+# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
+
+language: R
+sudo: false
+cache: packages
+dist: trusty
+
+latex: false
+os:
+  - linux
+  - osx
+  
+branches:
+  only:
+    - master
+
+r_packages:
+  - rmarkdown
+  - dplyr
+  - tidyr
+  - forcats
+  - purrr
+  - stringr
+  - readr
+  - lubridate
+  - billboarder
+  - knitr
+  - kableExtra
+  - leaflet
+  - tidycensus
+  - janitor
+  - scales
+
+r_github_packages:
+  - camille-s/camiller
+  - CT-Data-Haven/cwi
+  
+after_success:
+  - Rscript -e "rmarkdown::render_site()"
+  
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_PAT
+  on:
+    branch: master
+  local_dir: docs
+  keep_history: true

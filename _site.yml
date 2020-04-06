@@ -12,4 +12,4 @@ output:
     theme: cosmo
     css: styles.css
     md_extensions: +raw_html
-exclude: ["scripts", "input_data"]
+exclude: ["scripts", "input_data", "DESCRIPTION"]

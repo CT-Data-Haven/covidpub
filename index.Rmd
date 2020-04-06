@@ -13,15 +13,19 @@ knitr::opts_chunk$set(
 ```
 
 ```{r prep}
-library(tidyverse)
-library(showtext)
+library(dplyr)
+library(tidyr)
+library(forcats)
+library(purrr)
+library(stringr)
+library(readr)
 library(lubridate)
 library(billboarder)
 library(knitr)
 library(kableExtra)
 library(leaflet)
 
-source("scripts/plotting_utils.R")
+# source("scripts/plotting_utils.R")
 ```
 
 
@@ -135,7 +139,7 @@ gnh_trend %>%
 ```
 
 ```{r}
-exec_orders <- tribble(
+exec_orders <- tibble::tribble(
   ~date, ~order,
   "2020-03-24", "Stay home order",
   "2020-03-17", "Restrictions on gatherings"
@@ -296,7 +300,7 @@ elapsed <- county %>%
 dates_elapsed <- elapsed %>%
   distinct(days_ago, date) %>%
   mutate(date = format(date, "%m/%d")) %>%
-  deframe()
+  tibble::deframe()
 
 case_change <- elapsed %>%
   filter(level != "noid", days_ago %in% c("t00", "t05", "t10")) %>%
