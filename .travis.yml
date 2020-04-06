@@ -7,7 +7,6 @@ dist: trusty
 
 latex: false
 os:
-  - linux
   - osx
   
 branches:
