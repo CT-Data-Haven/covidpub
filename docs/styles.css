@@ -40,3 +40,13 @@ h1, h2, h3 {
   margin-top: 1.2em;
   padding-top: 0;
 }
+
+div.tooltip {
+  width: 100px;
+  line-height: 1.1;
+  white-space: normal;
+}
+
+.bb-lines path {
+  stroke-width: 3;
+}
