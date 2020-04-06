@@ -19,3 +19,24 @@ footer {
 h1, h2, h3 {
   margin-top: 2em;
 }
+
+.viz-title {
+  
+}
+
+.milestone text {
+  fill: #333;
+}
+.milestone line {
+  stroke: #444;
+}
+
+.section h2.section-title {
+  margin-top: 1.5em;
+  padding-top: 0;
+}
+
+.section h3.viz-title {
+  margin-top: 1.2em;
+  padding-top: 0;
+}

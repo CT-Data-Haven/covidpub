@@ -1,18 +1,6 @@
 ---
-title: "Resources"
+title: "Additional resources"
 ---
 
-# Additional resources
 
-## COVID-19 data and resources
-
-* one
-* two
-* three
-
-## General DataHaven resources
-
-* aaa
-* bbb
-* ccc
-* ddd
+See DataHaven's list of [trusted sources of information](https://ctdatahaven.org/articles/coronavirus-covid-19-connecticut-trusted-sources-information) on COVID-19.
