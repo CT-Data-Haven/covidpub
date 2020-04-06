@@ -43,8 +43,16 @@ town <- read_csv("input_data/covid_ct_town.csv") %>%
   mutate(Date = mdy(Date)) %>%
   janitor::clean_names()
 
+tests <- read_csv("input_data/covid_tests.csv") %>%
+  mutate(date = mdy(date),
+         name = "Connecticut")
+
 date_range <- range(county$date)
 date_range_fmt <- format(date_range, "%m/%d/%Y")
+town_latest <- max(town$date)
+town_latest_fmt <- format(town_latest, "%m/%d/%Y")
+test_date_range <- range(tests$date)
+test_date_range_fmt <- format(test_date_range, "%m/%d/%Y")
 
 pops <- read_csv("input_data/total_pop_2018.csv")
 
@@ -154,7 +162,7 @@ mob_date_range <- range(mob$date)
 
 One way to measure the impact of social distancing measures is through the distances people travel each day. Anonymized cell phone data shows the average number of miles traveled by people within each county starting March 2. As statewide executive orders restricting public and private gatherings and limiting nonessential travel, these average distances traveled dropped steeply.
 
-### Residents' average daily mobility in miles, `r format(mob_date_range[1], "%m/%d")` to `r format(mob_date_range[2], "%m/%d")` {.viz-title}
+### Residents' average daily mobility in miles, `r format(mob_date_range[1], "%m/%d/%Y")` to `r format(mob_date_range[2], "%m/%d/%Y")` {.viz-title}
 
 ```{r mobility, fig.height=4.5, fig.width=7}
 # mob_pal <- c(pal[c(3, 5, 7)], "gray50") %>% setNames(levels(mob$name2))
@@ -202,7 +210,7 @@ county_to_plot %>%
   bb_title(padding = list(bottom = 20, top = 10), position = "top-left")
 ```
 
-### Confirmed cases by town, as of `r date_range_fmt[2]` {.viz-title}
+### Confirmed cases by town, as of `r town_latest_fmt` {.viz-title}
 
 ```{r case_map, fig.height=5, fig.width=7}
 rad_scale <- function(x, max_rad = 25) {
@@ -237,12 +245,10 @@ leaflet(cases_sf, width = 700, height = 500,
 
 
 
-### Trends in statewide COVID-related testing, cases, hospitalizations, and deaths, `r date_range_fmt[1]` to `r date_range_fmt[2]` {.viz-title}
+### Trends in statewide COVID-related testing, cases, hospitalizations, and deaths, `r test_date_range_fmt[1]` to `r test_date_range_fmt[2]` {.viz-title}
 
 ```{r state_stats, fig.width=7, fig.height=4.5}
-tests <- read_csv("input_data/covid_tests.csv") %>%
-  mutate(date = mdy(date),
-         name = "Connecticut")
+
 
 test_x_cases <- county %>%
   inner_join(tests, by = c("name", "date")) %>%
@@ -345,7 +351,7 @@ elapsed %>%
 ## Sources {.section-title}
 
 * DataHaven analysis of data reported by the State of Connecticut daily and posted to the COVID-19 information portal, https://portal.ct.gov/Coronavirus
-* Data from Descartes Lab, "Mobility Changes in Response to COVID-19," "Mobility Changes in Response to COVID-19"
+* Data from Descartes Lab, "Mobility Changes in Response to COVID-19," https://descarteslabs.com/mobility/
 
 
 
