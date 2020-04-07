@@ -33,6 +33,12 @@ r_packages:
   - tidycensus
   - janitor
   - scales
+  - DT
+  - htmlwidgets
+  - htmltools
+  - sf
+  - tibble
+  - measurements
 
 r_github_packages:
   - CT-Data-Haven/cwi

@@ -9,6 +9,7 @@ Authors@R:
 Description: Quick site of COVID-19 data.
 License: TBD
 Imports: 
+    rmarkdown,
     dplyr,
     tidyr,
     forcats,
@@ -22,6 +23,12 @@ Imports:
     leaflet,
     tidycensus,
     janitor,
-    scales
+    scales,
+    DT,
+    htmlwidgets,
+    htmltools,
+    sf,
+    tibble,
+    measurements
 Remotes:
   CT-Data-Haven/cwi
