@@ -39,6 +39,7 @@ r_packages:
   - sf
   - tibble
   - measurements
+  - rcartocolor
 
 r_github_packages:
   - CT-Data-Haven/cwi

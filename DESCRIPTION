@@ -29,6 +29,7 @@ Imports:
     htmltools,
     sf,
     tibble,
-    measurements
+    measurements,
+    rcartocolor
 Remotes:
   CT-Data-Haven/cwi
