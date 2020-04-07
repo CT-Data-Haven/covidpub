@@ -1,0 +1,22 @@
+* installing *source* package ‘covidsite’ ...
+** using staged installation
+** help
+No man pages found in package  ‘covidsite’ 
+*** installing help indices
+** building package indices
+** testing if installed package can be loaded from temporary location
+Warning: replacing previous import ‘dplyr::intersect’ by ‘lubridate::intersect’ when loading ‘covidsite’
+Warning: replacing previous import ‘dplyr::union’ by ‘lubridate::union’ when loading ‘covidsite’
+Warning: replacing previous import ‘dplyr::setdiff’ by ‘lubridate::setdiff’ when loading ‘covidsite’
+Warning: replacing previous import ‘dplyr::group_rows’ by ‘kableExtra::group_rows’ when loading ‘covidsite’
+Warning: replacing previous import ‘purrr::discard’ by ‘scales::discard’ when loading ‘covidsite’
+Warning: replacing previous import ‘readr::col_factor’ by ‘scales::col_factor’ when loading ‘covidsite’
+** testing if installed package can be loaded from final location
+Warning: replacing previous import ‘dplyr::intersect’ by ‘lubridate::intersect’ when loading ‘covidsite’
+Warning: replacing previous import ‘dplyr::union’ by ‘lubridate::union’ when loading ‘covidsite’
+Warning: replacing previous import ‘dplyr::setdiff’ by ‘lubridate::setdiff’ when loading ‘covidsite’
+Warning: replacing previous import ‘dplyr::group_rows’ by ‘kableExtra::group_rows’ when loading ‘covidsite’
+Warning: replacing previous import ‘purrr::discard’ by ‘scales::discard’ when loading ‘covidsite’
+Warning: replacing previous import ‘readr::col_factor’ by ‘scales::col_factor’ when loading ‘covidsite’
+** testing if installed package keeps a record of temporary installation path
+* DONE (covidsite)

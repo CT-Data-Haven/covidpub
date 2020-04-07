@@ -1,0 +1,19 @@
+Package: covidsite
+Title: DataHaven site of COVID-19 data
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Camille",
+           family = "Seaberry",
+           role = c("aut", "cre"),
+           email = "camille@ctdatahaven.org")
+Description: Quick site of COVID-19 data.
+License: TBD
+Imports: rmarkdown, dplyr, tidyr, forcats, purrr, stringr, readr,
+        lubridate, billboarder, knitr, kableExtra, leaflet, tidycensus,
+        janitor, scales, DT, htmlwidgets, htmltools, sf, tibble,
+        measurements, rcartocolor
+Remotes: CT-Data-Haven/cwi
+NeedsCompilation: no
+Packaged: 2020-04-07 18:51:14 UTC; travis
+Author: Camille Seaberry [aut, cre]
+Maintainer: Camille Seaberry <camille@ctdatahaven.org>

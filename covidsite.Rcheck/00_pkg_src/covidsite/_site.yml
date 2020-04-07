@@ -1,0 +1,15 @@
+name: "dh-covid"
+output_dir: "docs"
+navbar:
+  title: "COVID-19"
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "Additional resources"
+      href: resources.html
+output:
+  html_document:
+    theme: cosmo
+    css: styles.css
+    md_extensions: +raw_html
+exclude: ["scripts", "input_data", "DESCRIPTION"]

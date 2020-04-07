@@ -1,0 +1,180 @@
+level,name,total_pop
+1_state,Connecticut,3581504
+2_counties,Fairfield County,944348
+2_counties,Hartford County,894730
+2_counties,Litchfield County,183031
+2_counties,Middlesex County,163368
+2_counties,New Haven County,859339
+2_counties,New London County,268881
+2_counties,Tolland County,151269
+2_counties,Windham County,116538
+3_regions,Greater New Haven,464425
+4_towns,Bethel,19551
+4_towns,Bridgeport,146417
+4_towns,Brookfield,17013
+4_towns,Danbury,84479
+4_towns,Darien,21759
+4_towns,Easton,7558
+4_towns,Fairfield,61598
+4_towns,Greenwich,62574
+4_towns,Monroe,19621
+4_towns,New Canaan,20273
+4_towns,New Fairfield,13992
+4_towns,Newtown,27853
+4_towns,Norwalk,88436
+4_towns,Redding,9209
+4_towns,Ridgefield,25070
+4_towns,Shelton,41155
+4_towns,Sherman,3641
+4_towns,Stamford,129026
+4_towns,Stratford,52279
+4_towns,Trumbull,36174
+4_towns,Weston,10288
+4_towns,Westport,27840
+4_towns,Wilton,18542
+4_towns,Avon,18338
+4_towns,Berlin,20519
+4_towns,Bloomfield,20952
+4_towns,Bristol,60308
+4_towns,Burlington,9607
+4_towns,Canton,10306
+4_towns,East Granby,5256
+4_towns,East Hartford,50453
+4_towns,East Windsor,11379
+4_towns,Enfield,44455
+4_towns,Farmington,25546
+4_towns,Glastonbury,34578
+4_towns,Granby,11305
+4_towns,Hartford,123628
+4_towns,Hartland,2041
+4_towns,Manchester,57955
+4_towns,Marlborough,6394
+4_towns,New Britain,72839
+4_towns,Newington,30323
+4_towns,Plainville,17720
+4_towns,Rocky Hill,20137
+4_towns,Simsbury,24519
+4_towns,Southington,43763
+4_towns,South Windsor,25823
+4_towns,Suffield,15662
+4_towns,West Hartford,63127
+4_towns,Wethersfield,26267
+4_towns,Windsor,28917
+4_towns,Windsor Locks,12613
+4_towns,Barkhamsted,3671
+4_towns,Bethlehem,3452
+4_towns,Bridgewater,1706
+4_towns,Canaan,1196
+4_towns,Colebrook,1518
+4_towns,Cornwall,1302
+4_towns,Goshen,2903
+4_towns,Harwinton,5469
+4_towns,Kent,2824
+4_towns,Litchfield,8198
+4_towns,Morris,2288
+4_towns,New Hartford,6755
+4_towns,New Milford,27196
+4_towns,Norfolk,1503
+4_towns,North Canaan,3302
+4_towns,Plymouth,11782
+4_towns,Roxbury,2103
+4_towns,Salisbury,3631
+4_towns,Sharon,2721
+4_towns,Thomaston,7623
+4_towns,Torrington,34737
+4_towns,Warren,1432
+4_towns,Washington,3472
+4_towns,Watertown,21832
+4_towns,Winchester,10798
+4_towns,Woodbury,9617
+4_towns,Chester,4268
+4_towns,Clinton,12976
+4_towns,Cromwell,13973
+4_towns,Deep River,4493
+4_towns,Durham,7248
+4_towns,East Haddam,9032
+4_towns,East Hampton,12856
+4_towns,Essex,6599
+4_towns,Haddam,8267
+4_towns,Killingworth,6414
+4_towns,Middlefield,4385
+4_towns,Middletown,46473
+4_towns,Old Saybrook,10118
+4_towns,Portland,9362
+4_towns,Westbrook,6904
+4_towns,Ansonia,18860
+4_towns,Beacon Falls,6115
+4_towns,Bethany,5504
+4_towns,Branford,28094
+4_towns,Cheshire,29208
+4_towns,Derby,12596
+4_towns,East Haven,28860
+4_towns,Guilford,22285
+4_towns,Hamden,61206
+4_towns,Madison,18183
+4_towns,Meriden,59864
+4_towns,Middlebury,7661
+4_towns,Milford,54047
+4_towns,Naugatuck,31481
+4_towns,New Haven,130529
+4_towns,North Branford,14208
+4_towns,North Haven,23786
+4_towns,Orange,13937
+4_towns,Oxford,13022
+4_towns,Prospect,9736
+4_towns,Seymour,16522
+4_towns,Southbury,19754
+4_towns,Wallingford,44771
+4_towns,Waterbury,108672
+4_towns,West Haven,54918
+4_towns,Wolcott,16652
+4_towns,Woodbridge,8868
+4_towns,Bozrah,2567
+4_towns,Colchester,15927
+4_towns,East Lyme,18766
+4_towns,Franklin,1842
+4_towns,Griswold,11693
+4_towns,Groton,39105
+4_towns,Lebanon,7256
+4_towns,Ledyard,14850
+4_towns,Lisbon,4272
+4_towns,Lyme,2469
+4_towns,Montville,19094
+4_towns,New London,27032
+4_towns,North Stonington,5242
+4_towns,Norwich,39567
+4_towns,Old Lyme,7431
+4_towns,Preston,4666
+4_towns,Salem,4126
+4_towns,Sprague,2929
+4_towns,Stonington,18436
+4_towns,Voluntown,2559
+4_towns,Waterford,19052
+4_towns,Andover,3223
+4_towns,Bolton,4928
+4_towns,Columbia,5421
+4_towns,Coventry,12422
+4_towns,Ellington,16041
+4_towns,Hebron,9522
+4_towns,Mansfield,25977
+4_towns,Somers,11137
+4_towns,Stafford,11890
+4_towns,Tolland,14766
+4_towns,Union,873
+4_towns,Vernon,29157
+4_towns,Willington,5912
+4_towns,Ashford,4234
+4_towns,Brooklyn,8243
+4_towns,Canterbury,5074
+4_towns,Chaplin,2329
+4_towns,Eastford,1721
+4_towns,Hampton,1861
+4_towns,Killingly,17170
+4_towns,Plainfield,15114
+4_towns,Pomfret,4173
+4_towns,Putnam,9360
+4_towns,Scotland,1653
+4_towns,Sterling,3762
+4_towns,Thompson,9343
+4_towns,Windham,24688
+4_towns,Woodstock,7813

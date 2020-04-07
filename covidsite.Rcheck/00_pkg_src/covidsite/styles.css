@@ -1,0 +1,52 @@
+table.table caption {
+  color: black;
+  font-size: 1.1em;
+}
+
+table.table tfoot td {
+  color: #666;
+  padding-top: 1em !important;
+}
+
+text.bb-title {
+  font-size: 1.1em;
+}
+
+footer {
+  margin-top: 4em;
+}
+
+h1, h2, h3 {
+  margin-top: 2em;
+}
+
+.viz-title {
+  
+}
+
+.milestone text {
+  fill: #333;
+}
+.milestone line {
+  stroke: #444;
+}
+
+.section h2.section-title {
+  margin-top: 1.5em;
+  padding-top: 0;
+}
+
+.section h3.viz-title {
+  margin-top: 1.2em;
+  padding-top: 0;
+}
+
+div.tooltip {
+  width: 100px;
+  line-height: 1.1;
+  white-space: normal;
+}
+
+.bb-lines path {
+  stroke-width: 3;
+}
