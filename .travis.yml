@@ -35,7 +35,6 @@ r_packages:
   - scales
 
 r_github_packages:
-  - camille-s/camiller
   - CT-Data-Haven/cwi
   
 after_success:

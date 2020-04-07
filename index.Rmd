@@ -24,7 +24,7 @@ library(knitr)
 library(leaflet)
 library(DT)
 
-# source("scripts/plotting_utils.R")
+source("scripts/plotting_utils.R")
 ```
 
 
@@ -293,7 +293,7 @@ change_table <- case_change %>%
   mutate_at(vars(end, start), recode, !!!dates_elapsed) %>%
   mutate(type = coalesce(type, variable),
          lbl = ifelse(is.na(end), type, str_glue("{type}, {start} to {end}")) %>%
-           camiller::clean_titles(),
+           clean_titles(),
          name = ifelse(level == "county", paste(name, "County"), as.character(name))) %>%
   select(Name = name, lbl, value) %>%
   pivot_wider(names_from = lbl)

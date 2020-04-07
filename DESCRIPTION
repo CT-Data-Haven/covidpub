@@ -24,5 +24,4 @@ Imports:
     janitor,
     scales
 Remotes:
-  camille-s/camiller,
   CT-Data-Haven/cwi
