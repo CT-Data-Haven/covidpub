@@ -7,8 +7,7 @@ knitr::opts_chunk$set(
   warning = FALSE, 
   message = FALSE,
   echo = FALSE,
-  dpi = 300,
-  fig.showtext = TRUE
+  dpi = 300
 )
 ```
 
