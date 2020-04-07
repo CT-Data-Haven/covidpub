@@ -1,6 +1,6 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
-language: R
+language: r
 sudo: false
 cache: packages
 dist: trusty
@@ -19,27 +19,6 @@ branches:
 
 r_packages:
   - rmarkdown
-  - dplyr
-  - tidyr
-  - forcats
-  - purrr
-  - stringr
-  - readr
-  - lubridate
-  - billboarder
-  - knitr
-  - kableExtra
-  - leaflet
-  - tidycensus
-  - janitor
-  - scales
-  - DT
-  - htmlwidgets
-  - htmltools
-  - sf
-  - tibble
-  - measurements
-  - rcartocolor
 
 r_github_packages:
   - CT-Data-Haven/cwi
