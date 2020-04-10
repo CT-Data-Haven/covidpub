@@ -1,0 +1,37 @@
+race,date,cases,deaths
+Hispanic,04/03/20,591,8
+NH Asian,04/03/20,67,1
+NH Black,04/03/20,421,20
+NH Other,04/03/20,37,1
+NH Unknown,04/03/20,2163,21
+NH White,04/03/20,1635,80
+Hispanic,04/04/20,656,13
+NH Asian,04/04/20,73,1
+NH Black,04/04/20,464,25
+NH Other,04/04/20,43,2
+NH Unknown,04/04/20,2294,21
+NH White,04/04/20,1746,103
+Hispanic,04/05/20,715,14
+NH Asian,04/05/20,75,1
+NH Black,04/05/20,502,30
+NH Other,04/05/20,43,2
+NH Unknown,04/05/20,2501,25
+NH White,04/05/20,1839,117
+Hispanic,04/06/20,835,17
+NH Asian,04/06/20,83,2
+NH Black,04/06/20,578,32
+NH Other,04/06/20,49,3
+NH Unknown,04/06/20,3316,9
+NH White,04/06/20,2045,143
+Hispanic,04/07/20,951,25
+NH Asian,04/07/20,98,3
+NH Black,04/07/20,678,42
+NH Other,04/07/20,54,3
+NH Unknown,04/07/20,3701,12
+NH White,04/07/20,2299,192
+Hispanic,04/08/20,1109,32
+NH Asian,04/08/20,113,4
+NH Black,04/08/20,831,46
+NH Other,04/08/20,66,5
+NH Unknown,04/08/20,4073,29
+NH White,04/08/20,2589,219
