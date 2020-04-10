@@ -1,5 +1,5 @@
 name: "dh-covid"
-output_dir: "docs"
+output_dir: "dist"
 navbar:
   title: "COVID-19"
   left:
