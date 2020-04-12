@@ -32,7 +32,7 @@ Non-standard license specification:
 Standardizable: FALSE
 * checking top-level files ... NOTE
 Non-standard files/directories found at top level:
-  ‘_site.yml’ ‘dist’ ‘index.Rmd’ ‘input_data’ ‘resources.md’ ‘scripts’
+  ‘_site.yml’ ‘index.Rmd’ ‘input_data’ ‘resources.md’ ‘scripts’
   ‘styles.css’
 * checking for left-over files ... OK
 * checking index information ... OK
