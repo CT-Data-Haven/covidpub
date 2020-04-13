@@ -50,3 +50,12 @@ div.tooltip {
 .bb-lines path {
   stroke-width: 3;
 }
+
+.btn {
+  border-radius: 4px;
+}
+
+
+#infoContainer {
+  margin: 4px 0;
+}

@@ -1,5 +1,5 @@
 ---
-title: "COVID-19 -- DRAFT Apr 2020"
+title: "COVID-19 in Connecticut"
 ---
 
 ```{r setup, message=FALSE, echo=FALSE}
@@ -23,6 +23,7 @@ library(billboarder)
 library(knitr)
 library(leaflet)
 library(DT)
+library(htmltools)
 
 source("scripts/plotting_utils.R")
 ```
@@ -74,7 +75,12 @@ This webpage provides graphics that are intended to communicate what we know abo
 
 For the latest information from the Connecticut Department of Public Health, visit http://portal.ct.gov/Coronavirus
 
-### Important data notes:
+### Important data notes: 
+
+<button class="btn btn-sm btn-default" role="button" data-toggle="collapse" data-target="#infoContainer" aria-controls="infoContainer" aria-expanded="true">Toggle</button>
+
+
+::: {#infoContainer .panel .panel-default .collapse .in}
 
 - Current testing protocols restrict tests to contact tracing and specimen sampling of individuals exhibiting severe symptoms. Test results also take several days to return after a specimen is collected and received. As such, counts of detected cases almost certainly underestimate the true number of people infected with COVID-19.
 
@@ -82,9 +88,11 @@ For the latest information from the Connecticut Department of Public Health, vis
 
 - **Hospitalizations** refer to patients who have been admitted to a hospital for complications arising from COVID-19. These are reported at the county level only and represent the county where the hospital is located, not the patient’s home county. On March 29, 2020, the State reported a change to the way hospitalizations were recorded and acknowledged that hospitalization counts prior to that date were underestimated. Hospitalization counts are only available starting on March 21.
 
-- **Deaths** refer to individuals who tested positive for COVID-19 around the time of their death. This doesn't necessarily mean COVID-19 symptoms or complications specifically caused that person's death. *Because of testing protocols, this number is likely undercounted.*
+- **Deaths** refer to individuals who tested positive for COVID-19 around the time of their death. This doesn\'t necessarily mean COVID-19 symptoms or complications specifically caused that person\'s death. *Because of testing protocols, this number is likely undercounted.*
 
 - Some values are given as rates and are marked as such, where the number of cases is divided by population in order to meaningfully compare the relative magnitude of cases across areas.
+
+:::
 
 
 
@@ -464,5 +472,7 @@ elapsed %>%
 <footer>
 
 Page last updated by DataHaven, `r format(today(), "%m/%d/%Y")`
+
+![](img/25th_logo_alpha.png){ width=200px }
 
 </footer>
