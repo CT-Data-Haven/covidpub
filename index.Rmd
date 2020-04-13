@@ -77,7 +77,7 @@ For the latest information from the Connecticut Department of Public Health, vis
 
 ### Important data notes: 
 
-<button class="btn btn-sm btn-default" role="button" data-toggle="collapse" data-target="#infoContainer" aria-controls="infoContainer" aria-expanded="true">Toggle</button>
+<button class="btn btn-sm btn-default" role="button" data-toggle="collapse" data-target="#infoContainer" aria-controls="infoContainer" aria-expanded="true">Show / hide</button>
 
 
 ::: {#infoContainer .panel .panel-default .collapse .in}
