@@ -58,4 +58,9 @@ div.tooltip {
 
 #infoContainer {
   margin: 4px 0;
+  padding: 0.4em;
+}
+
+.leaflet-container {
+  width: 100%;
 }
