@@ -14,6 +14,6 @@ Imports: rmarkdown, dplyr, tidyr, forcats, purrr, stringr, readr,
         measurements, rcartocolor
 Remotes: CT-Data-Haven/cwi
 NeedsCompilation: no
-Packaged: 2020-04-14 03:24:06 UTC; travis
+Packaged: 2020-04-14 16:01:34 UTC; travis
 Author: Camille Seaberry [aut, cre]
 Maintainer: Camille Seaberry <camille@ctdatahaven.org>
