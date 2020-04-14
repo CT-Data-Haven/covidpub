@@ -326,7 +326,7 @@ test_x_cases <- county %>%
   pivot_longer(-c(date, name), names_to = "measure") %>%
   mutate(measure = as_factor(measure) %>%
            fct_relevel("tests", "cases", "hospitalizations") %>%
-           fct_recode("detected cases" = "cases") %>%
+           fct_recode("detected cases" = "cases", "individuals tested" = "tests") %>%
            fct_relabel(str_to_sentence)) %>%
   filter(!is.na(value)) %>%
   arrange(measure)
