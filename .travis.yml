@@ -1,27 +1,29 @@
+# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
+
 language: r
-sudo: true
+sudo: false
 cache: packages
 dist: trusty
+
 warnings_are_errors: false
 latex: false
-
 env:
   global:
-    - NOT_CRAN=true
+  - NOT_CRAN=true
 os:
   - osx
   
 branches:
   only:
     - master
-    
+
 r_packages:
   - rmarkdown
+
 r_github_packages:
   - CT-Data-Haven/cwi
   
 after_success:
-  - rm -rf dist
   - Rscript -e "rmarkdown::render_site()"
   
 deploy:
