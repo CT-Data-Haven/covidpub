@@ -23,7 +23,7 @@ r_packages:
 r_github_packages:
   - CT-Data-Haven/cwi
   
-after_success:
+script:
   - Rscript -e "rmarkdown::render_site()"
   
 deploy:
