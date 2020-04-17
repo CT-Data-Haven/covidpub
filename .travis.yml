@@ -22,7 +22,7 @@ after_success:
 deploy:
   provider: pages
   skip_cleanup: true
-  github_token: "$GITHUB_PAT"
+  github_token: $GITHUB_PAT
   on:
     branch: master
   local_dir: dist
