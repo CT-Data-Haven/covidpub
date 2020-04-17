@@ -81,7 +81,7 @@ For the latest information from the Connecticut Department of Public Health, vis
 <button class="btn btn-sm btn-default" role="button" data-toggle="collapse" data-target="#infoContainer" aria-controls="infoContainer" aria-expanded="true">Show / hide</button>
 
 
-::: {#infoContainer .panel .panel-default .collapse .in}
+::: {#infoContainer .panel .panel-default .collapse }
 
 - Current testing protocols restrict tests to contact tracing and specimen sampling of individuals exhibiting severe symptoms. Test results also take several days to return after a specimen is collected and received. As such, counts of detected cases almost certainly underestimate the true number of people infected with COVID-19.
 

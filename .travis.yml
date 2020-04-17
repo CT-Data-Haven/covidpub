@@ -6,19 +6,19 @@ warnings_are_errors: false
 latex: false
 env:
   global:
-  - NOT_CRAN=true
+    - NOT_CRAN=true
 os:
-- osx
+  - osx
 branches:
   only:
-  - master
+    - master
 r_packages:
-- rmarkdown
+  - rmarkdown
 r_github_packages:
-- CT-Data-Haven/cwi
+  - CT-Data-Haven/cwi
 after_success:
-- rm -rf dist
-- Rscript -e "rmarkdown::render_site()"
+  - rm -rf dist
+  - Rscript -e "rmarkdown::render_site()"
 deploy:
   provider: pages
   skip_cleanup: true
