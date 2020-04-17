@@ -42,6 +42,7 @@ town_county <- cwi::xwalk %>%
   select(county, town)
 
 county <- read_csv("input_data/covid_ct_county_detailed.csv") %>%
+  select(name:deaths) %>%
   mutate(date = mdy(date),
          name = as_factor(name),
          level = name %>% 
