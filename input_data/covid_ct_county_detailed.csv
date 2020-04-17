@@ -1,369 +1,379 @@
-name,date,cases,hospitalizations,deaths
-Fairfield,03/08/20,1,,0
-Hartford,03/08/20,0,,0
-Litchfield,03/08/20,0,,0
-Middlesex,03/08/20,0,,0
-New Haven,03/08/20,0,,0
-New London,03/08/20,0,,0
-Tolland,03/08/20,0,,0
-Windham,03/08/20,0,,0
-Connecticut,03/08/20,1,,0
-Fairfield,03/09/20,1,,0
-Hartford,03/09/20,0,,0
-Litchfield,03/09/20,0,,0
-Middlesex,03/09/20,0,,0
-New Haven,03/09/20,0,,0
-New London,03/09/20,0,,0
-Tolland,03/09/20,0,,0
-Windham,03/09/20,0,,0
-Connecticut,03/09/20,1,,0
-Fairfield,03/10/20,1,,0
-Hartford,03/10/20,0,,0
-Litchfield,03/10/20,0,,0
-Middlesex,03/10/20,0,,0
-New Haven,03/10/20,0,,0
-New London,03/10/20,0,,0
-Tolland,03/10/20,0,,0
-Windham,03/10/20,0,,0
-Connecticut,03/10/20,1,,0
-Fairfield,03/11/20,2,,0
-Hartford,03/11/20,0,,0
-Litchfield,03/11/20,1,,0
-Middlesex,03/11/20,0,,0
-New Haven,03/11/20,0,,0
-New London,03/11/20,0,,0
-Tolland,03/11/20,0,,0
-Windham,03/11/20,0,,0
-Connecticut,03/11/20,3,,0
-Fairfield,03/12/20,4,,0
-Hartford,03/12/20,0,,0
-Litchfield,03/12/20,1,,0
-Middlesex,03/12/20,0,,0
-New Haven,03/12/20,0,,0
-New London,03/12/20,0,,0
-Tolland,03/12/20,0,,0
-Windham,03/12/20,0,,0
-Connecticut,03/12/20,5,,0
-Fairfield,03/13/20,5,,0
-Hartford,03/13/20,0,,0
-Litchfield,03/13/20,3,,0
-Middlesex,03/13/20,0,,0
-New Haven,03/13/20,0,,0
-New London,03/13/20,0,,0
-Tolland,03/13/20,0,,0
-Windham,03/13/20,0,,0
-Connecticut,03/13/20,8,,0
-Fairfield,03/14/20,15,,0
-Hartford,03/14/20,1,,0
-Litchfield,03/14/20,3,,0
-Middlesex,03/14/20,0,,0
-New Haven,03/14/20,1,,0
-New London,03/14/20,0,,0
-Tolland,03/14/20,0,,0
-Windham,03/14/20,0,,0
-Connecticut,03/14/20,20,,0
-Fairfield,03/15/20,16,,0
-Hartford,03/15/20,3,,0
-Litchfield,03/15/20,4,,0
-Middlesex,03/15/20,0,,0
-New Haven,03/15/20,3,,0
-New London,03/15/20,0,,0
-Tolland,03/15/20,0,,0
-Windham,03/15/20,0,,0
-Connecticut,03/15/20,26,,0
-Fairfield,03/16/20,29,,0
-Hartford,03/16/20,4,,0
-Litchfield,03/16/20,4,,0
-Middlesex,03/16/20,0,,0
-New Haven,03/16/20,4,,0
-New London,03/16/20,0,,0
-Tolland,03/16/20,0,,0
-Windham,03/16/20,0,,0
-Connecticut,03/16/20,41,,0
-Fairfield,03/17/20,48,,0
-Hartford,03/17/20,7,,0
-Litchfield,03/17/20,5,,0
-Middlesex,03/17/20,0,,0
-New Haven,03/17/20,8,,0
-New London,03/17/20,0,,0
-Tolland,03/17/20,0,,0
-Windham,03/17/20,0,,0
-Connecticut,03/17/20,68,,0
-Fairfield,03/18/20,69,,1
-Hartford,03/18/20,11,,0
-Litchfield,03/18/20,5,,0
-Middlesex,03/18/20,1,,0
-New Haven,03/18/20,10,,0
-New London,03/18/20,0,,0
-Tolland,03/18/20,0,,0
-Windham,03/18/20,0,,0
-Connecticut,03/18/20,96,,1
-Fairfield,03/19/20,102,,4
-Hartford,03/19/20,18,,0
-Litchfield,03/19/20,7,,0
-Middlesex,03/19/20,3,,0
-New Haven,03/19/20,23,,0
-New London,03/19/20,0,,0
-Tolland,03/19/20,4,,0
-Windham,03/19/20,2,,0
-Connecticut,03/19/20,159,,4
-Fairfield,03/20/20,122,,4
-Hartford,03/20/20,29,,0
-Litchfield,03/20/20,8,,0
-Middlesex,03/20/20,5,,0
-New Haven,03/20/20,23,,0
-New London,03/20/20,1,,0
-Tolland,03/20/20,4,,0
-Windham,03/20/20,2,,0
-Connecticut,03/20/20,194,,4
-Fairfield,03/21/20,140,15,4
-Hartford,03/21/20,35,12,0
-Litchfield,03/21/20,11,2,0
-Middlesex,03/21/20,6,3,0
-New Haven,03/21/20,24,9,0
-New London,03/21/20,1,0,0
-Tolland,03/21/20,5,2,1
-Windham,03/21/20,1,0,0
-Connecticut,03/21/20,223,43,5
-Fairfield,03/22/20,208,20,5
-Hartford,03/22/20,54,13,1
-Litchfield,03/22/20,12,3,0
-Middlesex,03/22/20,6,3,0
-New Haven,03/22/20,29,9,0
-New London,03/22/20,3,1,0
-Tolland,03/22/20,14,2,2
-Windham,03/22/20,1,0,0
-Connecticut,03/22/20,327,51,8
-Fairfield,03/23/20,270,20,6
-Hartford,03/23/20,61,13,2
-Litchfield,03/23/20,13,2,0
-Middlesex,03/23/20,8,4,0
-New Haven,03/23/20,41,12,0
-New London,03/23/20,4,1,0
-Tolland,03/23/20,16,2,2
-Windham,03/23/20,2,0,0
-Connecticut,03/23/20,415,54,10
-Fairfield,03/24/20,384,23,7
-Hartford,03/24/20,88,17,2
-Litchfield,03/24/20,22,3,0
-Middlesex,03/24/20,8,4,0
-New Haven,03/24/20,89,19,0
-New London,03/24/20,6,1,0
-Tolland,03/24/20,19,4,3
-Windham,03/24/20,2,0,0
-Connecticut,03/24/20,618,71,12
-Fairfield,03/25/20,546,47,12
-Hartford,03/25/20,116,24,2
-Litchfield,03/25/20,33,3,0
-Middlesex,03/25/20,15,4,0
-New Haven,03/25/20,127,28,2
-New London,03/25/20,9,2,0
-Tolland,03/25/20,27,5,3
-Windham,03/25/20,2,0,0
-Connecticut,03/25/20,875,113,18
-Fairfield,03/26/20,607,49,13
-Hartford,03/26/20,138,27,2
-Litchfield,03/26/20,44,3,0
-Middlesex,03/26/20,18,5,1
-New Haven,03/26/20,156,34,2
-New London,03/26/20,13,2,0
-Tolland,03/26/20,33,5,3
-Windham,03/26/20,3,0,0
-Connecticut,03/26/20,1012,125,21
-Fairfield,03/27/20,752,68,15
-Hartford,03/27/20,189,36,2
-Litchfield,03/27/20,52,9,0
-Middlesex,03/27/20,25,5,1
-New Haven,03/27/20,222,46,6
-New London,03/27/20,15,2,0
-Tolland,03/27/20,33,7,3
-Windham,03/27/20,3,0,0
-Connecticut,03/27/20,1291,173,27
-Fairfield,03/28/20,908,88,20
-Hartford,03/28/20,228,41,2
-Litchfield,03/28/20,65,12,0
-Middlesex,03/28/20,28,5,1
-New Haven,03/28/20,236,50,6
-New London,03/28/20,19,2,0
-Tolland,03/28/20,37,7,4
-Windham,03/28/20,3,0,0
-Connecticut,03/28/20,1524,205,33
-Fairfield,03/29/20,1245,189,21
-Hartford,03/29/20,276,67,2
-Litchfield,03/29/20,87,5,0
-Middlesex,03/29/20,38,1,1
-New Haven,03/29/20,280,137,6
-New London,03/29/20,20,4,0
-Tolland,03/29/20,40,0,4
-Windham,03/29/20,7,1,0
-Connecticut,03/29/20,1993,404,34
-Fairfield,03/30/20,1445,230,21
-Hartford,03/30/20,330,96,3
-Litchfield,03/30/20,113,7,1
-Middlesex,03/30/20,50,1,1
-New Haven,03/30/20,373,176,6
-New London,03/30/20,24,5,0
-Tolland,03/30/20,50,2,4
-Windham,03/30/20,10,0,0
-Pending address validation,03/30/20,176,,0
-Connecticut,03/30/20,2571,517,36
-Fairfield,03/31/20,1870,275,38
-Hartford,03/31/20,393,110,7
-Litchfield,03/31/20,121,7,1
-Middlesex,03/31/20,56,5,1
-New Haven,03/31/20,517,202,12
-New London,03/31/20,27,8,1
-Tolland,03/31/20,56,1,7
-Windham,03/31/20,11,0,0
-Pending address validation,03/31/20,77,,2
-Connecticut,03/31/20,3128,608,69
-Fairfield,04/01/20,1986,359,46
-Hartford,04/01/20,469,126,11
-Litchfield,04/01/20,131,11,1
-Middlesex,04/01/20,66,8,2
-New Haven,04/01/20,611,251,15
-New London,04/01/20,29,10,1
-Tolland,04/01/20,61,1,7
-Windham,04/01/20,19,0,0
-Pending address validation,04/01/20,185,,2
-Connecticut,04/01/20,3557,766,85
-Fairfield,04/02/20,2132,381,65
-Hartford,04/02/20,539,136,13
-Litchfield,04/02/20,141,11,2
-Middlesex,04/02/20,74,11,3
-New Haven,04/02/20,647,274,17
-New London,04/02/20,29,9,1
-Tolland,04/02/20,67,2,10
-Windham,04/02/20,21,3,0
-Pending address validation,04/02/20,174,,1
-Connecticut,04/02/20,3824,827,112
-Fairfield,04/03/20,2717,409,76
-Hartford,04/03/20,679,166,18
-Litchfield,04/03/20,173,14,4
-Middlesex,04/03/20,91,12,2
-New Haven,04/03/20,891,293,18
-New London,04/03/20,40,9,3
-Tolland,04/03/20,79,3,10
-Windham,04/03/20,27,3,0
-Pending address validation,04/03/20,218,,1
-Connecticut,04/03/20,4915,909,132
-Fairfield,04/04/20,2824,475,86
-Hartford,04/04/20,726,184,26
-Litchfield,04/04/20,182,15,5
-Middlesex,04/04/20,100,19,4
-New Haven,04/04/20,1024,324,29
-New London,04/04/20,57,10,3
-Tolland,04/04/20,91,3,10
-Windham,04/04/20,31,3,1
-Pending address validation,04/04/20,241,,1
-Connecticut,04/04/20,5276,1033,165
-Fairfield,04/05/20,3050,531,96
-Hartford,04/05/20,751,189,29
-Litchfield,04/05/20,197,15,6
-Middlesex,04/05/20,110,19,5
-New Haven,04/05/20,1162,372,36
-New London,04/05/20,57,10,4
-Tolland,04/05/20,94,3,11
-Windham,04/05/20,32,3,1
-Pending address validation,04/05/20,222,,1
-Connecticut,04/05/20,5675,1142,189
-Fairfield,04/06/20,3719,572,101
-Hartford,04/06/20,882,213,31
-Litchfield,04/06/20,230,15,8
-Middlesex,04/06/20,135,22,7
-New Haven,04/06/20,1468,384,41
-New London,04/06/20,65,10,4
-Tolland,04/06/20,103,3,13
-Windham,04/06/20,40,2,1
-Pending address validation,04/06/20,264,,0
-Connecticut,04/06/20,6906,1221,206
-Fairfield,04/07/20,4136,613,132
-Hartford,04/07/20,1045,243,48
-Litchfield,04/07/20,255,17,9
-Middlesex,04/07/20,150,26,7
-New Haven,04/07/20,1664,390,60
-New London,04/07/20,85,12,4
-Tolland,04/07/20,111,4,13
-Windham,04/07/20,43,3,1
-Pending address validation,04/07/20,292,,3
-Connecticut,04/07/20,7781,1308,277
-Fairfield,04/08/20,4417,665,155
-Hartford,04/08/20,1290,251,68
-Litchfield,04/08/20,292,20,12
-Middlesex,04/08/20,174,28,9
-New Haven,04/08/20,1945,428,70
-New London,04/08/20,120,16,5
-Tolland,04/08/20,128,7,13
-Windham,04/08/20,49,3,1
-Pending address validation,04/08/20,366,,2
-Connecticut,04/08/20,8781,1418,335
-Fairfield,04/09/20,4882,664,178
-Hartford,04/09/20,1471,276,75
-Litchfield,04/09/20,315,25,13
-Middlesex,04/09/20,205,26,14
-New Haven,04/09/20,2183,447,78
-New London,04/09/20,139,15,6
-Tolland,04/09/20,145,7,13
-Windham,04/09/20,52,4,1
-Pending address validation,04/09/20,392,,2
-Connecticut,04/09/20,9784,1464,380
-Fairfield,04/10/20,5180,685,203
-Hartford,04/10/20,1615,296,88
-Litchfield,04/10/20,346,32,16
-Middlesex,04/10/20,240,28,17
-New Haven,04/10/20,2383,493,98
-New London,04/10/20,156,17,7
-Tolland,04/10/20,152,6,14
-Windham,04/10/20,59,5,1
-Pending address validation,04/10/20,407,,4
-Connecticut,04/10/20,10538,1562,448
-Fairfield,04/11/20,5407,676,220
-Hartford,04/11/20,1832,311,101
-Litchfield,04/11/20,388,38,20
-Middlesex,04/11/20,290,27,18
-New Haven,04/11/20,2715,514,107
-New London,04/11/20,185,16,7
-Tolland,04/11/20,171,7,15
-Windham,04/11/20,66,4,1
-Pending address validation,04/11/20,456,,5
-Connecticut,04/11/20,11510,1593,494
-Fairfield,04/12/20,5534,688,248
-Hartford,04/12/20,1914,333,116
-Litchfield,04/12/20,403,39,24
-Middlesex,04/12/20,299,32,18
-New Haven,04/12/20,2946,535,119
-New London,04/12/20,190,16,7
-Tolland,04/12/20,182,7,17
-Windham,04/12/20,66,4,1
-Pending address validation,04/12/20,501,,4
-Connecticut,04/12/20,12035,1654,554
-Fairfield,04/13/20,6004,710,262
-Hartford,04/13/20,2243,361,133
-Litchfield,04/13/20,446,37,24
-Middlesex,04/13/20,339,35,19
-New Haven,04/13/20,3358,580,135
-New London,04/13/20,222,20,7
-Tolland,04/13/20,195,13,17
-Windham,04/13/20,83,4,1
-Pending address validation,04/13/20,491,,4
-Connecticut,04/13/20,13381,1760,602
-Fairfield,04/14/20,6213,731,287
-Hartford,04/14/20,2370,369,153
-Litchfield,04/14/20,460,35,29
-Middlesex,04/14/20,355,38,21
-New Haven,04/14/20,3543,572,151
-New London,04/14/20,227,17,7
-Tolland,04/14/20,201,12,18
-Windham,04/14/20,87,5,1
-Pending address validation,04/14/20,533,,4
-Connecticut,04/14/20,13989,1779,671
-Fairfield,04/15/20,6480,784,365
-Hartford,04/15/20,2570,402,213
-Litchfield,04/15/20,490,32,35
-Middlesex,04/15/20,379,40,28
-New Haven,04/15/20,3758,612,195
-New London,04/15/20,236,21,7
-Tolland,04/15/20,216,11,22
-Windham,04/15/20,89,6,1
-Pending address validation,04/15/20,537,,2
-Connecticut,04/15/20,14755,1908,868
+name,date,cases,hospitalizations,deaths,cumulative_hosp
+Fairfield,03/08/20,1,,0,
+Hartford,03/08/20,0,,0,
+Litchfield,03/08/20,0,,0,
+Middlesex,03/08/20,0,,0,
+New Haven,03/08/20,0,,0,
+New London,03/08/20,0,,0,
+Tolland,03/08/20,0,,0,
+Windham,03/08/20,0,,0,
+Connecticut,03/08/20,1,,0,
+Fairfield,03/09/20,1,,0,
+Hartford,03/09/20,0,,0,
+Litchfield,03/09/20,0,,0,
+Middlesex,03/09/20,0,,0,
+New Haven,03/09/20,0,,0,
+New London,03/09/20,0,,0,
+Tolland,03/09/20,0,,0,
+Windham,03/09/20,0,,0,
+Connecticut,03/09/20,1,,0,
+Fairfield,03/10/20,1,,0,
+Hartford,03/10/20,0,,0,
+Litchfield,03/10/20,0,,0,
+Middlesex,03/10/20,0,,0,
+New Haven,03/10/20,0,,0,
+New London,03/10/20,0,,0,
+Tolland,03/10/20,0,,0,
+Windham,03/10/20,0,,0,
+Connecticut,03/10/20,1,,0,
+Fairfield,03/11/20,2,,0,
+Hartford,03/11/20,0,,0,
+Litchfield,03/11/20,1,,0,
+Middlesex,03/11/20,0,,0,
+New Haven,03/11/20,0,,0,
+New London,03/11/20,0,,0,
+Tolland,03/11/20,0,,0,
+Windham,03/11/20,0,,0,
+Connecticut,03/11/20,3,,0,
+Fairfield,03/12/20,4,,0,
+Hartford,03/12/20,0,,0,
+Litchfield,03/12/20,1,,0,
+Middlesex,03/12/20,0,,0,
+New Haven,03/12/20,0,,0,
+New London,03/12/20,0,,0,
+Tolland,03/12/20,0,,0,
+Windham,03/12/20,0,,0,
+Connecticut,03/12/20,5,,0,
+Fairfield,03/13/20,5,,0,
+Hartford,03/13/20,0,,0,
+Litchfield,03/13/20,3,,0,
+Middlesex,03/13/20,0,,0,
+New Haven,03/13/20,0,,0,
+New London,03/13/20,0,,0,
+Tolland,03/13/20,0,,0,
+Windham,03/13/20,0,,0,
+Connecticut,03/13/20,8,,0,
+Fairfield,03/14/20,15,,0,
+Hartford,03/14/20,1,,0,
+Litchfield,03/14/20,3,,0,
+Middlesex,03/14/20,0,,0,
+New Haven,03/14/20,1,,0,
+New London,03/14/20,0,,0,
+Tolland,03/14/20,0,,0,
+Windham,03/14/20,0,,0,
+Connecticut,03/14/20,20,,0,
+Fairfield,03/15/20,16,,0,
+Hartford,03/15/20,3,,0,
+Litchfield,03/15/20,4,,0,
+Middlesex,03/15/20,0,,0,
+New Haven,03/15/20,3,,0,
+New London,03/15/20,0,,0,
+Tolland,03/15/20,0,,0,
+Windham,03/15/20,0,,0,
+Connecticut,03/15/20,26,,0,
+Fairfield,03/16/20,29,,0,
+Hartford,03/16/20,4,,0,
+Litchfield,03/16/20,4,,0,
+Middlesex,03/16/20,0,,0,
+New Haven,03/16/20,4,,0,
+New London,03/16/20,0,,0,
+Tolland,03/16/20,0,,0,
+Windham,03/16/20,0,,0,
+Connecticut,03/16/20,41,,0,
+Fairfield,03/17/20,48,,0,
+Hartford,03/17/20,7,,0,
+Litchfield,03/17/20,5,,0,
+Middlesex,03/17/20,0,,0,
+New Haven,03/17/20,8,,0,
+New London,03/17/20,0,,0,
+Tolland,03/17/20,0,,0,
+Windham,03/17/20,0,,0,
+Connecticut,03/17/20,68,,0,
+Fairfield,03/18/20,69,,1,
+Hartford,03/18/20,11,,0,
+Litchfield,03/18/20,5,,0,
+Middlesex,03/18/20,1,,0,
+New Haven,03/18/20,10,,0,
+New London,03/18/20,0,,0,
+Tolland,03/18/20,0,,0,
+Windham,03/18/20,0,,0,
+Connecticut,03/18/20,96,,1,
+Fairfield,03/19/20,102,,4,
+Hartford,03/19/20,18,,0,
+Litchfield,03/19/20,7,,0,
+Middlesex,03/19/20,3,,0,
+New Haven,03/19/20,23,,0,
+New London,03/19/20,0,,0,
+Tolland,03/19/20,4,,0,
+Windham,03/19/20,2,,0,
+Connecticut,03/19/20,159,,4,
+Fairfield,03/20/20,122,,4,
+Hartford,03/20/20,29,,0,
+Litchfield,03/20/20,8,,0,
+Middlesex,03/20/20,5,,0,
+New Haven,03/20/20,23,,0,
+New London,03/20/20,1,,0,
+Tolland,03/20/20,4,,0,
+Windham,03/20/20,2,,0,
+Connecticut,03/20/20,194,,4,
+Fairfield,03/21/20,140,15,4,
+Hartford,03/21/20,35,12,0,
+Litchfield,03/21/20,11,2,0,
+Middlesex,03/21/20,6,3,0,
+New Haven,03/21/20,24,9,0,
+New London,03/21/20,1,0,0,
+Tolland,03/21/20,5,2,1,
+Windham,03/21/20,1,0,0,
+Connecticut,03/21/20,223,43,5,
+Fairfield,03/22/20,208,20,5,
+Hartford,03/22/20,54,13,1,
+Litchfield,03/22/20,12,3,0,
+Middlesex,03/22/20,6,3,0,
+New Haven,03/22/20,29,9,0,
+New London,03/22/20,3,1,0,
+Tolland,03/22/20,14,2,2,
+Windham,03/22/20,1,0,0,
+Connecticut,03/22/20,327,51,8,
+Fairfield,03/23/20,270,20,6,
+Hartford,03/23/20,61,13,2,
+Litchfield,03/23/20,13,2,0,
+Middlesex,03/23/20,8,4,0,
+New Haven,03/23/20,41,12,0,
+New London,03/23/20,4,1,0,
+Tolland,03/23/20,16,2,2,
+Windham,03/23/20,2,0,0,
+Connecticut,03/23/20,415,54,10,
+Fairfield,03/24/20,384,23,7,
+Hartford,03/24/20,88,17,2,
+Litchfield,03/24/20,22,3,0,
+Middlesex,03/24/20,8,4,0,
+New Haven,03/24/20,89,19,0,
+New London,03/24/20,6,1,0,
+Tolland,03/24/20,19,4,3,
+Windham,03/24/20,2,0,0,
+Connecticut,03/24/20,618,71,12,
+Fairfield,03/25/20,546,47,12,
+Hartford,03/25/20,116,24,2,
+Litchfield,03/25/20,33,3,0,
+Middlesex,03/25/20,15,4,0,
+New Haven,03/25/20,127,28,2,
+New London,03/25/20,9,2,0,
+Tolland,03/25/20,27,5,3,
+Windham,03/25/20,2,0,0,
+Connecticut,03/25/20,875,113,18,
+Fairfield,03/26/20,607,49,13,
+Hartford,03/26/20,138,27,2,
+Litchfield,03/26/20,44,3,0,
+Middlesex,03/26/20,18,5,1,
+New Haven,03/26/20,156,34,2,
+New London,03/26/20,13,2,0,
+Tolland,03/26/20,33,5,3,
+Windham,03/26/20,3,0,0,
+Connecticut,03/26/20,1012,125,21,
+Fairfield,03/27/20,752,68,15,
+Hartford,03/27/20,189,36,2,
+Litchfield,03/27/20,52,9,0,
+Middlesex,03/27/20,25,5,1,
+New Haven,03/27/20,222,46,6,
+New London,03/27/20,15,2,0,
+Tolland,03/27/20,33,7,3,
+Windham,03/27/20,3,0,0,
+Connecticut,03/27/20,1291,173,27,
+Fairfield,03/28/20,908,88,20,
+Hartford,03/28/20,228,41,2,
+Litchfield,03/28/20,65,12,0,
+Middlesex,03/28/20,28,5,1,
+New Haven,03/28/20,236,50,6,
+New London,03/28/20,19,2,0,
+Tolland,03/28/20,37,7,4,
+Windham,03/28/20,3,0,0,
+Connecticut,03/28/20,1524,205,33,
+Fairfield,03/29/20,1245,189,21,
+Hartford,03/29/20,276,67,2,
+Litchfield,03/29/20,87,5,0,
+Middlesex,03/29/20,38,1,1,
+New Haven,03/29/20,280,137,6,
+New London,03/29/20,20,4,0,
+Tolland,03/29/20,40,0,4,
+Windham,03/29/20,7,1,0,
+Connecticut,03/29/20,1993,404,34,
+Fairfield,03/30/20,1445,230,21,
+Hartford,03/30/20,330,96,3,
+Litchfield,03/30/20,113,7,1,
+Middlesex,03/30/20,50,1,1,
+New Haven,03/30/20,373,176,6,
+New London,03/30/20,24,5,0,
+Tolland,03/30/20,50,2,4,
+Windham,03/30/20,10,0,0,
+Pending address validation,03/30/20,176,,0,
+Connecticut,03/30/20,2571,517,36,
+Fairfield,03/31/20,1870,275,38,
+Hartford,03/31/20,393,110,7,
+Litchfield,03/31/20,121,7,1,
+Middlesex,03/31/20,56,5,1,
+New Haven,03/31/20,517,202,12,
+New London,03/31/20,27,8,1,
+Tolland,03/31/20,56,1,7,
+Windham,03/31/20,11,0,0,
+Pending address validation,03/31/20,77,,2,
+Connecticut,03/31/20,3128,608,69,
+Fairfield,04/01/20,1986,359,46,
+Hartford,04/01/20,469,126,11,
+Litchfield,04/01/20,131,11,1,
+Middlesex,04/01/20,66,8,2,
+New Haven,04/01/20,611,251,15,
+New London,04/01/20,29,10,1,
+Tolland,04/01/20,61,1,7,
+Windham,04/01/20,19,0,0,
+Pending address validation,04/01/20,185,,2,
+Connecticut,04/01/20,3557,766,85,
+Fairfield,04/02/20,2132,381,65,
+Hartford,04/02/20,539,136,13,
+Litchfield,04/02/20,141,11,2,
+Middlesex,04/02/20,74,11,3,
+New Haven,04/02/20,647,274,17,
+New London,04/02/20,29,9,1,
+Tolland,04/02/20,67,2,10,
+Windham,04/02/20,21,3,0,
+Pending address validation,04/02/20,174,,1,
+Connecticut,04/02/20,3824,827,112,
+Fairfield,04/03/20,2717,409,76,
+Hartford,04/03/20,679,166,18,
+Litchfield,04/03/20,173,14,4,
+Middlesex,04/03/20,91,12,2,
+New Haven,04/03/20,891,293,18,
+New London,04/03/20,40,9,3,
+Tolland,04/03/20,79,3,10,
+Windham,04/03/20,27,3,0,
+Pending address validation,04/03/20,218,,1,
+Connecticut,04/03/20,4915,909,132,
+Fairfield,04/04/20,2824,475,86,
+Hartford,04/04/20,726,184,26,
+Litchfield,04/04/20,182,15,5,
+Middlesex,04/04/20,100,19,4,
+New Haven,04/04/20,1024,324,29,
+New London,04/04/20,57,10,3,
+Tolland,04/04/20,91,3,10,
+Windham,04/04/20,31,3,1,
+Pending address validation,04/04/20,241,,1,
+Connecticut,04/04/20,5276,1033,165,
+Fairfield,04/05/20,3050,531,96,
+Hartford,04/05/20,751,189,29,
+Litchfield,04/05/20,197,15,6,
+Middlesex,04/05/20,110,19,5,
+New Haven,04/05/20,1162,372,36,
+New London,04/05/20,57,10,4,
+Tolland,04/05/20,94,3,11,
+Windham,04/05/20,32,3,1,
+Pending address validation,04/05/20,222,,1,
+Connecticut,04/05/20,5675,1142,189,
+Fairfield,04/06/20,3719,572,101,
+Hartford,04/06/20,882,213,31,
+Litchfield,04/06/20,230,15,8,
+Middlesex,04/06/20,135,22,7,
+New Haven,04/06/20,1468,384,41,
+New London,04/06/20,65,10,4,
+Tolland,04/06/20,103,3,13,
+Windham,04/06/20,40,2,1,
+Pending address validation,04/06/20,264,,0,
+Connecticut,04/06/20,6906,1221,206,
+Fairfield,04/07/20,4136,613,132,
+Hartford,04/07/20,1045,243,48,
+Litchfield,04/07/20,255,17,9,
+Middlesex,04/07/20,150,26,7,
+New Haven,04/07/20,1664,390,60,
+New London,04/07/20,85,12,4,
+Tolland,04/07/20,111,4,13,
+Windham,04/07/20,43,3,1,
+Pending address validation,04/07/20,292,,3,
+Connecticut,04/07/20,7781,1308,277,
+Fairfield,04/08/20,4417,665,155,
+Hartford,04/08/20,1290,251,68,
+Litchfield,04/08/20,292,20,12,
+Middlesex,04/08/20,174,28,9,
+New Haven,04/08/20,1945,428,70,
+New London,04/08/20,120,16,5,
+Tolland,04/08/20,128,7,13,
+Windham,04/08/20,49,3,1,
+Pending address validation,04/08/20,366,,2,
+Connecticut,04/08/20,8781,1418,335,
+Fairfield,04/09/20,4882,664,178,
+Hartford,04/09/20,1471,276,75,
+Litchfield,04/09/20,315,25,13,
+Middlesex,04/09/20,205,26,14,
+New Haven,04/09/20,2183,447,78,
+New London,04/09/20,139,15,6,
+Tolland,04/09/20,145,7,13,
+Windham,04/09/20,52,4,1,
+Pending address validation,04/09/20,392,,2,
+Connecticut,04/09/20,9784,1464,380,
+Fairfield,04/10/20,5180,685,203,
+Hartford,04/10/20,1615,296,88,
+Litchfield,04/10/20,346,32,16,
+Middlesex,04/10/20,240,28,17,
+New Haven,04/10/20,2383,493,98,
+New London,04/10/20,156,17,7,
+Tolland,04/10/20,152,6,14,
+Windham,04/10/20,59,5,1,
+Pending address validation,04/10/20,407,,4,
+Connecticut,04/10/20,10538,1562,448,
+Fairfield,04/11/20,5407,676,220,
+Hartford,04/11/20,1832,311,101,
+Litchfield,04/11/20,388,38,20,
+Middlesex,04/11/20,290,27,18,
+New Haven,04/11/20,2715,514,107,
+New London,04/11/20,185,16,7,
+Tolland,04/11/20,171,7,15,
+Windham,04/11/20,66,4,1,
+Pending address validation,04/11/20,456,,5,
+Connecticut,04/11/20,11510,1593,494,
+Fairfield,04/12/20,5534,688,248,
+Hartford,04/12/20,1914,333,116,
+Litchfield,04/12/20,403,39,24,
+Middlesex,04/12/20,299,32,18,
+New Haven,04/12/20,2946,535,119,
+New London,04/12/20,190,16,7,
+Tolland,04/12/20,182,7,17,
+Windham,04/12/20,66,4,1,
+Pending address validation,04/12/20,501,,4,
+Connecticut,04/12/20,12035,1654,554,
+Fairfield,04/13/20,6004,710,262,
+Hartford,04/13/20,2243,361,133,
+Litchfield,04/13/20,446,37,24,
+Middlesex,04/13/20,339,35,19,
+New Haven,04/13/20,3358,580,135,
+New London,04/13/20,222,20,7,
+Tolland,04/13/20,195,13,17,
+Windham,04/13/20,83,4,1,
+Pending address validation,04/13/20,491,,4,
+Connecticut,04/13/20,13381,1760,602,
+Fairfield,04/14/20,6213,731,287,
+Hartford,04/14/20,2370,369,153,
+Litchfield,04/14/20,460,35,29,
+Middlesex,04/14/20,355,38,21,
+New Haven,04/14/20,3543,572,151,
+New London,04/14/20,227,17,7,
+Tolland,04/14/20,201,12,18,
+Windham,04/14/20,87,5,1,
+Pending address validation,04/14/20,533,,4,
+Connecticut,04/14/20,13989,1779,671,
+Fairfield,04/15/20,6480,784,365,
+Hartford,04/15/20,2570,402,213,
+Litchfield,04/15/20,490,32,35,
+Middlesex,04/15/20,379,40,28,
+New Haven,04/15/20,3758,612,195,
+New London,04/15/20,236,21,7,
+Tolland,04/15/20,216,11,22,
+Windham,04/15/20,89,6,1,
+Pending address validation,04/15/20,537,,2,
+Connecticut,04/15/20,14755,1908,868,
+Fairfield,04/16/20,6816,787,406,1852
+Hartford,04/16/20,2859,420,243,932
+Litchfield,04/16/20,535,27,44,123
+Middlesex,04/16/20,394,39,30,251
+New Haven,04/16/20,4163,613,214,1194
+New London,04/16/20,255,23,9,41
+Tolland,04/16/20,241,11,22,24
+Windham,04/16/20,87,6,1,16
+Pending address validation,04/16/20,534,,2,
+Connecticut,04/16/20,15884,1926,971,4433
