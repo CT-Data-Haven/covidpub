@@ -1,24 +1,29 @@
 language: r
-sudo: false
+sudo: true
 cache: packages
 dist: trusty
 warnings_are_errors: false
 latex: false
+
 env:
   global:
     - NOT_CRAN=true
 os:
   - osx
+  
 branches:
   only:
     - master
+    
 r_packages:
   - rmarkdown
 r_github_packages:
   - CT-Data-Haven/cwi
+  
 after_success:
   - rm -rf dist
   - Rscript -e "rmarkdown::render_site()"
+  
 deploy:
   provider: pages
   skip_cleanup: true
@@ -27,6 +32,3 @@ deploy:
     branch: master
   local_dir: dist
   keep_history: true
-notifications:
-  slack:
-    secure: Ew0owhtnX/4s7kr0rkBFW4DCf6lNNowmznuOWzWAN5Iozlh/kQ0AaoSZVDaQyEgO+fSVPmVZDxc0WOf81YZpGYxzocmAU9Xw6XDFrpVakIfWKfnXO79ldudRVz5BY09wnyDQkt1TgkKSyN/DHTqPnZJBQLDwcLubkKddoNsC1d4c16vmMlh3GG22aOOAOcuu1CoiQ3fEyOixB46N29J3G81CfZtVxro1rwObyN88/wn60nvuBjfXSzjxc3tczAG4wtXMN5snLXmd7Sz/u1HeqKOH2mFM/jez+8Xv/NPz8v18nXr5gD0/aK+jHq4blM/b3borcmjRVY2pR7JntTwP6NndbD6O8cT6L64qa2p9g0AYgcLFQbZFRzFGgq6qZz7F7Y7ma2Ee2UlxUIfJNuhVVg/r/h0Ww6P7tstR3dfpQSuWEmb8S59qoXGM8mDp1YpRsO3MJm/XQmQAG+QQYgF8xr9eOVyjx+qy55LRbyYFZLLxDSlCbthSYtPrEtLPvKYjJZ8Wfdp3LWs7RCj2vp/T6cZdMcrCse3/VBdh8ExcxkeW2IeJDP8G8d5NLIuSHjAPsbMjXfibh2M8e3/zuOPHq5EBvZnqL3jZ2hj+vGsL//LXe4tfa/fUEycRm3u1r6z6i51OI5W8WMAJN6iKaq1o2E1Jmh+KL3HmW5r7v8LX2yQ=
