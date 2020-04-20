@@ -72,7 +72,7 @@ pops <- read_csv("input_data/total_pop_2018.csv")
 ## Latest statewide data: `r date_range_fmt[2]` {.font-italic}
 
 
-This webpage provides graphics that are intended to communicate what we know about COVID-19 (also known as SARS-CoV-2) in Connecticut. These charts are not intended to predict any scenarios about the disease or the people affected by it. They merely reflect data we have already collected at the town, county, and state levels. To the extent possible, this webpage is updated daily. 
+This webpage provides graphics that are intended to communicate what we know about COVID-19 (also known as SARS-CoV-2) in Connecticut. These charts are not intended to predict any scenarios about the disease or the people affected by it. They merely reflect data that [DataHaven](https://ctdatahaven.org) has already collected at the town, county, and state levels. To the extent possible, this webpage is updated daily. 
 
 For the latest information from the Connecticut Department of Public Health, visit http://portal.ct.gov/Coronavirus
 
