@@ -1,0 +1,11 @@
+Package: covidsite
+Title: DataHaven site of COVID-19 data
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Camille",
+           family = "Seaberry",
+           role = c("aut", "cre"),
+           email = "camille@ctdatahaven.org")
+Description: Quick site of COVID-19 data.
+License: TBD
+Imports: 
