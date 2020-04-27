@@ -2,4 +2,5 @@
 .Rhistory
 .RData
 .Ruserdata
-dist/*
+.DS_Store
+**/.DS_Store
