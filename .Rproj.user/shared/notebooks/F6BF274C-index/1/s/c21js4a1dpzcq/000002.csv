@@ -1,6 +1,0 @@
-"0","race_pal <- setNames(c(""#888888"", pal[c(2, 4, 9, 3)]), levels(rates_by_race$race))"
-"0","billboarder(data = rates_by_race, height = 350) %>%"
-"0","  bb_barchart(mapping = bbaes(x = race, y = cases_rate_10k, group = race), stack = TRUE, width = list(ratio = 0.5)) %>%"
-"0","  bb_colors_manual(race_pal) %>%"
-"0","  bb_legend(hide = TRUE) %>%"
-"0","  bb_y_axis(label = list(text = ""Cases per 10k"", position = ""outer-top""))"
