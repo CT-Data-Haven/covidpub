@@ -9,8 +9,6 @@ latex: false
 env:
   global:
   - NOT_CRAN=true
-os:
-  - osx
   
 branches:
   only:
