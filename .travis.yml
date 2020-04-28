@@ -4,14 +4,14 @@ language: r
 sudo: false
 cache: packages
 dist: trusty
+os:
+  - osx
 
 warnings_are_errors: false
 latex: false
 env:
   global:
   - NOT_CRAN=true
-os:
-  - osx
   
 branches:
   only:
