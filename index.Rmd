@@ -113,6 +113,7 @@ county_to_plot <- county %>%
 mondays <- seq(date_range[1], date_range[2], by = 1) %>%
   floor_date(unit = "week", week_start = 1) %>%
   unique()
+mondays <- mondays[mondays >= min(county_to_plot$date)]
 ```
 
 
@@ -243,7 +244,7 @@ county_to_plot %>%
   bb_x_grid(show = TRUE) %>%
   bb_y_grid(show = TRUE) %>%
   bb_colors_manual(pal) %>%
-  bb_legend(position = "right") %>%
+  # bb_legend(position = "right") %>%
   bb_tooltip(grouped = FALSE) %>%
   bb_title(padding = list(bottom = 20, top = 10), position = "top-left")
 ```
@@ -342,7 +343,7 @@ billboarder(data = test_x_cases, height = 450) %>%
   bb_x_grid(show = TRUE) %>%
   bb_y_grid(show = TRUE) %>%
   bb_colors_manual(set_names(pal[2:5], levels(test_x_cases$measure))) %>%
-  bb_legend(position = "right") %>%
+  # bb_legend(position = "right") %>%
   # bb_tooltip(grouped = FALSE) %>%
   bb_title(padding = list(bottom = 20, top = 10), position = "top-left")
 
@@ -433,7 +434,7 @@ One way to measure the impact of social distancing measures is through the dista
 
 Note that these executive orders took effect in the evening but are dated here with the following day, as that is when they are likely to have had an impact on people's travel.
 
-### Residents' average daily mobility in miles, `r format(mob_date_range[1], "%m/%d/%Y")` to `r format(mob_date_range[2], "%m/%d/%Y")` {.viz-title}
+### Residents' average daily mobility in miles, weekdays `r format(mob_date_range[1], "%m/%d/%Y")` to `r format(mob_date_range[2], "%m/%d/%Y")` {.viz-title}
 
 ```{r mobility, fig.height=4.5, fig.width=7}
 # mob_pal <- c(pal[c(3, 5, 7)], "gray50") %>% setNames(levels(mob$name2))
@@ -454,7 +455,7 @@ billboarder(data = mob, height = 450) %>%
             lines = list(exec_orders$`1`, exec_orders$`2`)) %>%
   bb_y_grid(show = TRUE) %>%
   bb_colors_manual(mob_pal) %>%
-  bb_legend(position = "right") %>%
+  # bb_legend(position = "right") %>%
   bb_tooltip()
 ```
 
