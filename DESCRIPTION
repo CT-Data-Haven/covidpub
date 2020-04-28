@@ -30,11 +30,5 @@ Imports:
     sf,
     tibble,
     measurements,
-<<<<<<< HEAD
     rcartocolor
-Remotes:
-  CT-Data-Haven/cwi
-=======
-    rcartocolor,
     classInt
->>>>>>> 8fb0d3c... # This is a combination of 2 commits.
