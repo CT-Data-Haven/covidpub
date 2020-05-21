@@ -1,265 +1,305 @@
 race,date,cases,deaths
 Hispanic,04/03/20,591,8
-NH Asian,04/03/20,67,1
+NH Asian or Pacific Islander,04/03/20,67,1
 NH Black,04/03/20,421,20
 NH Other,04/03/20,37,1
-NH Unknown,04/03/20,2163,21
 NH White,04/03/20,1635,80
+Unknown,04/03/20,2163,21
 Hispanic,04/04/20,656,13
-NH Asian,04/04/20,73,1
+NH Asian or Pacific Islander,04/04/20,73,1
 NH Black,04/04/20,464,25
 NH Other,04/04/20,43,2
-NH Unknown,04/04/20,2294,21
 NH White,04/04/20,1746,103
+Unknown,04/04/20,2294,21
 Hispanic,04/05/20,715,14
-NH Asian,04/05/20,75,1
+NH Asian or Pacific Islander,04/05/20,75,1
 NH Black,04/05/20,502,30
 NH Other,04/05/20,43,2
-NH Unknown,04/05/20,2501,25
 NH White,04/05/20,1839,117
+Unknown,04/05/20,2501,25
 Hispanic,04/06/20,835,17
-NH Asian,04/06/20,83,2
+NH Asian or Pacific Islander,04/06/20,83,2
 NH Black,04/06/20,578,32
 NH Other,04/06/20,49,3
-NH Unknown,04/06/20,3316,9
 NH White,04/06/20,2045,143
+Unknown,04/06/20,3316,9
 Hispanic,04/07/20,951,25
-NH Asian,04/07/20,98,3
+NH Asian or Pacific Islander,04/07/20,98,3
 NH Black,04/07/20,678,42
 NH Other,04/07/20,54,3
-NH Unknown,04/07/20,3701,12
 NH White,04/07/20,2299,192
+Unknown,04/07/20,3701,12
 Hispanic,04/08/20,1109,32
-NH Asian,04/08/20,113,4
+NH Asian or Pacific Islander,04/08/20,113,4
 NH Black,04/08/20,831,46
 NH Other,04/08/20,66,5
-NH Unknown,04/08/20,4073,29
 NH White,04/08/20,2589,219
+Unknown,04/08/20,4073,29
 Hispanic,04/09/20,1175,35
-NH Asian,04/09/20,115,5
+NH Asian or Pacific Islander,04/09/20,115,5
 NH Black,04/09/20,897,53
 NH Other,04/09/20,72,6
-NH Unknown,04/09/20,4775,21
 NH White,04/09/20,2750,260
+Unknown,04/09/20,4775,21
 Hispanic,04/10/20,1247,41
-NH Asian,04/10/20,123,6
+NH Asian or Pacific Islander,04/10/20,123,6
 NH Black,04/10/20,956,61
 NH Other,04/10/20,73,6
-NH Unknown,04/10/20,5216,24
 NH White,04/10/20,2923,310
+Unknown,04/10/20,5216,24
 Hispanic,04/11/20,1277,45
-NH Asian,04/11/20,124,6
+NH Asian or Pacific Islander,04/11/20,124,6
 NH Black,04/11/20,993,65
 NH Other,04/11/20,73,6
-NH Unknown,04/11/20,6013,29
 NH White,04/11/20,3030,343
+Unknown,04/11/20,6013,29
 Hispanic,04/13/20,1447,58
-NH Asian,04/13/20,144,9
+NH Asian or Pacific Islander,04/13/20,144,9
 NH Black,04/13/20,1145,85
 NH Other,04/13/20,85,9
-NH Unknown,04/13/20,7141,32
 NH White,04/13/20,3419,409
+Unknown,04/13/20,7141,32
 Hispanic,04/16/20,1921,87
-NH Asian,04/16/20,187,13
+NH Asian or Pacific Islander,04/16/20,187,13
 NH Black,04/16/20,1496,148
 NH Other,04/16/20,113,11
-NH Unknown,04/16/20,7943,59
 NH White,04/16/20,4224,653
+Unknown,04/16/20,7943,59
 Hispanic,04/17/20,2137,89
-NH Asian,04/17/20,204,14
+NH Asian or Pacific Islander,04/17/20,204,14
 NH Black,04/17/20,1654,156
 NH Other,04/17/20,117,11
-NH Unknown,04/17/20,8181,70
 NH White,04/17/20,4516,696
+Unknown,04/17/20,8181,70
 Hispanic,04/18/20,2242,97
-NH Asian,04/18/20,209,14
+NH Asian or Pacific Islander,04/18/20,209,14
 NH Black,04/18/20,1738,161
 NH Other,04/18/20,119,11
-NH Unknown,04/18/20,8516,66
 NH White,04/18/20,4726,737
+Unknown,04/18/20,8516,66
 Hispanic,04/19/20,2286,100
-NH Asian,04/19/20,214,14
+NH Asian or Pacific Islander,04/19/20,214,14
 NH Black,04/19/20,1782,171
 NH Other,04/19/20,120,11
-NH Unknown,04/19/20,8684,65
 NH White,04/19/20,4876,766
+Unknown,04/19/20,8684,65
 Hispanic,04/20/20,2478,124
-NH Asian,04/20/20,246,14
+NH Asian or Pacific Islander,04/20/20,246,14
 NH Black,04/20/20,2002,206
 NH Other,04/20/20,126,13
-NH Unknown,04/20/20,9386,47
 NH White,04/20/20,5577,927
+Unknown,04/20/20,9386,47
 Hispanic,04/21/20,2654,131
-NH Asian,04/21/20,256,15
+NH Asian or Pacific Islander,04/21/20,256,15
 NH Black,04/21/20,2126,220
 NH Other,04/21/20,133,13
-NH Unknown,04/21/20,9280,51
 NH White,04/21/20,5911,993
+Unknown,04/21/20,9280,51
 Hispanic,04/22/20,3145,139
-NH Asian,04/22/20,299,15
+NH Asian or Pacific Islander,04/22/20,299,15
 NH Black,04/22/20,2368,230
 NH Other,04/22/20,141,13
-NH Unknown,04/22/20,9810,51
 NH White,04/22/20,6706,1096
+Unknown,04/22/20,9810,51
 Hispanic,04/23/20,3343,145
-NH Asian,04/23/20,311,15
+NH Asian or Pacific Islander,04/23/20,311,15
 NH Black,04/23/20,2537,249
 NH Other,04/23/20,152,16
-NH Unknown,04/23/20,9689,54
 NH White,04/23/20,7068,1160
+Unknown,04/23/20,9689,54
 Hispanic,04/24/20,3456,157
-NH Asian,04/24/20,325,16
+NH Asian or Pacific Islander,04/24/20,325,16
 NH Black,04/24/20,2661,266
 NH Other,04/24/20,164,18
-NH Unknown,04/24/20,9983,60
 NH White,04/24/20,7332,1247
+Unknown,04/24/20,9983,60
 Hispanic,04/25/20,3598,169
-NH Asian,04/25/20,337,17
+NH Asian or Pacific Islander,04/25/20,337,17
 NH Black,04/25/20,2766,278
 NH Other,04/25/20,178,20
-NH Unknown,04/25/20,10119,50
 NH White,04/25/20,7584,1328
+Unknown,04/25/20,10119,50
 Hispanic,04/26/20,3699,173
-NH Asian,04/26/20,350,17
+NH Asian or Pacific Islander,04/26/20,350,17
 NH Black,04/26/20,2819,294
 NH Other,04/26/20,179,20
-NH Unknown,04/26/20,10463,50
 NH White,04/26/20,7759,1370
+Unknown,04/26/20,10463,50
 Hispanic,04/27/20,3889,183
-NH Asian,04/27/20,371,19
+NH Asian or Pacific Islander,04/27/20,371,19
 NH Black,04/27/20,2942,304
 NH Other,04/27/20,188,20
-NH Unknown,04/27/20,10550,54
 NH White,04/27/20,8057,1432
+Unknown,04/27/20,10550,54
 Hispanic,04/28/20,3977,186
-NH Asian,04/28/20,376,19
+NH Asian or Pacific Islander,04/28/20,376,19
 NH Black,04/28/20,3015,317
 NH Other,04/28/20,193,20
-NH Unknown,04/28/20,10478,58
 NH White,04/28/20,8273,1489
+Unknown,04/28/20,10478,58
 Hispanic,04/29/20,4108,189
-NH Asian,04/29/20,390,19
+NH Asian or Pacific Islander,04/29/20,390,19
 NH Black,04/29/20,3105,328
 NH Other,04/29/20,198,20
-NH Unknown,04/29/20,10462,58
 NH White,04/29/20,8504,1554
+Unknown,04/29/20,10462,58
 Hispanic,04/30/20,4263,198
-NH Asian,04/30/20,396,20
+NH Asian or Pacific Islander,04/30/20,396,20
 NH Black,04/30/20,3209,346
 NH Other,04/30/20,211,23
-NH Unknown,04/30/20,10828,59
 NH White,04/30/20,8793,1611
+Unknown,04/30/20,10828,59
 Hispanic,05/01/20,4471,201
-NH Asian,05/01/20,413,21
+NH Asian or Pacific Islander,05/01/20,413,21
 NH Black,05/01/20,3361,352
 NH Other,05/01/20,213,24
-NH Unknown,05/01/20,11133,59
 NH White,05/01/20,9173,1682
+Unknown,05/01/20,11133,59
 Hispanic,05/02/20,4597,213
-NH Asian,05/02/20,421,22
+NH Asian or Pacific Islander,05/02/20,421,22
 NH Black,05/02/20,3435,360
 NH Other,05/02/20,215,24
-NH Unknown,05/02/20,11249,62
 NH White,05/02/20,9370,1755
+Unknown,05/02/20,11249,62
 Hispanic,05/04/20,4909,226
-NH Asian,05/04/20,441,22
+NH Asian or Pacific Islander,05/04/20,441,22
 NH Black,05/04/20,3600,382
 NH Other,05/04/20,219,24
-NH Unknown,05/04/20,11123,68
 NH White,05/04/20,9681,1834
+Unknown,05/04/20,11123,68
 Hispanic,05/05/20,5079,234
-NH Asian,05/05/20,444,25
+NH Asian or Pacific Islander,05/05/20,444,25
 NH Black,05/05/20,3720,399
-NH Other,05/05/20,236,22
-NH Unknown,05/05/20,11178,74
+NH Multiracial,05/05/20,43,8
+NH Native American or Alaska Native,05/05/20,30,0
+NH Other,05/05/20,163,14
 NH White,05/05/20,9964,1879
+Unknown,05/05/20,11178,74
 Hispanic,05/06/20,5194,240
-NH Asian,05/06/20,448,26
+NH Asian or Pacific Islander,05/06/20,448,26
 NH Black,05/06/20,3790,409
-NH Other,05/06/20,239,26
-NH Unknown,05/06/20,11146,74
+NH Multiracial,05/06/20,44,11
+NH Native American or Alaska Native,05/06/20,31,0
+NH Other,05/06/20,164,15
 NH White,05/06/20,10178,1943
+Unknown,05/06/20,11146,74
 Hispanic,05/07/20,5330,244
-NH Asian,05/07/20,462,29
+NH Asian or Pacific Islander,05/07/20,462,29
 NH Black,05/07/20,3920,416
-NH Other,05/07/20,546,26
-NH Unknown,05/07/20,11445,80
+NH Multiracial,05/07/20,47,11
+NH Native American or Alaska Native,05/07/20,31,0
+NH Other,05/07/20,168,15
 NH White,05/07/20,10381,2002
+Unknown,05/07/20,11445,80
 Hispanic,05/08/20,5450,251
-NH Asian,05/08/20,477,29
+NH Asian or Pacific Islander,05/08/20,477,29
 NH Black,05/08/20,4019,428
-NH Other,05/08/20,251,27
-NH Unknown,05/08/20,11660,86
+NH Multiracial,05/08/20,51,12
+NH Native American or Alaska Native,05/08/20,32,0
+NH Other,05/08/20,168,15
 NH White,05/08/20,10554,2053
+Unknown,05/08/20,11660,86
 Hispanic,05/09/20,5618,251
-NH Asian,05/09/20,483,30
+NH Asian or Pacific Islander,05/09/20,483,30
 NH Black,05/09/20,4109,437
-NH Other,05/09/20,260,27
-NH Unknown,05/09/20,11746,89
+NH Multiracial,05/09/20,51,12
+NH Native American or Alaska Native,05/09/20,33,0
+NH Other,05/09/20,176,15
 NH White,05/09/20,10768,2098
+Unknown,05/09/20,11746,89
 Hispanic,05/10/20,5713,256
-NH Asian,05/10/20,466,30
+NH Asian or Pacific Islander,05/10/20,466,30
 NH Black,05/10/20,4177,439
-NH Other,05/10/20,260,26
-NH Unknown,05/10/20,12051,89
+NH Multiracial,05/10/20,52,12
+NH Native American or Alaska Native,05/10/20,33,0
+NH Other,05/10/20,175,14
 NH White,05/10/20,10867,2127
+Unknown,05/10/20,12051,89
 Hispanic,05/11/20,5757,258
-NH Asian,05/11/20,496,31
+NH Asian or Pacific Islander,05/11/20,496,31
 NH Black,05/11/20,4217,449
-NH Other,05/11/20,261,26
-NH Unknown,05/11/20,12103,91
+NH Multiracial,05/11/20,52,12
+NH Native American or Alaska Native,05/11/20,34,0
+NH Other,05/11/20,175,14
 NH White,05/11/20,10931,2153
+Unknown,05/11/20,12103,91
 Hispanic,05/12/20,5925,265
-NH Asian,05/12/20,504,32
+NH Asian or Pacific Islander,05/12/20,504,32
 NH Black,05/12/20,4311,458
-NH Other,05/12/20,263,25
-NH Unknown,05/12/20,12239,74
+NH Multiracial,05/12/20,54,12
+NH Native American or Alaska Native,05/12/20,34,0
+NH Other,05/12/20,175,13
 NH White,05/12/20,11091,2187
+Unknown,05/12/20,12239,74
 Hispanic,05/13/20,6099,272
-NH Asian,05/13/20,516,33
+NH Asian or Pacific Islander,05/13/20,516,33
 NH Black,05/13/20,4395,464
-NH Other,05/13/20,275,27
-NH Unknown,05/13/20,12272,72
+NH Multiracial,05/13/20,58,12
+NH Native American or Alaska Native,05/13/20,35,1
+NH Other,05/13/20,182,14
 NH White,05/13/20,11298,2257
+Unknown,05/13/20,12272,72
 Hispanic,05/14/20,6234,279
-NH Asian,05/14/20,523,34
+NH Asian or Pacific Islander,05/14/20,523,34
 NH Black,05/14/20,4488,475
-NH Other,05/14/20,283,28
-NH Unknown,05/14/20,12387,75
+NH Multiracial,05/14/20,60,13
+NH Native American or Alaska Native,05/14/20,37,1
+NH Other,05/14/20,186,14
 NH White,05/14/20,11549,2328
+Unknown,05/14/20,12387,75
 Hispanic,05/15/20,6370,281
-NH Asian,05/15/20,532,34
+NH Asian or Pacific Islander,05/15/20,532,34
 NH Black,05/15/20,4561,482
-NH Other,05/15/20,286,28
-NH Unknown,05/15/20,12574,78
+NH Multiracial,05/15/20,62,13
+NH Native American or Alaska Native,05/15/20,37,1
+NH Other,05/15/20,187,14
 NH White,05/15/20,11762,2382
+Unknown,05/15/20,12574,78
 Hispanic,05/16/20,6493,283
-NH Asian,05/16/20,542,34
+NH Asian or Pacific Islander,05/16/20,542,34
 NH Black,05/16/20,4644,491
-NH Other,05/16/20,292,29
-NH Unknown,05/16/20,12810,82
+NH Multiracial,05/16/20,64,13
+NH Native American or Alaska Native,05/16/20,37,1
+NH Other,05/16/20,191,15
 NH White,05/16/20,11922,2420
+Unknown,05/16/20,12810,82
 Hispanic,05/17/20,6558,286
-NH Asian,05/17/20,550,34
+NH Asian or Pacific Islander,05/17/20,550,34
 NH Black,05/17/20,4712,499
-NH Other,05/17/20,294,29
-NH Unknown,05/17/20,13254,78
+NH Multiracial,05/17/20,65,13
+NH Native American or Alaska Native,05/17/20,37,1
+NH Other,05/17/20,192,15
 NH White,05/17/20,12051,2482
+Unknown,05/17/20,13254,78
 Hispanic,05/18/20,6638,291
-NH Asian,05/18/20,559,34
+NH Asian or Pacific Islander,05/18/20,559,34
 NH Black,05/18/20,4758,504
-NH Other,05/18/20,296,29
-NH Unknown,05/18/20,13765,86
+NH Multiracial,05/18/20,66,13
+NH Native American or Alaska Native,05/18/20,37,1
+NH Other,05/18/20,193,15
 NH White,05/18/20,12100,2505
+Unknown,05/18/20,13765,86
 Hispanic,05/19/20,6669,294
-NH Asian,05/19/20,561,34
+NH Asian or Pacific Islander,05/19/20,561,34
 NH Black,05/19/20,4788,512
-NH Other,05/19/20,297,29
-NH Unknown,05/19/20,13930,82
+NH Multiracial,05/19/20,66,13
+NH Native American or Alaska Native,05/19/20,38,1
+NH Other,05/19/20,193,15
 NH White,05/19/20,12185,2520
+Unknown,05/19/20,13930,82
 Hispanic,05/20/20,6847,305
-NH Asian,05/20/20,563,35
+NH Asian or Pacific Islander,05/20/20,563,35
 NH Black,05/20/20,4904,519
-NH Other,05/20/20,304,29
-NH Unknown,05/20/20,13944,81
+NH Multiracial,05/20/20,68,13
+NH Native American or Alaska Native,05/20/20,38,1
+NH Other,05/20/20,198,15
 NH White,05/20/20,12455,2560
+Unknown,05/20/20,13944,81
+Hispanic,05/21/20,6945,312
+NH Asian or Pacific Islander,05/21/20,571,35
+NH Black,05/21/20,4959,525
+NH Multiracial,05/21/20,76,15
+NH Native American or Alaska Native,05/21/20,38,1
+NH Other,05/21/20,199,14
+NH White,05/21/20,12606,2600
+Unknown,05/21/20,13814,80
