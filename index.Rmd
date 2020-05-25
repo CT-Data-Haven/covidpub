@@ -163,7 +163,8 @@ pop_race <- read_csv("input_data/race18.csv") %>%
   select(name, race, total_pop = estimate)
 case_by_race <- read_csv("input_data/covid_ct_race.csv") %>%
   mutate(race = as_factor(race) %>% 
-           fct_relabel(str_remove, "NH ") %>%
+           fct_relabel(str_remove, "NH ") %>% 
+           fct_relabel(str_remove, " or Pacific Islander") %>% 
            fct_recode(Latino = "Hispanic"),
          date = mdy(date),
          name = "Connecticut") %>%
