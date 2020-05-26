@@ -36,6 +36,11 @@ h1, h2, h3 {
   padding-top: 0;
 }
 
+.section h3 {
+  margin-top: 1.25em;
+  padding-top: 0;
+}
+
 .section h3.viz-title {
   margin-top: 1.2em;
   padding-top: 0;
