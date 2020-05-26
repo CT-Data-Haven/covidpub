@@ -335,7 +335,7 @@ test_x_cases <- county %>%
   arrange(measure)
 
 billboarder(data = test_x_cases, height = 450) %>%
-  bb_linechart(mapping = bbaes(x = date, y = value, group = measure), type = "step") %>%
+  bb_linechart(mapping = bbaes(x = date, y = value, group = measure), type = "step", hide = c("Individuals tested")) %>%
   bb_x_axis(label = list(text = NULL), type = "timeseries", 
             tick = list(format = "%m/%d", values = mondays)) %>%
   bb_y_axis(label = list(text = "Count", position = "outer-top"),
