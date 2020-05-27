@@ -35,6 +35,9 @@ counties <- tidycensus::fips_codes %>%
   mutate(county = str_remove(county, " County")) %>%
   pull(county)
 
+pal <- vivid %>%
+  purrr::set_names(c("Connecticut", counties))
+
 town_county <- cwi::xwalk %>%
   mutate(county_code = substr(town_fips, 3, 5)) %>%
   distinct(county_code, town) %>%
@@ -69,7 +72,7 @@ pops <- read_csv("input_data/total_pop_2018.csv")
 
 ```
 
-## Latest statewide data: `r date_range_fmt[2]` {.font-italic}
+## Latest statewide data: `r date_range_fmt[2]` {.text-info}
 
 
 This webpage provides graphics that are intended to communicate what we know about COVID-19 (also known as SARS-CoV-2) in Connecticut. These charts are not intended to predict any scenarios about the disease or the people affected by it. They merely reflect data that [DataHaven](https://ctdatahaven.org) has already collected at the town, county, and state levels. To the extent possible, this webpage is updated daily. 
@@ -99,11 +102,6 @@ For the latest information from the Connecticut Department of Public Health, vis
 
 ```{r county_line_plot, fig.width=7, fig.height=5}
 set.seed(1)
-pal <- c("gray20", rcartocolor::carto_pal(9, "Vivid")[sample.int(8)]) %>%
-  set_names(c("Connecticut", counties))
-seq_pal <- rcartocolor::carto_pal(5, "SunsetDark")
-
-set_theme("insight")
 
 county_to_plot <- county %>%
   filter(name %in% c("Connecticut", counties)) %>%
@@ -198,7 +196,7 @@ Currently, data by both race/ethnicity and age are not publicly available, so th
 
 ::: {.col-md-6}
 
-### Crude rate of detected cases per 10,000 residents by race/ethnicity, statewide as of `r race_date_fmt`
+### Crude rate of detected cases per 10,000 residents by race/ethnicity, statewide as of `r race_date_fmt` {.viz-title}
 
 ```{r}
 race_pal <- setNames(c("#888888", pal[c(2, 4, 9, 3)]), levels(rates_by_race$race))
@@ -213,7 +211,7 @@ billboarder(data = rates_by_race, height = 350) %>%
 
 ::: {.col-md-6}
 
-### Crude rate of COVID-19-related deaths per 10,000 residents by race/ethnicity, statewide as of `r race_date_fmt`
+### Crude rate of COVID-19-related deaths per 10,000 residents by race/ethnicity, statewide as of `r race_date_fmt` {.viz-title}
 
 ```{r}
 billboarder(list(), data = rates_by_race, height = 350) %>%
@@ -237,7 +235,7 @@ county_to_plot %>%
   filter(name != "Connecticut") %>%
   arrange(date, name) %>%
   billboarder(list(data = list(order = "asc")), data = ., height = 400) %>%
-  bb_barchart(mapping = bbaes(x = date, y = cases, group = name), stacked = TRUE) %>%
+  bb_barchart(mapping = bbaes(x = date, y = cases, group = name), stacked = TRUE, width = list(ratio = 0.7)) %>%
   bb_x_axis(label = list(text = NULL), type = "timeseries", 
             tick = list(format = "%m/%d", values = mondays)) %>%
   bb_y_axis(label = list(text = "Cases", position = "outer-top"),
@@ -319,12 +317,11 @@ leaflet(cases_sf, width = "100%", height = 500,
 
 ### Trends in statewide COVID-related testing, cases, hospitalizations, and deaths, `r test_date_range_fmt[1]` to `r test_date_range_fmt[2]` {.viz-title}
 
-```{r state_stats, fig.width=7, fig.height=4.5}
+::: {.nomargin}
 
-
+```{r state_stats, fig.width=7, fig.height=5.5}
 test_x_cases <- county %>%
   inner_join(tests, by = c("name", "date")) %>%
-  # filter(date == date_range[2]) %>%
   select(-level) %>%
   pivot_longer(-c(date, name), names_to = "measure") %>%
   mutate(measure = as_factor(measure) %>%
@@ -332,25 +329,127 @@ test_x_cases <- county %>%
            fct_recode("detected cases" = "cases", "individuals tested" = "tests") %>%
            fct_relabel(str_to_sentence)) %>%
   filter(!is.na(value)) %>%
-  arrange(measure)
+  arrange(measure) %>%
+  mutate(type = fct_collapse(measure, "Hospitalizations & deaths" = c("Hospitalizations", "Deaths")))
+test_case_split <- test_x_cases %>% split(.$type)
 
-billboarder(data = test_x_cases, height = 450) %>%
-  bb_linechart(mapping = bbaes(x = date, y = value, group = measure), type = "step", hide = c("Individuals tested")) %>%
-  bb_x_axis(label = list(text = NULL), type = "timeseries", 
-            tick = list(format = "%m/%d", values = mondays)) %>%
-  bb_y_axis(label = list(text = "Count", position = "outer-top"),
-            tick = list(format = htmlwidgets::JS("d3.format(',')")),
-            padding = list(bottom = 0)) %>%
-  bb_x_grid(show = TRUE) %>%
-  bb_y_grid(show = TRUE) %>%
-  bb_colors_manual(set_names(pal[2:5], levels(test_x_cases$measure))) %>%
-  # bb_legend(position = "right") %>%
-  # bb_tooltip(grouped = FALSE) %>%
-  bb_title(padding = list(bottom = 20, top = 10), position = "top-left")
+# need extra space on third one for legend. 
+test_case_charts <- list(
+  df = test_case_split, 
+  title = names(test_case_split), 
+  h = c(150, 150, 170), 
+  has_legend = c(FALSE, FALSE, TRUE)) %>%
+  pmap(function(df, title, h, has_legend) {
+    y_range <- c(0, max(df$value))
+    brks <- scales::breaks_extended(n = 5)(y_range)
+    billboarder(data = df, height = h) %>%
+      bb_linechart(mapping = bbaes(x = date, y = value, group = measure), type = "step") %>%
+      bb_x_axis(label = list(text = NULL), type = "timeseries",
+                tick = list(format = "%m/%d", values = mondays)) %>%
+      bb_y_axis(label = list(text = "Count", position = "outer-top"),
+                tick = list(format = htmlwidgets::JS("d3.format(',')")),
+                padding = list(bottom = 0)) %>%
+      bb_axis(y = list(tick = list(values = brks))) %>%
+      bb_x_grid(show = TRUE) %>%
+      bb_y_grid(show = TRUE) %>%
+      bb_colors_manual(set_names(pal[c(2:4, 9)], levels(test_x_cases$measure))) %>%
+      bb_title(position = "top-center", text = title) %>%
+      bb_legend(show = has_legend) %>%
+      bb_tooltip(linked = list(name = "trend-tip"))
+  })
+# idk why walk(print) doesn't work for this
+test_case_charts[[1]]
+test_case_charts[[2]]
+test_case_charts[[3]] 
 
 ```
 
+:::
+
+
+
 Note that counts of COVID-19-related hospitalizations are only available from March 21 onward.
+
+```{r}
+# need to fill any possible gaps in data in order to mark off streaks accurately? or ok to assume direction continues across any possible gaps? currently aren't any anyways
+hospital_change <- test_x_cases %>%
+  filter(measure == "Hospitalizations") %>%
+  arrange(date) %>%
+  mutate(change = value - lag(value),
+         direction = case_when(
+           change == 0 ~ "Constant",
+           change < 0 ~ "Decreasing",
+           change > 0 ~ "Increasing"
+         ),
+         change_lbl = formatC(change, flag = "+"))
+
+streak <- function(x) {
+  durations <- rle(x)$lengths
+  imap(durations, function(d, i) {
+    rep(i, times = d)
+  }) %>%
+    flatten_dbl()
+}
+
+hosp_streaks <- hospital_change %>%
+  mutate(strk = streak(direction)) %>%
+  filter(change < 0) %>%
+  group_by(strk) %>%
+  summarise(day1 = min(date), day2 = max(date)) %>%
+  mutate(n_days = as.numeric(day2 - day1))
+
+longest_streak <- hosp_streaks %>%
+  top_n(1, n_days) %>%
+  pivot_longer(starts_with("day"), values_to = "date")
+
+streak_fmt <- format(longest_streak$date, "%B %d")
+streak_dur <- unique(longest_streak$n_days)
+
+hosp_recent <- hospital_change %>%
+  top_n(1, date) %>%
+  select(date, change, direction) %>%
+  mutate(direction = direction %>%
+           tolower() %>%
+           str_replace("ing", "ed"))
+
+hosp_date_range <- format(range(hospital_change$date), "%m/%d/%Y")
+```
+
+The longest continuous decrease in hospitalizations was between `r streak_fmt[1]` and `r streak_fmt[2]`, a streak of `r streak_dur` days. On the most recent day of data (`r format(hosp_recent$date, "%m/%d")`), the number of people hospitalized `r hosp_recent$direction` by `r hosp_recent$change` from the previous day.
+
+### Change in number of COVID-19-related hospitalizations from previous day, `r hosp_date_range[1]` to `r hosp_date_range[2]` {.viz-title}
+
+```{r}
+d3_flag <- "function(value, ratio, id, index) {
+  return d3.format('+,')(value);
+}"
+hospital_change %>%
+  filter(!is.na(change)) %>%
+  billboarder(data = ., height = 300) %>%
+  bb_barchart(mapping = bbaes(x = date, y = change, group = direction), 
+              width = list(ratio = 1)) %>%
+  bb_x_axis(label = list(text = NULL), type = "timeseries", 
+            tick = list(format = "%m/%d", values = mondays)) %>%
+  bb_y_axis(label = list(text = "Change in # hospitalized", position = "outer-top"),
+            tick = list(format = htmlwidgets::JS("d3.format(',')"))) %>%
+  bb_x_grid(show = TRUE) %>%
+  bb_y_grid(show = TRUE) %>%
+  bb_colors_manual(set_names(div_pal[c(1, 5)], c("Decreasing", "Increasing"))) %>%
+  # bb_legend(position = "right") %>%
+  bb_tooltip(format = list(
+    value = htmlwidgets::JS(d3_flag)
+  )) %>%
+  bb_title(padding = list(bottom = 20, top = 10), position = "top-left")
+```
+
+
+
+```{r eval=FALSE, include=FALSE}
+pod <- read_csv("input_data/ct_place_of_death.csv")
+
+billboarder(data = pod) %>%
+  bb_piechart(mapping = bbaes(x = type, y = value))
+```
 
 
 Summarizing the past five days of trends helps to smooth out daily jumps or drops in the number of reported cases. Looking at the five days before that helps contextualize the most recent five-day period. 
@@ -409,12 +508,14 @@ datatable(change_table,
 exec_orders <- tibble::tribble(
   ~date, ~order,
   "2020-03-24", "Non-essential business closures",
-  "2020-03-17", "Restrictions on gatherings"
+  "2020-03-17", "Restrictions on gatherings",
+  "2020-05-20", "Phase 1 reopening"
 ) %>%
   mutate(date = as.Date(date),
          lbl = str_glue("{format(date, '%m/%d')}: {order}")) %>%
   split(seq_along(.$date)) %>%
-  map(function(x) list(value = x$date, text = x$order, class = "milestone"))
+  map(function(x) list(value = x$date, text = x$order, class = "milestone")) %>%
+  unname()
 
 mob <- read_csv("https://raw.githubusercontent.com/descarteslabs/DL-COVID-19/master/DL-us-mobility-daterow.csv")  %>% 
   filter(admin_level == 0 | fips == "09" | admin1 == "Connecticut") %>% 
@@ -451,9 +552,9 @@ billboarder(data = mob, height = 450) %>%
   bb_linechart(mapping = bbaes(x = date, y = m50_miles, group = name)) %>%
   bb_x_axis(label = list(text = NULL), type = "timeseries", 
             tick = list(format = "%m/%d", values = mondays[mondays <= max(mob$date)])) %>%
-  bb_y_axis(label = list(text = "Avg. mobility (miles)", position = "outer-top")) %>%
+  bb_y_axis(label = list(text = "Avg. mobility (miles)", position = "outer-top"), padding = list(bottom = 0)) %>%
   bb_x_grid(show = TRUE, 
-            lines = list(exec_orders$`1`, exec_orders$`2`)) %>%
+            lines = exec_orders) %>%
   bb_y_grid(show = TRUE) %>%
   bb_colors_manual(mob_pal) %>%
   # bb_legend(position = "right") %>%
