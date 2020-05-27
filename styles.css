@@ -1,3 +1,11 @@
+section .html-widget {
+  margin-bottom: 2em;
+}
+
+section .nomargin .html-widget {
+  margin-bottom: 0.1em;
+}
+
 table.table caption {
   color: black;
   font-size: 1.1em;
@@ -20,8 +28,9 @@ h1, h2, h3 {
   margin-top: 2em;
 }
 
-.viz-title {
-  
+h2.viz-title, h3.viz-title {
+  margin-top: 1.2em !important;
+  padding-top: 0 !important;
 }
 
 .milestone text {
@@ -41,10 +50,6 @@ h1, h2, h3 {
   padding-top: 0;
 }
 
-.section h3.viz-title {
-  margin-top: 1.2em;
-  padding-top: 0;
-}
 
 div.tooltip {
   width: 100px;
@@ -68,4 +73,13 @@ div.tooltip {
 
 .leaflet-container {
   width: 100%;
+}
+
+.legend-item span.legend-box {
+  width: 1em;
+  height: 1em;
+}
+
+#dummy-div {
+  display: none;
 }
