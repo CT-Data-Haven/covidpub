@@ -17,6 +17,7 @@ Imports:
     stringr,
     readr,
     lubridate,
+    sf,
     billboarder,
     knitr,
     kableExtra,
@@ -27,8 +28,9 @@ Imports:
     DT,
     htmlwidgets,
     htmltools,
-    sf,
     tibble,
     measurements,
     rcartocolor,
     classInt
+Remotes:
+    cran/rgdal@1.4-8

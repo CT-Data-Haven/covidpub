@@ -20,9 +20,6 @@ branches:
 r_packages:
   - rmarkdown
 
-r_binary_packages:
-  - sf
-  
 script:
   - Rscript ./scripts/latest_data.R
   - Rscript -e "rmarkdown::render_site()"
