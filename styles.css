@@ -1,8 +1,20 @@
-section .html-widget {
+#date-heading {
+  font-size: 1.5em;
+}
+
+.section.level2 {
+  margin-top: 2em;
+}
+
+.section.level3 {
+  margin-top: 0.8em;
+}
+
+.section .html-widget {
   margin-bottom: 2em;
 }
 
-section .nomargin .html-widget {
+.section .nomargin .html-widget {
   margin-bottom: 0.1em;
 }
 
@@ -40,15 +52,6 @@ h2.viz-title, h3.viz-title {
   stroke: #444;
 }
 
-.section h2.section-title {
-  margin-top: 1.5em;
-  padding-top: 0;
-}
-
-.section h3 {
-  margin-top: 1.25em;
-  padding-top: 0;
-}
 
 
 div.tooltip {
