@@ -160,6 +160,27 @@ datatable(counts_table,
 ```
 
 ```{r}
+age_adj <- httr::GET("https://data.ct.gov/resource/7rne-efic.json", query = list("$where" = "ageadjustedcaserate_100k > 0")) %>%
+  httr::content(as = "text", type = "application/json") %>%
+  jsonlite::fromJSON() %>%
+  select(date = dateupdated, race = hisp_race, ends_with("100k")) %>%
+  mutate(date = as.Date(date)) %>%
+  pivot_longer(-date:-race, names_to = c("type", "measure"), names_pattern = "(ageadjusted)?(.+)") %>%
+  mutate_at(vars(race, type, measure), as_factor) %>%
+  mutate(race = race %>%
+           fct_relabel(str_remove, "NH ") %>%
+           fct_recode(Latino = "Hispanic", AIAN = "American Indian or Alaskan Native", "Asian/Pac. Isl." = "Asian or Pacific Islander") %>%
+           fct_relevel("White", "Black", "Latino"),
+         type = fct_explicit_na(type, "crude") %>% 
+           fct_recode("age-adjusted" = "ageadjusted") %>%
+           fct_relabel(str_to_sentence),
+         measure = fct_relabel(measure, str_replace, "(^\\w+)rate.+$", "\\1s") %>%
+           fct_relabel(str_to_sentence),
+         value = as.numeric(value))
+```
+
+
+```{r}
 pop_race <- read_csv("input_data/race18.csv") %>%
   select(name, race, total_pop = estimate)
 case_by_race <- read_csv("input_data/covid_ct_race.csv") %>%
@@ -459,7 +480,7 @@ Summarizing the past five days of trends helps to smooth out daily jumps or drop
 
 ### Change in number of detected new cases over 5-day periods {.viz-title}
 
-```{r case_5day, message=TRUE, warning=TRUE}
+```{r case_5day}
 # only including if each 5-day period involves more than N cases; otherwise have things like increases of 1700%
 t5_thresh <- 10
 elapsed <- county %>%
@@ -486,7 +507,9 @@ change_table <- case_change %>%
   select(-matches("^t\\d")) %>%
   pivot_longer(-c(level, name), names_to = "variable") %>%
   extract(variable, into = c("type", "end", "start"), "(^\\w+)_(t\\d{2})_(t\\d{2}$)", remove = FALSE) %>%
-  mutate_at(vars(end, start), recode, !!!dates_elapsed) %>%
+  # broken with new dplyr
+  # mutate_at(vars(end, start), recode, !!!dates_elapsed) %>%
+  mutate_at(vars(end, start), function(x) map_chr(x, ~ifelse(!is.na(.), names(dates_elapsed)[which(dates_elapsed == .)], NA))) %>%
   mutate(type = coalesce(type, variable),
          lbl = ifelse(is.na(end), type, str_glue("{type}, {start} to {end}")) %>%
            clean_titles(),
