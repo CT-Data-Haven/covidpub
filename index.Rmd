@@ -157,50 +157,30 @@ datatable(counts_table,
 ```
 
 ```{r}
-pop_race <- read_csv("input_data/race18.csv") %>%
-  select(name, race, total_pop = estimate)
-case_by_race <- read_csv("input_data/covid_ct_race.csv") %>%
-  mutate(race = as_factor(race) %>% 
-           fct_relabel(str_remove, "NH ") %>% 
-           fct_relabel(str_remove, " or Pacific Islander") %>% 
-           fct_recode(Latino = "Hispanic"),
-         date = mdy(date),
-         name = "Connecticut") %>%
-  inner_join(pop_race, by = c("name", "race")) %>%
-  filter(date == max(date))
-
-race_date <- unique(case_by_race$date)
-race_date_fmt <- format(race_date, "%m/%d/%Y")
-
-rates_by_race <- bind_rows(
-  case_by_race %>% mutate(race = "Average"),
-  case_by_race
-) %>%
-  group_by(name, date, race) %>%
-  summarise_at(vars(cases, deaths, total_pop), sum) %>%
-  mutate_at(vars(cases, deaths), list(rate_10k = ~round(. / total_pop * 1e4, digits = 1))) %>%
-  ungroup() %>%
-  filter(race != "Other") %>%
-  mutate(race = as_factor(race) %>%
-           fct_reorder(cases_rate_10k, .desc = TRUE) %>%
-           fct_relevel("Average")) %>%
+age_adj_race <- read_csv("input_data/ct_age_adj_rates.csv") %>%
+  filter(race %in% c("Average", "White", "Black", "Latino", "Asian")) %>%
+  mutate_at(vars(race, measure), as_factor) %>%
+  pivot_wider(id_cols = c(date, race), names_from = measure, values_from = rate_10k, names_glue = "{measure}_{.value}") %>%
+  mutate(race = fct_reorder(race, cases_rate_10k, .desc = TRUE) %>% fct_relevel("Average")) %>%
   arrange(race)
 
+race_date <- unique(age_adj_race$date)
+race_date_fmt <- format(race_date, "%m/%d/%Y")
 ```
 
-Early data suggest higher rates of detected cases among Black and Latino residents than average, and higher death rates among Black residents. Note that race/ethnicity is not known for all patients, particularly in case counts; as such, the average rates shown here are only of people whose race/ethnicity is known, and are therefore lower than total rates shown above. Rates are again given per 10,000 people by race/ethnicity.
 
-Currently, data by both race/ethnicity and age are not publicly available, so these are only crude rates rather than the preferable age-adjusted ones that would account for differing age distributions in the population by race/ethnicity. For example, age-adjusted rates from New York City suggest that detected case rates may be higher among Latinos when accounting for age.
+Early data suggest higher rates of detected cases and deaths among Black and Latino residents than average. Note that race/ethnicity is not known for all patients, particularly in case counts; as such, it is possible that more complete data would show slightly different rates. The average rates shown include patients without race/ethnicity given. Rates are again given per 10,000 people by race/ethnicity and adjusted for age. Statewide age-adjusted data became available in late May, and are preferable in comparing racial groups because they account for differing age distributions in populations.
+
 
 :::: {.row}
 
 ::: {.col-md-6}
 
-### Crude rate of detected cases per 10,000 residents by race/ethnicity, statewide as of `r race_date_fmt` {.viz-title}
+### Age-adjusted rate of detected cases per 10,000 residents by race/ethnicity, statewide as of `r race_date_fmt` {.viz-title}
 
 ```{r}
-race_pal <- setNames(c("#888888", pal[c(2, 4, 9, 3)]), levels(rates_by_race$race))
-billboarder(data = rates_by_race, height = 350) %>%
+race_pal <- setNames(c("#888888", pal[c(2, 4, 9, 3)]), levels(age_adj_race$race))
+billboarder(data = age_adj_race, height = 350) %>%
   bb_barchart(mapping = bbaes(x = race, y = cases_rate_10k, group = race), stack = TRUE, width = list(ratio = 0.5)) %>%
   bb_colors_manual(race_pal) %>%
   bb_legend(hide = TRUE) %>%
@@ -211,10 +191,10 @@ billboarder(data = rates_by_race, height = 350) %>%
 
 ::: {.col-md-6}
 
-### Crude rate of COVID-19-related deaths per 10,000 residents by race/ethnicity, statewide as of `r race_date_fmt` {.viz-title}
+### Age-adjusted rate of COVID-19-related deaths per 10,000 residents by race/ethnicity, statewide as of `r race_date_fmt` {.viz-title}
 
 ```{r}
-billboarder(list(), data = rates_by_race, height = 350) %>%
+billboarder(list(), data = age_adj_race, height = 350) %>%
   bb_barchart(mapping = bbaes(x = race, y = deaths_rate_10k, group = race), stack = TRUE, width = list(ratio = 0.5)) %>%
   bb_colors_manual(race_pal) %>%
   bb_legend(hide = TRUE) %>%
