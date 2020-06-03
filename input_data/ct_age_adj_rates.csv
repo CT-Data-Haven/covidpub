@@ -1,0 +1,13 @@
+date,race,measure,rate_100k,rate_10k
+2020-05-27,Average,cases,1060,106
+2020-05-27,Average,deaths,79,7.9
+2020-05-27,White,cases,443,44.3
+2020-05-27,White,deaths,63,6.3
+2020-05-27,Black,cases,1372,137.2
+2020-05-27,Black,deaths,169,16.9
+2020-05-27,Latino,cases,1418,141.8
+2020-05-27,Latino,deaths,105,10.5
+2020-05-27,Asian,cases,343,34.3
+2020-05-27,Asian,deaths,31,3.1
+2020-05-27,AIAN,cases,445,44.5
+2020-05-27,AIAN,deaths,NA,NA
