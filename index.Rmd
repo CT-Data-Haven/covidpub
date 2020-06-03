@@ -160,8 +160,9 @@ datatable(counts_table,
 age_adj_race <- read_csv("input_data/ct_age_adj_rates.csv") %>%
   filter(race %in% c("Average", "White", "Black", "Latino", "Asian")) %>%
   mutate_at(vars(race, measure), as_factor) %>%
+  mutate(race = fct_recode(race, Total = "Average")) %>%
   pivot_wider(id_cols = c(date, race), names_from = measure, values_from = rate_10k, names_glue = "{measure}_{.value}") %>%
-  mutate(race = fct_reorder(race, cases_rate_10k, .desc = TRUE) %>% fct_relevel("Average")) %>%
+  mutate(race = fct_reorder(race, cases_rate_10k, .desc = TRUE) %>% fct_relevel("Total")) %>%
   arrange(race)
 
 race_date <- unique(age_adj_race$date)
@@ -169,7 +170,7 @@ race_date_fmt <- format(race_date, "%m/%d/%Y")
 ```
 
 
-Early data suggest higher rates of detected cases and deaths among Black and Latino residents than average. Note that race/ethnicity is not known for all patients, particularly in case counts; as such, it is possible that more complete data would show slightly different rates. The average rates shown include patients without race/ethnicity given. Rates are again given per 10,000 people by race/ethnicity and adjusted for age. Statewide age-adjusted data became available in late May, and are preferable in comparing racial groups because they account for differing age distributions in populations.
+Data show higher rates of detected cases and deaths among Black and Latino residents than other groups. The statewide total rates shown include patients without race/ethnicity given. Rates are again given per 10,000 people by race/ethnicity and adjusted for age. Statewide age-adjusted data became available in late May, and are preferable in comparing racial groups because they account for differing age distributions in populations.
 
 
 :::: {.row}
@@ -317,7 +318,7 @@ test_case_split <- test_x_cases %>% split(.$type)
 test_case_charts <- list(
   df = test_case_split, 
   title = names(test_case_split), 
-  h = c(150, 150, 170), 
+  h = c(170, 170, 190), 
   has_legend = c(FALSE, FALSE, TRUE)) %>%
   pmap(function(df, title, h, has_legend) {
     y_range <- c(0, max(df$value))
