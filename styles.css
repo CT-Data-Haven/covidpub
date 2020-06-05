@@ -1,3 +1,7 @@
+h1.title {
+  font-weight: 600;
+}
+
 #date-heading {
   font-size: 1.5em;
 }
@@ -8,6 +12,11 @@
 
 .section.level3 {
   margin-top: 0.8em;
+}
+
+.section h2 {
+  font-weight: 500;
+  color: #454556;
 }
 
 .section .html-widget {

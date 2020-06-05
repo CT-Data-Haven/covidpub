@@ -82,7 +82,7 @@ This webpage provides graphics that are intended to communicate what we know abo
 
 For the latest information from the Connecticut Department of Public Health, visit http://portal.ct.gov/Coronavirus
 
-## Important data notes: 
+## Important data notes 
 
 <button class="btn btn-sm btn-default" role="button" data-toggle="collapse" data-target="#infoContainer" aria-controls="infoContainer" aria-expanded="true">Show / hide</button>
 
@@ -154,7 +154,7 @@ counts_table <- bind_rows(
 
 datatable(counts_table, 
           options = list(searching = FALSE, rowGroup = list(dataSrc = 0, emptyDataGroup = "State / counties")),
-          rownames = FALSE) %>%
+          rownames = FALSE, style = "bootstrap", class = "table table-striped", plugins = c("simple_incremental_bootstrap")) %>%
   formatRound("Cases", digits = 0) %>%
   formatRound(4, digits = 1)
 ```
@@ -219,7 +219,8 @@ county_to_plot %>%
   filter(name != "Connecticut") %>%
   arrange(date, name) %>%
   billboarder(list(data = list(order = "asc")), data = ., height = 400) %>%
-  bb_barchart(mapping = bbaes(x = date, y = cases, group = name), stacked = TRUE, width = list(ratio = 0.7)) %>%
+  bb_barchart(mapping = bbaes(x = date, y = cases, group = name), stacked = TRUE, width = list(ratio = 1)) %>%
+  # bb_linechart(mapping = bbaes(x = date, y = cases, group = name), type = "area") %>%
   bb_x_axis(label = list(text = NULL), type = "timeseries", 
             tick = list(format = "%m/%d", values = mondays)) %>%
   bb_y_axis(label = list(text = "Cases", position = "outer-top"),
@@ -485,7 +486,7 @@ change_table <- case_change %>%
 
 datatable(change_table,
           options = list(searching = FALSE, paging = FALSE, info = FALSE),
-          rownames = FALSE) %>%
+          rownames = FALSE, style = "bootstrap", class = "table table-striped") %>%
   formatRound(2:3, digits = 0) %>%
   formatPercentage(4)
 ```
@@ -493,11 +494,65 @@ datatable(change_table,
 ## Mobility and policy impacts
 
 ```{r}
+reopen_df <- tibble::tribble(
+  ~date,        ~value, ~descr,
+  "2020-06-20", 100000, "Phase 2 goal",
+  "2020-05-20",  50000, "May 20 goal"
+) %>%
+  mutate(date = as.Date(date),
+         lbl = str_glue("{descr}: {scales::number(value, scale = 1e-3, suffix = 'k')}"))
+
+reopen <- reopen_df %>%
+  split(seq_along(.$date)) %>%
+  map(function(x) list(value = x$value, text = x$lbl, class = "milestone")) %>%
+  unname()
+
+# make sure there's at least 5 days of data in the week; just to keep from having weeks shown that aren't more or less over
+# reshaping just bc of annoying bb tooltip. also leaves room for expansion
+weekly_tests <- test_x_cases %>%
+  filter(measure == "Individuals tested") %>%
+  mutate(monday = floor_date(date, unit = "weeks", week_start = 1),
+         daily_tests = value - lag(value, default = first(value))) %>%
+  group_by(name, monday) %>%
+  summarise(days_incl = n(),
+            weekly_tests = sum(daily_tests)) %>%
+  filter(between(monday, min(mondays), max(mondays)),
+         days_incl >= 5) %>%
+  pivot_longer(-name:-days_incl, names_to = "measure") %>%
+  mutate(measure = as_factor(measure) %>% fct_relabel(clean_titles))
+
+recent_wk_tests <- top_n(weekly_tests, 1, monday)
+recent_test_num <- scales::number(recent_wk_tests$value, big.mark = ",")
+wk_test_range <- range(weekly_tests$monday)
+wk_test_dates <- format(wk_test_range, "%m/%d")
+```
+
+Governor Lamont's roadmap for the next phases of reopening ([pdf](https://portal.ct.gov/-/media/Office-of-the-Governor/News/20200526-Governors-Reopen-Report.pdf?la=en)) includes a goal of 100,000 tests per week in order to begin phase 2 on or around June 20. While the state has increased its testing capacity, the actual number of tests conducted per week still falls well below this goal. Most recently, in the week starting `r wk_test_dates[2]`, testing sites conducted a total of `r recent_test_num` tests.
+
+### Statewide total tests conducted per week, weeks starting `r wk_test_dates[1]` to `r wk_test_dates[2]` {.viz-title}
+
+```{r tests_per_wk, fig.width=7, fig.height=4.5}
+billboarder(data = weekly_tests, height = 450) %>%
+  bb_barchart(mapping = bbaes(x = monday, y = value, group = measure)) %>%
+  bb_x_axis(label = list(text = "Week of", position = "outer-left"), type = "timeseries", 
+            tick = list(format = "%m/%d", values = mondays)) %>%
+  bb_y_axis(label = list(text = "Weekly tests", position = "outer-top"), max = max(reopen_df$value),
+            tick = list(format = htmlwidgets::JS("d3.format(',')"))) %>%
+  bb_x_grid(show = TRUE) %>%
+  bb_y_grid(show = TRUE,
+            lines = reopen) %>%
+  bb_colors_manual(set_names(c(pal[6]), levels(weekly_tests$measure))) %>%
+  bb_legend(show = FALSE)
+```
+
+
+
+```{r}
 exec_orders <- tibble::tribble(
   ~date, ~order,
   "2020-03-24", "Non-essential business closures",
   "2020-03-17", "Restrictions on gatherings",
-  "2020-05-20", "Phase 1 reopening"
+  "2020-05-20", "Phase 1 reopening (CT)"
 ) %>%
   mutate(date = as.Date(date),
          lbl = str_glue("{format(date, '%m/%d')}: {order}")) %>%
@@ -531,11 +586,6 @@ Note that these executive orders took effect in the evening but are dated here w
 mob_pal <- c(pal[c(3, 4, 9)], rep("gray50", 7)) %>%
   setNames(c(c("US", "Connecticut", "New Haven County"), setdiff(levels(mob$name), c("US", "Connecticut", "New Haven County"))))
 
-# mob_legend <- "function(name, color) {
-#   return ['US', 'Connecticut', 'New Haven County'].indexOf(name) !== -1 ? '<span>' + name + '</span>' : '';
-# }"
-
-
 billboarder(data = mob, height = 450) %>%
   bb_linechart(mapping = bbaes(x = date, y = m50_miles, group = name)) %>%
   bb_x_axis(label = list(text = NULL), type = "timeseries", 
@@ -544,9 +594,7 @@ billboarder(data = mob, height = 450) %>%
   bb_x_grid(show = TRUE, 
             lines = exec_orders) %>%
   bb_y_grid(show = TRUE) %>%
-  bb_colors_manual(mob_pal) %>%
-  # bb_legend(position = "right") %>%
-  bb_tooltip()
+  bb_colors_manual(mob_pal) 
 ```
 
 
