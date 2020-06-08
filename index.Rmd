@@ -28,38 +28,49 @@ library(htmltools)
 source("scripts/plotting_utils.R")
 ```
 
+```{r}
+dfs <- list.files("input_data", pattern = ".csv", full.names = TRUE) %>%
+  set_names(str_extract, "(?<=covid_)(\\w+)(?=\\.csv)") %>%
+  map(read_csv)
+```
 
-```{r main_vars}
-counties <- tidycensus::fips_codes %>%
-  filter(state == "CT") %>%
-  mutate(county = str_remove(county, " County")) %>%
-  pull(county)
-
-pal <- vivid %>%
-  purrr::set_names(c("Connecticut", counties))
-
+```{r meta}
 town_county <- cwi::xwalk %>%
   mutate(county_code = substr(town_fips, 3, 5)) %>%
   distinct(county_code, town) %>%
-  left_join(tidycensus::fips_codes %>% filter(state == "CT"), by = "county_code") %>% 
+  left_join(tidycensus::fips_codes %>% filter(state == "CT"), by = "county_code") %>%
   select(county, town)
 
-county <- read_csv("input_data/covid_ct_county_detailed.csv") %>%
-  select(name:deaths) %>%
-  mutate(date = mdy(date),
-         name = as_factor(name),
-         level = name %>% 
-           fct_collapse(state = "Connecticut", county = counties, other_level = "noid") %>%
-           fct_relevel("state"))
+counties <- unique(town_county$county) %>%
+  str_remove(" County")
 
-town <- read_csv("input_data/covid_ct_town.csv") %>%
-  pivot_longer(-Town, names_to = "Date", values_to = "Cases") %>%
-  mutate(Date = mdy(Date)) %>%
-  janitor::clean_names()
+pal <- vivid %>%
+  purrr::set_names(c("Connecticut", counties))
+```
 
-tests <- read_csv("input_data/covid_tests.csv") %>%
-  mutate(date = mdy(date),
-         name = "Connecticut")
+```{r main_vars}
+# county <- read_csv("input_data/covid_ct_county_detailed.csv") %>%
+#   select(name:deaths) %>%
+#   mutate(date = mdy(date),
+#          name = as_factor(name),
+#          level = name %>% 
+#            fct_collapse(state = "Connecticut", county = counties, other_level = "noid") %>%
+#            fct_relevel("state"))
+# 
+# town <- read_csv("input_data/covid_ct_town.csv") %>%
+#   pivot_longer(-Town, names_to = "Date", values_to = "Cases") %>%
+#   mutate(Date = mdy(Date)) %>%
+#   janitor::clean_names()
+# 
+# tests <- read_csv("input_data/covid_tests.csv") %>%
+#   mutate(date = mdy(date),
+#          name = "Connecticut")
+county <- dfs[["county"]] %>%
+  mutate_at(vars(name, level), as_factor)
+
+town <- dfs[["town"]]
+
+tests <- dfs[["tests"]]
 
 date_range <- range(county$date)
 date_range_fmt <- format(date_range, "%m/%d/%Y")
@@ -108,7 +119,7 @@ set.seed(1)
 
 county_to_plot <- county %>%
   filter(name %in% c("Connecticut", counties)) %>%
-  mutate(name = as_factor(name) %>% fct_reorder2(date, cases, .desc = FALSE),
+  mutate(name = fct_reorder2(name, date, cases, .desc = FALSE),
          lbl = str_glue("{name}: {scales::comma(cases)}")) 
 
 mondays <- seq(date_range[1], date_range[2], by = 1) %>%
@@ -138,7 +149,6 @@ counts_table <- bind_rows(
     select(level, name, date, cases) %>%
     mutate(name = fct_relabel(name, ~ifelse(. %in% counties, paste(., "County"), .))),
   town %>%
-    select(name = town, date, cases) %>%
     mutate(level = "town")
 ) %>%
   filter(date == date_range[2], cases >= reg_thresh, level != "noid") %>%
@@ -154,18 +164,21 @@ counts_table <- bind_rows(
 
 datatable(counts_table, 
           options = list(searching = FALSE, rowGroup = list(dataSrc = 0, emptyDataGroup = "State / counties")),
-          rownames = FALSE, style = "bootstrap", class = "table table-striped", plugins = c("simple_incremental_bootstrap")) %>%
+          rownames = FALSE, style = "bootstrap", class = "table table-striped", 
+          plugins = c("simple_incremental_bootstrap")) %>%
   formatRound("Cases", digits = 0) %>%
   formatRound(4, digits = 1)
 ```
 
 ```{r}
-age_adj_race <- read_csv("input_data/ct_age_adj_rates.csv") %>%
-  filter(race %in% c("Average", "White", "Black", "Latino", "Asian")) %>%
+age_adj_race <- dfs[["age_adjusted_race"]] %>%
   mutate_at(vars(race, measure), as_factor) %>%
-  mutate(race = fct_recode(race, Total = "Average")) %>%
+  filter(race %in% c("Average", "White", "Black", "Latino", "Asian")) %>%
   pivot_wider(id_cols = c(date, race), names_from = measure, values_from = rate_10k, names_glue = "{measure}_{.value}") %>%
-  mutate(race = fct_reorder(race, cases_rate_10k, .desc = TRUE) %>% fct_relevel("Total")) %>%
+  mutate(race = race %>%
+           fct_reorder(cases_rate_10k, .desc = TRUE) %>% 
+           fct_recode(Total = "Average") %>%
+           fct_relevel("Total")) %>%
   arrange(race)
 
 race_date <- unique(age_adj_race$date)
@@ -178,12 +191,13 @@ Data show higher rates of detected cases and deaths among Black and Latino resid
 
 :::: {.row}
 
-::: {.col-md-6}
+::: {.col-sm-6}
 
 ### Age-adjusted rate of detected cases per 10,000 residents by race/ethnicity, statewide as of `r race_date_fmt` {.viz-title}
 
 ```{r}
-race_pal <- setNames(c("#888888", pal[c(2, 4, 9, 3)]), levels(age_adj_race$race))
+# keep same colors regardless of order
+race_pal <- setNames(c("#888888", pal[c(2, 4, 9, 3)]), c("Total", "Black", "Latino", "White", "Asian"))
 billboarder(data = age_adj_race, height = 350) %>%
   bb_barchart(mapping = bbaes(x = race, y = cases_rate_10k, group = race), stack = TRUE, width = list(ratio = 0.5)) %>%
   bb_colors_manual(race_pal) %>%
@@ -193,7 +207,7 @@ billboarder(data = age_adj_race, height = 350) %>%
 
 :::
 
-::: {.col-md-6}
+::: {.col-sm-6}
 
 ### Age-adjusted rate of COVID-19-related deaths per 10,000 residents by race/ethnicity, statewide as of `r race_date_fmt` {.viz-title}
 
@@ -256,7 +270,7 @@ cases_sf <- cwi::town_sf %>%
   select(-GEOID) %>%
   sf::st_transform(4326) %>%
   # sf::st_centroid() %>%
-  left_join(town %>% filter(date == date_range[2]), by = c("name" = "town")) %>%
+  left_join(town %>% filter(date == date_range[2]), by = "name") %>%
   left_join(pops %>% select(name, total_pop), by = "name") %>%
   mutate(rate_10k = round(cases / total_pop * 1e4, digits = 1))
 
@@ -306,7 +320,7 @@ leaflet(cases_sf, width = "100%", height = 500,
 
 ```{r state_stats, fig.width=7, fig.height=5.5}
 test_x_cases <- county %>%
-  inner_join(tests, by = c("name", "date")) %>%
+  inner_join(tests %>% select(-daily_tests), by = c("name", "date")) %>%
   select(-level) %>%
   pivot_longer(-c(date, name), names_to = "measure") %>%
   mutate(measure = as_factor(measure) %>%
@@ -391,16 +405,19 @@ streak_fmt <- format(longest_streak$date, "%B %d")
 streak_dur <- unique(longest_streak$n_days)
 
 hosp_recent <- hospital_change %>%
-  top_n(1, date) %>%
+  mutate(direction = as_factor(direction) %>%
+           fct_relabel(tolower) %>%
+           fct_relabel(str_replace, "ing$", "ed")) %>%
   select(date, change, direction) %>%
-  mutate(direction = direction %>%
-           tolower() %>%
-           str_replace("ing", "ed"))
+  mutate(lbl = ifelse(direction == "constant", 
+                      "stayed the same as", 
+                      str_glue("{direction} by {abs(change)} from"))) %>%
+  top_n(1, date)
 
 hosp_date_range <- format(range(hospital_change$date), "%m/%d/%Y")
 ```
 
-The longest continuous decrease in hospitalizations was between `r streak_fmt[1]` and `r streak_fmt[2]`, a streak of `r streak_dur` days. On the most recent day of data (`r format(hosp_recent$date, "%m/%d")`), the number of people hospitalized `r hosp_recent$direction` by `r abs(hosp_recent$change)` from the previous day.
+The longest continuous decrease in hospitalizations was between `r streak_fmt[1]` and `r streak_fmt[2]`, a streak of `r streak_dur` days. On the most recent day of data (`r format(hosp_recent$date, "%m/%d")`), the number of people hospitalized `r hosp_recent$lbl` the previous day.
 
 ### Change in number of COVID-19-related hospitalizations from previous day, `r hosp_date_range[1]` to `r hosp_date_range[2]` {.viz-title}
 
@@ -419,8 +436,8 @@ hospital_change %>%
             tick = list(format = htmlwidgets::JS("d3.format(',')"))) %>%
   bb_x_grid(show = TRUE) %>%
   bb_y_grid(show = TRUE) %>%
-  bb_colors_manual(set_names(div_pal[c(1, 5)], c("Decreasing", "Increasing"))) %>%
-  # bb_legend(position = "right") %>%
+  bb_colors_manual(set_names(div_pal[c(1, 3, 5)], c("Decreasing", "Constant", "Increasing"))) %>%
+  bb_legend(hide = c("Constant")) %>%
   bb_tooltip(format = list(
     value = htmlwidgets::JS(d3_flag)
   )) %>%
@@ -437,17 +454,18 @@ billboarder(data = pod) %>%
 ```
 
 
-Summarizing the past five days of trends helps to smooth out daily jumps or drops in the number of reported cases. Looking at the five days before that helps contextualize the most recent five-day period. 
+Summarizing the past seven days of trends helps to smooth out daily jumps or drops in the number of reported cases. Looking at the seven days before that helps contextualize the most recent seven-day period. 
 
-### Change in number of detected new cases over 5-day periods {.viz-title}
+### Change in number of detected new cases over 7-day periods {.viz-title}
 
 ```{r case_5day}
+# switching to 7 days
 # only including if each 5-day period involves more than N cases; otherwise have things like increases of 1700%
 t5_thresh <- 10
+change_incrs <- seq(0, 2) * 7
+
 elapsed <- county %>%
-  mutate(days_ago = (date_range[2] - date) %>%
-           str_pad(width = 2, side = "left", pad = "0") %>%
-           paste0("t", .))
+  mutate(days_ago = sprintf("t%02d", (date_range[2] - date)))
 
 dates_elapsed <- elapsed %>%
   distinct(days_ago, date) %>%
@@ -455,12 +473,12 @@ dates_elapsed <- elapsed %>%
   tibble::deframe()
 
 case_change <- elapsed %>%
-  filter(level != "noid", days_ago %in% c("t00", "t05", "t10")) %>%
+  filter(level != "noid", parse_number(days_ago) %in% change_incrs) %>%
   select(days_ago, level, name, cases) %>%
   pivot_wider(names_from = days_ago, values_from = cases) %>%
-  mutate(new_cases_t05_t10 = t05 - t10,
-         new_cases_t00_t05 = t00 - t05,
-         pct_change = (new_cases_t00_t05 - new_cases_t05_t10) / new_cases_t05_t10) %>%
+  mutate(new_cases_t07_t14 = t07 - t14,
+         new_cases_t00_t07 = t00 - t07,
+         pct_change = (new_cases_t00_t07 - new_cases_t07_t14) / new_cases_t07_t14) %>%
   filter_at(vars(starts_with("new_cases")), ~ . >= t5_thresh)
 
 change_table <- case_change %>%
@@ -478,20 +496,28 @@ change_table <- case_change %>%
   select(Name = name, lbl, value) %>%
   pivot_wider(names_from = lbl)
 
-# datatable(change_table,
-#           options = list(searching = FALSE, order = list(list(4, "desc"))),
-#           rownames = FALSE) %>%
-#   formatRound(2:3, digits = 0) %>%
-#   formatPercentage(4)
-
 datatable(change_table,
           options = list(searching = FALSE, paging = FALSE, info = FALSE),
           rownames = FALSE, style = "bootstrap", class = "table table-striped") %>%
   formatRound(2:3, digits = 0) %>%
   formatPercentage(4)
+
+# finish wrangling this later
+# case_change %>%
+#   group_by(level, name) %>%
+#   summarise(period = paste(days_ago, lag(days_ago), sep = "_"),
+#             change = cases - lag(cases)) %>%
+#   filter(!is.na(change)) %>%
+#   mutate(pct_change = diff(change) / change[1]) %>%
+#   filter(change >= t5_thresh) %>%
+#   # extract(period, into = c("end", "start"), "(^t\\d{2})_(t\\d{2}$)", remove = FALSE)
+#   mutate(range = str_match_all(period, "t\\d{2}")) %>%
+#   # mutate(x = names(which(dates_elapsed == range[[1]])))
+#   mutate(x = map(range, ~which(dates_elapsed == .[[1]])))
 ```
 
 ## Mobility and policy impacts
+
 
 ```{r}
 reopen_df <- tibble::tribble(
@@ -509,11 +535,8 @@ reopen <- reopen_df %>%
 
 # make sure there's at least 5 days of data in the week; just to keep from having weeks shown that aren't more or less over
 # reshaping just bc of annoying bb tooltip. also leaves room for expansion
-weekly_tests <- test_x_cases %>%
-  filter(measure == "Individuals tested") %>%
-  mutate(monday = floor_date(date, unit = "weeks", week_start = 1),
-         daily_tests = value - lag(value, default = first(value))) %>%
-  group_by(name, monday) %>%
+weekly_tests <- tests %>%
+  group_by(name, monday = floor_date(date, unit = "weeks", week_start = 1)) %>%
   summarise(days_incl = n(),
             weekly_tests = sum(daily_tests)) %>%
   filter(between(monday, min(mondays), max(mondays)),

@@ -1,0 +1,829 @@
+name,date,cases,hospitalizations,deaths,level
+Connecticut,2020-03-08,1,NA,0,state
+Fairfield,2020-03-08,1,NA,0,county
+Hartford,2020-03-08,0,NA,0,county
+Litchfield,2020-03-08,0,NA,0,county
+Middlesex,2020-03-08,0,NA,0,county
+New Haven,2020-03-08,0,NA,0,county
+New London,2020-03-08,0,NA,0,county
+Tolland,2020-03-08,0,NA,0,county
+Windham,2020-03-08,0,NA,0,county
+Connecticut,2020-03-09,1,NA,0,state
+Fairfield,2020-03-09,1,NA,0,county
+Hartford,2020-03-09,0,NA,0,county
+Litchfield,2020-03-09,0,NA,0,county
+Middlesex,2020-03-09,0,NA,0,county
+New Haven,2020-03-09,0,NA,0,county
+New London,2020-03-09,0,NA,0,county
+Tolland,2020-03-09,0,NA,0,county
+Windham,2020-03-09,0,NA,0,county
+Connecticut,2020-03-10,1,NA,0,state
+Fairfield,2020-03-10,1,NA,0,county
+Hartford,2020-03-10,0,NA,0,county
+Litchfield,2020-03-10,0,NA,0,county
+Middlesex,2020-03-10,0,NA,0,county
+New Haven,2020-03-10,0,NA,0,county
+New London,2020-03-10,0,NA,0,county
+Tolland,2020-03-10,0,NA,0,county
+Windham,2020-03-10,0,NA,0,county
+Connecticut,2020-03-11,3,NA,0,state
+Fairfield,2020-03-11,2,NA,0,county
+Hartford,2020-03-11,0,NA,0,county
+Litchfield,2020-03-11,1,NA,0,county
+Middlesex,2020-03-11,0,NA,0,county
+New Haven,2020-03-11,0,NA,0,county
+New London,2020-03-11,0,NA,0,county
+Tolland,2020-03-11,0,NA,0,county
+Windham,2020-03-11,0,NA,0,county
+Connecticut,2020-03-12,5,NA,0,state
+Fairfield,2020-03-12,4,NA,0,county
+Hartford,2020-03-12,0,NA,0,county
+Litchfield,2020-03-12,1,NA,0,county
+Middlesex,2020-03-12,0,NA,0,county
+New Haven,2020-03-12,0,NA,0,county
+New London,2020-03-12,0,NA,0,county
+Tolland,2020-03-12,0,NA,0,county
+Windham,2020-03-12,0,NA,0,county
+Connecticut,2020-03-13,8,NA,0,state
+Fairfield,2020-03-13,5,NA,0,county
+Hartford,2020-03-13,0,NA,0,county
+Litchfield,2020-03-13,3,NA,0,county
+Middlesex,2020-03-13,0,NA,0,county
+New Haven,2020-03-13,0,NA,0,county
+New London,2020-03-13,0,NA,0,county
+Tolland,2020-03-13,0,NA,0,county
+Windham,2020-03-13,0,NA,0,county
+Connecticut,2020-03-14,20,NA,0,state
+Fairfield,2020-03-14,15,NA,0,county
+Hartford,2020-03-14,1,NA,0,county
+Litchfield,2020-03-14,3,NA,0,county
+Middlesex,2020-03-14,0,NA,0,county
+New Haven,2020-03-14,1,NA,0,county
+New London,2020-03-14,0,NA,0,county
+Tolland,2020-03-14,0,NA,0,county
+Windham,2020-03-14,0,NA,0,county
+Connecticut,2020-03-15,26,NA,0,state
+Fairfield,2020-03-15,16,NA,0,county
+Hartford,2020-03-15,3,NA,0,county
+Litchfield,2020-03-15,4,NA,0,county
+Middlesex,2020-03-15,0,NA,0,county
+New Haven,2020-03-15,3,NA,0,county
+New London,2020-03-15,0,NA,0,county
+Tolland,2020-03-15,0,NA,0,county
+Windham,2020-03-15,0,NA,0,county
+Connecticut,2020-03-16,41,NA,0,state
+Fairfield,2020-03-16,29,NA,0,county
+Hartford,2020-03-16,4,NA,0,county
+Litchfield,2020-03-16,4,NA,0,county
+Middlesex,2020-03-16,0,NA,0,county
+New Haven,2020-03-16,4,NA,0,county
+New London,2020-03-16,0,NA,0,county
+Tolland,2020-03-16,0,NA,0,county
+Windham,2020-03-16,0,NA,0,county
+Connecticut,2020-03-17,68,NA,0,state
+Fairfield,2020-03-17,48,NA,0,county
+Hartford,2020-03-17,7,NA,0,county
+Litchfield,2020-03-17,5,NA,0,county
+Middlesex,2020-03-17,0,NA,0,county
+New Haven,2020-03-17,8,NA,0,county
+New London,2020-03-17,0,NA,0,county
+Tolland,2020-03-17,0,NA,0,county
+Windham,2020-03-17,0,NA,0,county
+Connecticut,2020-03-18,96,NA,1,state
+Fairfield,2020-03-18,69,NA,1,county
+Hartford,2020-03-18,11,NA,0,county
+Litchfield,2020-03-18,5,NA,0,county
+Middlesex,2020-03-18,1,NA,0,county
+New Haven,2020-03-18,10,NA,0,county
+New London,2020-03-18,0,NA,0,county
+Tolland,2020-03-18,0,NA,0,county
+Windham,2020-03-18,0,NA,0,county
+Connecticut,2020-03-19,159,NA,4,state
+Fairfield,2020-03-19,102,NA,4,county
+Hartford,2020-03-19,18,NA,0,county
+Litchfield,2020-03-19,7,NA,0,county
+Middlesex,2020-03-19,3,NA,0,county
+New Haven,2020-03-19,23,NA,0,county
+New London,2020-03-19,0,NA,0,county
+Tolland,2020-03-19,4,NA,0,county
+Windham,2020-03-19,2,NA,0,county
+Connecticut,2020-03-20,194,NA,4,state
+Fairfield,2020-03-20,122,NA,4,county
+Hartford,2020-03-20,29,NA,0,county
+Litchfield,2020-03-20,8,NA,0,county
+Middlesex,2020-03-20,5,NA,0,county
+New Haven,2020-03-20,23,NA,0,county
+New London,2020-03-20,1,NA,0,county
+Tolland,2020-03-20,4,NA,0,county
+Windham,2020-03-20,2,NA,0,county
+Connecticut,2020-03-21,223,43,5,state
+Fairfield,2020-03-21,140,15,4,county
+Hartford,2020-03-21,35,12,0,county
+Litchfield,2020-03-21,11,2,0,county
+Middlesex,2020-03-21,6,3,0,county
+New Haven,2020-03-21,24,9,0,county
+New London,2020-03-21,1,0,0,county
+Tolland,2020-03-21,5,2,1,county
+Windham,2020-03-21,1,0,0,county
+Connecticut,2020-03-22,327,51,8,state
+Fairfield,2020-03-22,208,20,5,county
+Hartford,2020-03-22,54,13,1,county
+Litchfield,2020-03-22,12,3,0,county
+Middlesex,2020-03-22,6,3,0,county
+New Haven,2020-03-22,29,9,0,county
+New London,2020-03-22,3,1,0,county
+Tolland,2020-03-22,14,2,2,county
+Windham,2020-03-22,1,0,0,county
+Connecticut,2020-03-23,415,54,10,state
+Fairfield,2020-03-23,270,20,6,county
+Hartford,2020-03-23,61,13,2,county
+Litchfield,2020-03-23,13,2,0,county
+Middlesex,2020-03-23,8,4,0,county
+New Haven,2020-03-23,41,12,0,county
+New London,2020-03-23,4,1,0,county
+Tolland,2020-03-23,16,2,2,county
+Windham,2020-03-23,2,0,0,county
+Connecticut,2020-03-24,618,71,12,state
+Fairfield,2020-03-24,384,23,7,county
+Hartford,2020-03-24,88,17,2,county
+Litchfield,2020-03-24,22,3,0,county
+Middlesex,2020-03-24,8,4,0,county
+New Haven,2020-03-24,89,19,0,county
+New London,2020-03-24,6,1,0,county
+Tolland,2020-03-24,19,4,3,county
+Windham,2020-03-24,2,0,0,county
+Connecticut,2020-03-25,883,113,19,state
+Fairfield,2020-03-25,546,47,12,county
+Hartford,2020-03-25,116,24,2,county
+Litchfield,2020-03-25,33,3,0,county
+Middlesex,2020-03-25,15,4,0,county
+New Haven,2020-03-25,127,28,2,county
+New London,2020-03-25,9,2,0,county
+Tolland,2020-03-25,27,5,3,county
+Windham,2020-03-25,2,0,0,county
+Connecticut,2020-03-26,1012,125,21,state
+Fairfield,2020-03-26,607,49,13,county
+Hartford,2020-03-26,138,27,2,county
+Litchfield,2020-03-26,44,3,0,county
+Middlesex,2020-03-26,18,5,1,county
+New Haven,2020-03-26,156,34,2,county
+New London,2020-03-26,13,2,0,county
+Tolland,2020-03-26,33,5,3,county
+Windham,2020-03-26,3,0,0,county
+Connecticut,2020-03-27,1291,173,27,state
+Fairfield,2020-03-27,752,68,15,county
+Hartford,2020-03-27,189,36,2,county
+Litchfield,2020-03-27,52,9,0,county
+Middlesex,2020-03-27,25,5,1,county
+New Haven,2020-03-27,222,46,6,county
+New London,2020-03-27,15,2,0,county
+Tolland,2020-03-27,33,7,3,county
+Windham,2020-03-27,3,0,0,county
+Connecticut,2020-03-28,1524,205,33,state
+Fairfield,2020-03-28,908,88,20,county
+Hartford,2020-03-28,228,41,2,county
+Litchfield,2020-03-28,65,12,0,county
+Middlesex,2020-03-28,28,5,1,county
+New Haven,2020-03-28,236,50,6,county
+New London,2020-03-28,19,2,0,county
+Tolland,2020-03-28,37,7,4,county
+Windham,2020-03-28,3,0,0,county
+Connecticut,2020-03-29,1993,205,34,state
+Fairfield,2020-03-29,1245,189,21,county
+Hartford,2020-03-29,276,67,2,county
+Litchfield,2020-03-29,87,5,0,county
+Middlesex,2020-03-29,38,1,1,county
+New Haven,2020-03-29,280,137,6,county
+New London,2020-03-29,20,4,0,county
+Tolland,2020-03-29,40,0,4,county
+Windham,2020-03-29,7,1,0,county
+Connecticut,2020-03-30,2571,517,36,state
+Fairfield,2020-03-30,1445,101,21,county
+Hartford,2020-03-30,330,59,3,county
+Litchfield,2020-03-30,113,18,1,county
+Middlesex,2020-03-30,50,6,1,county
+New Haven,2020-03-30,373,55,6,county
+New London,2020-03-30,24,4,0,county
+Tolland,2020-03-30,50,7,4,county
+Windham,2020-03-30,10,0,0,county
+Connecticut,2020-03-31,3128,608,69,state
+Fairfield,2020-03-31,1870,275,38,county
+Hartford,2020-03-31,393,110,7,county
+Litchfield,2020-03-31,121,7,1,county
+Middlesex,2020-03-31,56,5,1,county
+New Haven,2020-03-31,517,202,12,county
+New London,2020-03-31,27,8,1,county
+Tolland,2020-03-31,56,1,7,county
+Windham,2020-03-31,11,0,0,county
+Connecticut,2020-04-01,3557,766,85,state
+Fairfield,2020-04-01,1986,359,46,county
+Hartford,2020-04-01,469,126,11,county
+Litchfield,2020-04-01,131,11,1,county
+Middlesex,2020-04-01,66,8,2,county
+New Haven,2020-04-01,611,251,15,county
+New London,2020-04-01,29,10,1,county
+Tolland,2020-04-01,61,1,7,county
+Windham,2020-04-01,19,0,0,county
+Connecticut,2020-04-02,3824,827,112,state
+Fairfield,2020-04-02,2132,381,65,county
+Hartford,2020-04-02,539,136,13,county
+Litchfield,2020-04-02,141,11,2,county
+Middlesex,2020-04-02,74,11,3,county
+New Haven,2020-04-02,647,274,17,county
+New London,2020-04-02,29,9,1,county
+Tolland,2020-04-02,67,2,10,county
+Windham,2020-04-02,21,3,0,county
+Connecticut,2020-04-03,4914,909,131,state
+Fairfield,2020-04-03,2716,409,75,county
+Hartford,2020-04-03,679,166,18,county
+Litchfield,2020-04-03,173,14,4,county
+Middlesex,2020-04-03,91,12,2,county
+New Haven,2020-04-03,891,293,18,county
+New London,2020-04-03,40,9,3,county
+Tolland,2020-04-03,79,3,10,county
+Windham,2020-04-03,27,3,0,county
+Connecticut,2020-04-04,5276,1033,165,state
+Fairfield,2020-04-04,2824,475,86,county
+Hartford,2020-04-04,726,184,26,county
+Litchfield,2020-04-04,182,15,5,county
+Middlesex,2020-04-04,100,19,4,county
+New Haven,2020-04-04,1024,324,29,county
+New London,2020-04-04,57,10,3,county
+Tolland,2020-04-04,91,3,10,county
+Windham,2020-04-04,31,3,1,county
+Connecticut,2020-04-05,5675,1142,189,state
+Fairfield,2020-04-05,3050,531,96,county
+Hartford,2020-04-05,751,189,29,county
+Litchfield,2020-04-05,197,15,6,county
+Middlesex,2020-04-05,110,19,5,county
+New Haven,2020-04-05,1162,372,36,county
+New London,2020-04-05,57,10,4,county
+Tolland,2020-04-05,94,3,11,county
+Windham,2020-04-05,32,3,1,county
+Connecticut,2020-04-06,6906,1221,206,state
+Fairfield,2020-04-06,3719,572,101,county
+Hartford,2020-04-06,882,213,31,county
+Litchfield,2020-04-06,230,15,8,county
+Middlesex,2020-04-06,135,22,7,county
+New Haven,2020-04-06,1468,384,41,county
+New London,2020-04-06,65,10,4,county
+Tolland,2020-04-06,103,3,13,county
+Windham,2020-04-06,40,2,1,county
+Connecticut,2020-04-07,7781,1308,277,state
+Fairfield,2020-04-07,4136,613,132,county
+Hartford,2020-04-07,1045,243,48,county
+Litchfield,2020-04-07,255,17,9,county
+Middlesex,2020-04-07,150,26,7,county
+New Haven,2020-04-07,1664,390,60,county
+New London,2020-04-07,85,12,4,county
+Tolland,2020-04-07,111,4,13,county
+Windham,2020-04-07,43,3,1,county
+Connecticut,2020-04-08,8781,1418,335,state
+Fairfield,2020-04-08,4417,665,155,county
+Hartford,2020-04-08,1290,251,68,county
+Litchfield,2020-04-08,292,20,12,county
+Middlesex,2020-04-08,174,28,9,county
+New Haven,2020-04-08,1945,428,70,county
+New London,2020-04-08,120,16,5,county
+Tolland,2020-04-08,128,7,13,county
+Windham,2020-04-08,49,3,1,county
+Connecticut,2020-04-09,9784,1464,380,state
+Fairfield,2020-04-09,4882,664,178,county
+Hartford,2020-04-09,1471,276,75,county
+Litchfield,2020-04-09,315,25,13,county
+Middlesex,2020-04-09,205,26,14,county
+New Haven,2020-04-09,2183,447,78,county
+New London,2020-04-09,139,15,6,county
+Tolland,2020-04-09,145,7,13,county
+Windham,2020-04-09,52,4,1,county
+Connecticut,2020-04-10,10538,1562,448,state
+Fairfield,2020-04-10,5180,685,203,county
+Hartford,2020-04-10,1615,296,88,county
+Litchfield,2020-04-10,346,32,16,county
+Middlesex,2020-04-10,240,28,17,county
+New Haven,2020-04-10,2383,493,98,county
+New London,2020-04-10,156,17,7,county
+Tolland,2020-04-10,152,6,14,county
+Windham,2020-04-10,59,5,1,county
+Connecticut,2020-04-11,11510,1593,494,state
+Fairfield,2020-04-11,5407,676,220,county
+Hartford,2020-04-11,1832,311,101,county
+Litchfield,2020-04-11,388,38,20,county
+Middlesex,2020-04-11,290,27,18,county
+New Haven,2020-04-11,2715,514,107,county
+New London,2020-04-11,185,16,7,county
+Tolland,2020-04-11,171,7,15,county
+Windham,2020-04-11,66,4,1,county
+Connecticut,2020-04-12,12035,1654,554,state
+Fairfield,2020-04-12,5534,688,248,county
+Hartford,2020-04-12,1914,333,116,county
+Litchfield,2020-04-12,403,39,24,county
+Middlesex,2020-04-12,299,32,18,county
+New Haven,2020-04-12,2946,535,119,county
+New London,2020-04-12,190,16,7,county
+Tolland,2020-04-12,182,7,17,county
+Windham,2020-04-12,66,4,1,county
+Connecticut,2020-04-13,13381,1760,602,state
+Fairfield,2020-04-13,6004,710,262,county
+Hartford,2020-04-13,2243,361,133,county
+Litchfield,2020-04-13,446,37,24,county
+Middlesex,2020-04-13,339,35,19,county
+New Haven,2020-04-13,3358,580,135,county
+New London,2020-04-13,222,20,7,county
+Tolland,2020-04-13,195,13,17,county
+Windham,2020-04-13,83,4,1,county
+Connecticut,2020-04-14,13989,1779,671,state
+Fairfield,2020-04-14,6213,731,287,county
+Hartford,2020-04-14,2370,369,153,county
+Litchfield,2020-04-14,460,35,29,county
+Middlesex,2020-04-14,355,38,21,county
+New Haven,2020-04-14,3543,572,151,county
+New London,2020-04-14,227,17,7,county
+Tolland,2020-04-14,201,12,18,county
+Windham,2020-04-14,87,5,1,county
+Connecticut,2020-04-15,14755,1908,868,state
+Fairfield,2020-04-15,6480,784,365,county
+Hartford,2020-04-15,2570,402,213,county
+Litchfield,2020-04-15,490,32,35,county
+Middlesex,2020-04-15,379,40,28,county
+New Haven,2020-04-15,3758,612,195,county
+New London,2020-04-15,236,21,7,county
+Tolland,2020-04-15,216,11,22,county
+Windham,2020-04-15,89,6,1,county
+Connecticut,2020-04-16,15884,1926,971,state
+Fairfield,2020-04-16,6816,787,406,county
+Hartford,2020-04-16,2859,420,243,county
+Litchfield,2020-04-16,535,27,44,county
+Middlesex,2020-04-16,394,39,30,county
+New Haven,2020-04-16,4163,613,214,county
+New London,2020-04-16,255,23,9,county
+Tolland,2020-04-16,241,11,22,county
+Windham,2020-04-16,87,6,1,county
+Connecticut,2020-04-17,16809,1946,1036,state
+Fairfield,2020-04-17,7146,797,425,county
+Hartford,2020-04-17,3015,410,266,county
+Litchfield,2020-04-17,569,28,46,county
+Middlesex,2020-04-17,422,37,32,county
+New Haven,2020-04-17,4520,633,229,county
+New London,2020-04-17,292,22,10,county
+Tolland,2020-04-17,258,12,24,county
+Windham,2020-04-17,92,7,2,county
+Connecticut,2020-04-18,17550,1938,1086,state
+Fairfield,2020-04-18,7363,776,432,county
+Hartford,2020-04-18,3196,417,289,county
+Litchfield,2020-04-18,593,30,48,county
+Middlesex,2020-04-18,448,36,37,county
+New Haven,2020-04-18,4743,638,241,county
+New London,2020-04-18,315,23,10,county
+Tolland,2020-04-18,270,14,24,county
+Windham,2020-04-18,97,4,2,county
+Connecticut,2020-04-19,17962,1901,1127,state
+Fairfield,2020-04-19,7434,746,447,county
+Hartford,2020-04-19,3351,420,295,county
+Litchfield,2020-04-19,600,27,48,county
+Middlesex,2020-04-19,462,33,40,county
+New Haven,2020-04-19,4871,633,257,county
+New London,2020-04-19,339,26,10,county
+Tolland,2020-04-19,276,12,24,county
+Windham,2020-04-19,100,4,2,county
+Connecticut,2020-04-20,19815,1919,1331,state
+Fairfield,2020-04-20,8320,733,512,county
+Hartford,2020-04-20,3823,455,369,county
+Litchfield,2020-04-20,639,23,58,county
+Middlesex,2020-04-20,484,36,45,county
+New Haven,2020-04-20,5272,626,301,county
+New London,2020-04-20,356,29,13,county
+Tolland,2020-04-20,299,13,27,county
+Windham,2020-04-20,108,4,2,county
+Connecticut,2020-04-21,20360,1949,1423,state
+Fairfield,2020-04-21,8472,735,544,county
+Hartford,2020-04-21,3951,473,402,county
+Litchfield,2020-04-21,643,23,59,county
+Middlesex,2020-04-21,512,40,47,county
+New Haven,2020-04-21,5493,625,322,county
+New London,2020-04-21,369,35,13,county
+Tolland,2020-04-21,305,13,30,county
+Windham,2020-04-21,112,5,2,county
+Connecticut,2020-04-22,22469,1972,1544,state
+Fairfield,2020-04-22,9883,749,584,county
+Hartford,2020-04-22,4128,495,442,county
+Litchfield,2020-04-22,722,20,63,county
+Middlesex,2020-04-22,525,42,53,county
+New Haven,2020-04-22,5811,620,345,county
+New London,2020-04-22,397,32,14,county
+Tolland,2020-04-22,331,11,32,county
+Windham,2020-04-22,122,3,4,county
+Connecticut,2020-04-23,23100,1947,1639,state
+Fairfield,2020-04-23,10008,730,615,county
+Hartford,2020-04-23,4303,490,469,county
+Litchfield,2020-04-23,751,22,66,county
+Middlesex,2020-04-23,545,38,57,county
+New Haven,2020-04-23,6064,626,372,county
+New London,2020-04-23,419,31,17,county
+Tolland,2020-04-23,359,6,33,county
+Windham,2020-04-23,129,4,4,county
+Connecticut,2020-04-24,23921,1877,1764,state
+Fairfield,2020-04-24,10227,694,662,county
+Hartford,2020-04-24,4570,462,511,county
+Litchfield,2020-04-24,808,22,69,county
+Middlesex,2020-04-24,561,39,63,county
+New Haven,2020-04-24,6286,617,396,county
+New London,2020-04-24,448,33,23,county
+Tolland,2020-04-24,375,4,34,county
+Windham,2020-04-24,139,6,3,county
+Connecticut,2020-04-25,24582,1810,1862,state
+Fairfield,2020-04-25,10373,649,689,county
+Hartford,2020-04-25,4761,443,553,county
+Litchfield,2020-04-25,834,22,73,county
+Middlesex,2020-04-25,576,41,62,county
+New Haven,2020-04-25,6509,610,416,county
+New London,2020-04-25,473,33,28,county
+Tolland,2020-04-25,384,6,35,county
+Windham,2020-04-25,151,6,3,county
+Connecticut,2020-04-26,25269,1766,1924,state
+Fairfield,2020-04-26,10529,635,707,county
+Hartford,2020-04-26,4989,426,579,county
+Litchfield,2020-04-26,864,22,74,county
+Middlesex,2020-04-26,588,37,66,county
+New Haven,2020-04-26,6715,605,429,county
+New London,2020-04-26,498,31,31,county
+Tolland,2020-04-26,407,5,35,county
+Windham,2020-04-26,157,5,3,county
+Connecticut,2020-04-27,25997,1758,2012,state
+Fairfield,2020-04-27,10763,627,727,county
+Hartford,2020-04-27,5157,429,612,county
+Litchfield,2020-04-27,892,21,75,county
+Middlesex,2020-04-27,609,37,69,county
+New Haven,2020-04-27,6993,602,456,county
+New London,2020-04-27,516,31,34,county
+Tolland,2020-04-27,419,5,35,county
+Windham,2020-04-27,164,6,3,county
+Connecticut,2020-04-28,26312,1732,2089,state
+Fairfield,2020-04-28,10874,620,747,county
+Hartford,2020-04-28,5224,418,643,county
+Litchfield,2020-04-28,900,20,76,county
+Middlesex,2020-04-28,618,31,70,county
+New Haven,2020-04-28,7089,598,478,county
+New London,2020-04-28,530,34,34,county
+Tolland,2020-04-28,422,6,35,county
+Windham,2020-04-28,164,5,3,county
+Connecticut,2020-04-29,26767,1691,2168,state
+Fairfield,2020-04-29,10985,591,774,county
+Hartford,2020-04-29,5388,403,670,county
+Litchfield,2020-04-29,919,21,79,county
+Middlesex,2020-04-29,631,37,76,county
+New Haven,2020-04-29,7205,591,493,county
+New London,2020-04-29,540,39,35,county
+Tolland,2020-04-29,427,5,36,county
+Windham,2020-04-29,165,4,2,county
+Connecticut,2020-04-30,27700,1650,2257,state
+Fairfield,2020-04-30,11294,565,810,county
+Hartford,2020-04-30,5601,416,698,county
+Litchfield,2020-04-30,963,21,80,county
+Middlesex,2020-04-30,657,42,79,county
+New Haven,2020-04-30,7536,557,512,county
+New London,2020-04-30,564,41,36,county
+Tolland,2020-04-30,437,4,36,county
+Windham,2020-04-30,186,4,2,county
+Connecticut,2020-05-01,28764,1592,2339,state
+Fairfield,2020-05-01,11612,537,839,county
+Hartford,2020-05-01,5931,413,715,county
+Litchfield,2020-05-01,1014,22,86,county
+Middlesex,2020-05-01,687,40,82,county
+New Haven,2020-05-01,7900,533,533,county
+New London,2020-05-01,603,38,42,county
+Tolland,2020-05-01,446,6,38,county
+Windham,2020-05-01,200,3,2,county
+Connecticut,2020-05-02,29287,1551,2436,state
+Fairfield,2020-05-02,11801,525,865,county
+Hartford,2020-05-02,6112,400,741,county
+Litchfield,2020-05-02,1036,22,89,county
+Middlesex,2020-05-02,707,37,91,county
+New Haven,2020-05-02,8024,523,565,county
+New London,2020-05-02,623,33,43,county
+Tolland,2020-05-02,461,6,39,county
+Windham,2020-05-02,211,5,2,county
+Connecticut,2020-05-03,29973,1464,2556,state
+Fairfield,2020-05-03,12245,507,910,county
+Hartford,2020-05-03,6173,362,773,county
+Litchfield,2020-05-03,1047,23,94,county
+Middlesex,2020-05-03,713,41,93,county
+New Haven,2020-05-03,8110,487,595,county
+New London,2020-05-03,641,33,45,county
+Tolland,2020-05-03,464,6,40,county
+Windham,2020-05-03,217,5,3,county
+Connecticut,2020-05-04,30621,1500,2633,state
+Fairfield,2020-05-04,12360,519,935,county
+Hartford,2020-05-04,6351,369,804,county
+Litchfield,2020-05-04,1065,24,95,county
+Middlesex,2020-05-04,734,42,95,county
+New Haven,2020-05-04,8337,504,610,county
+New London,2020-05-04,681,34,45,county
+Tolland,2020-05-04,502,7,43,county
+Windham,2020-05-04,223,1,4,county
+Connecticut,2020-05-05,30995,1445,2718,state
+Fairfield,2020-05-05,12455,489,952,county
+Hartford,2020-05-05,6530,361,842,county
+Litchfield,2020-05-05,1085,21,100,county
+Middlesex,2020-05-05,742,42,98,county
+New Haven,2020-05-05,8419,487,629,county
+New London,2020-05-05,704,36,47,county
+Tolland,2020-05-05,513,6,44,county
+Windham,2020-05-05,242,3,4,county
+Connecticut,2020-05-06,31784,1385,2797,state
+Fairfield,2020-05-06,12679,469,977,county
+Hartford,2020-05-06,6750,340,867,county
+Litchfield,2020-05-06,1114,20,104,county
+Middlesex,2020-05-06,764,45,104,county
+New Haven,2020-05-06,8678,468,643,county
+New London,2020-05-06,742,35,49,county
+Tolland,2020-05-06,522,5,46,county
+Windham,2020-05-06,250,3,5,county
+Connecticut,2020-05-07,32411,1336,2874,state
+Fairfield,2020-05-07,12879,439,1006,county
+Hartford,2020-05-07,6904,348,884,county
+Litchfield,2020-05-07,1130,17,103,county
+Middlesex,2020-05-07,775,41,108,county
+New Haven,2020-05-07,8887,448,669,county
+New London,2020-05-07,755,36,50,county
+Tolland,2020-05-07,530,5,46,county
+Windham,2020-05-07,249,2,5,county
+Connecticut,2020-05-08,32984,1301,2932,state
+Fairfield,2020-05-08,13030,424,1017,county
+Hartford,2020-05-08,7105,339,901,county
+Litchfield,2020-05-08,1142,15,105,county
+Middlesex,2020-05-08,789,44,114,county
+New Haven,2020-05-08,9091,437,686,county
+New London,2020-05-08,775,33,54,county
+Tolland,2020-05-08,540,5,46,county
+Windham,2020-05-08,266,4,6,county
+Connecticut,2020-05-09,33554,1242,2967,state
+Fairfield,2020-05-09,13236,403,1024,county
+Hartford,2020-05-09,7263,316,909,county
+Litchfield,2020-05-09,1153,19,107,county
+Middlesex,2020-05-09,798,47,115,county
+New Haven,2020-05-09,9209,421,701,county
+New London,2020-05-09,782,27,54,county
+Tolland,2020-05-09,543,5,47,county
+Windham,2020-05-09,270,4,7,county
+Connecticut,2020-05-10,33765,1212,3008,state
+Fairfield,2020-05-10,13312,384,1034,county
+Hartford,2020-05-10,7358,328,921,county
+Litchfield,2020-05-10,1161,17,109,county
+Middlesex,2020-05-10,801,42,115,county
+New Haven,2020-05-10,9260,405,716,county
+New London,2020-05-10,784,26,56,county
+Tolland,2020-05-10,545,4,47,county
+Windham,2020-05-10,271,6,7,county
+Connecticut,2020-05-11,34333,1189,3041,state
+Fairfield,2020-05-11,13488,378,1046,county
+Hartford,2020-05-11,7528,320,931,county
+Litchfield,2020-05-11,1171,21,110,county
+Middlesex,2020-05-11,823,40,116,county
+New Haven,2020-05-11,9430,399,723,county
+New London,2020-05-11,793,23,58,county
+Tolland,2020-05-11,556,2,47,county
+Windham,2020-05-11,281,6,7,county
+Connecticut,2020-05-12,34855,1158,3125,state
+Fairfield,2020-05-12,13636,372,1068,county
+Hartford,2020-05-12,7732,296,963,county
+Litchfield,2020-05-12,1179,18,110,county
+Middlesex,2020-05-12,837,36,116,county
+New Haven,2020-05-12,9570,404,745,county
+New London,2020-05-12,804,24,60,county
+Tolland,2020-05-12,560,3,49,county
+Windham,2020-05-12,287,5,9,county
+Connecticut,2020-05-13,35464,1103,3219,state
+Fairfield,2020-05-13,13836,362,1093,county
+Hartford,2020-05-13,7935,269,999,county
+Litchfield,2020-05-13,1203,14,115,county
+Middlesex,2020-05-13,863,31,118,county
+New Haven,2020-05-13,9712,394,767,county
+New London,2020-05-13,821,24,62,county
+Tolland,2020-05-13,568,3,51,county
+Windham,2020-05-13,291,6,11,county
+Connecticut,2020-05-14,36085,1033,3285,state
+Fairfield,2020-05-14,14009,342,1109,county
+Hartford,2020-05-14,8126,248,1025,county
+Litchfield,2020-05-14,1218,14,115,county
+Middlesex,2020-05-14,885,32,124,county
+New Haven,2020-05-14,9881,367,783,county
+New London,2020-05-14,844,24,63,county
+Tolland,2020-05-14,583,1,51,county
+Windham,2020-05-14,301,5,12,county
+Connecticut,2020-05-15,36703,994,3339,state
+Fairfield,2020-05-15,14140,330,1125,county
+Hartford,2020-05-15,8299,243,1044,county
+Litchfield,2020-05-15,1234,10,116,county
+Middlesex,2020-05-15,898,29,124,county
+New Haven,2020-05-15,10075,352,800,county
+New London,2020-05-15,860,24,65,county
+Tolland,2020-05-15,636,1,51,county
+Windham,2020-05-15,304,5,12,county
+Connecticut,2020-05-16,37419,937,3408,state
+Fairfield,2020-05-16,14248,299,1146,county
+Hartford,2020-05-16,8723,234,1069,county
+Litchfield,2020-05-16,1269,10,116,county
+Middlesex,2020-05-16,909,32,125,county
+New Haven,2020-05-16,10159,336,817,county
+New London,2020-05-16,873,22,66,county
+Tolland,2020-05-16,715,1,54,county
+Windham,2020-05-16,313,3,14,county
+Connecticut,2020-05-17,38116,920,3449,state
+Fairfield,2020-05-17,14439,287,1153,county
+Hartford,2020-05-17,8957,235,1084,county
+Litchfield,2020-05-17,1280,10,115,county
+Middlesex,2020-05-17,936,32,131,county
+New Haven,2020-05-17,10338,331,830,county
+New London,2020-05-17,876,21,66,county
+Tolland,2020-05-17,735,1,54,county
+Windham,2020-05-17,322,3,14,county
+Connecticut,2020-05-18,38430,914,3472,state
+Fairfield,2020-05-18,14522,287,1160,county
+Hartford,2020-05-18,9050,226,1090,county
+Litchfield,2020-05-18,1290,11,117,county
+Middlesex,2020-05-18,947,35,131,county
+New Haven,2020-05-18,10427,327,838,county
+New London,2020-05-18,880,24,66,county
+Tolland,2020-05-18,770,1,54,county
+Windham,2020-05-18,326,3,14,county
+Connecticut,2020-05-19,39017,887,3529,state
+Fairfield,2020-05-19,14719,272,1167,county
+Hartford,2020-05-19,9234,222,1116,county
+Litchfield,2020-05-19,1299,7,121,county
+Middlesex,2020-05-19,965,33,131,county
+New Haven,2020-05-19,10587,326,855,county
+New London,2020-05-19,896,24,68,county
+Tolland,2020-05-19,786,0,55,county
+Windham,2020-05-19,329,3,14,county
+Connecticut,2020-05-20,39208,816,3582,state
+Fairfield,2020-05-20,14751,241,1180,county
+Hartford,2020-05-20,9299,214,1133,county
+Litchfield,2020-05-20,1303,7,121,county
+Middlesex,2020-05-20,972,28,130,county
+New Haven,2020-05-20,10663,301,874,county
+New London,2020-05-20,903,22,73,county
+Tolland,2020-05-20,787,0,55,county
+Windham,2020-05-20,336,3,14,county
+Connecticut,2020-05-21,39640,740,3637,state
+Fairfield,2020-05-21,14889,226,1195,county
+Hartford,2020-05-21,9463,184,1155,county
+Litchfield,2020-05-21,1298,6,121,county
+Middlesex,2020-05-21,992,28,135,county
+New Haven,2020-05-21,10756,272,888,county
+New London,2020-05-21,910,21,72,county
+Tolland,2020-05-21,796,0,55,county
+Windham,2020-05-21,348,3,14,county
+Connecticut,2020-05-22,40022,724,3675,state
+Fairfield,2020-05-22,14989,227,1208,county
+Hartford,2020-05-22,9545,179,1169,county
+Litchfield,2020-05-22,1304,5,122,county
+Middlesex,2020-05-22,999,25,136,county
+New Haven,2020-05-22,10847,265,897,county
+New London,2020-05-22,970,20,72,county
+Tolland,2020-05-22,799,0,55,county
+Windham,2020-05-22,354,3,14,county
+Connecticut,2020-05-23,40468,701,3693,state
+Fairfield,2020-05-23,15114,232,1215,county
+Hartford,2020-05-23,9686,164,1175,county
+Litchfield,2020-05-23,1331,5,121,county
+Middlesex,2020-05-23,1010,26,136,county
+New Haven,2020-05-23,10905,254,903,county
+New London,2020-05-23,1046,17,74,county
+Tolland,2020-05-23,807,0,55,county
+Windham,2020-05-23,359,3,14,county
+Connecticut,2020-05-24,40873,706,3742,state
+Fairfield,2020-05-24,15213,233,1221,county
+Hartford,2020-05-24,9841,166,1187,county
+Litchfield,2020-05-24,1346,6,126,county
+Middlesex,2020-05-24,1012,29,138,county
+New Haven,2020-05-24,11017,253,922,county
+New London,2020-05-24,1043,16,78,county
+Tolland,2020-05-24,812,0,56,county
+Windham,2020-05-24,365,3,14,county
+Connecticut,2020-05-25,41303,694,3769,state
+Fairfield,2020-05-25,15355,225,1231,county
+Hartford,2020-05-25,9917,173,1193,county
+Litchfield,2020-05-25,1360,4,129,county
+Middlesex,2020-05-25,1026,28,142,county
+New Haven,2020-05-25,11121,248,925,county
+New London,2020-05-25,1075,14,78,county
+Tolland,2020-05-25,821,0,56,county
+Windham,2020-05-25,371,2,14,county
+Connecticut,2020-05-26,41288,684,3803,state
+Fairfield,2020-05-26,15314,220,1242,county
+Hartford,2020-05-26,9962,165,1203,county
+Litchfield,2020-05-26,1360,5,130,county
+Middlesex,2020-05-26,1061,30,143,county
+New Haven,2020-05-26,11124,248,934,county
+New London,2020-05-26,1053,15,79,county
+Tolland,2020-05-26,815,0,57,county
+Windham,2020-05-26,371,1,14,county
+Connecticut,2020-05-27,41559,648,3826,state
+Fairfield,2020-05-27,15353,211,1246,county
+Hartford,2020-05-27,10078,158,1208,county
+Litchfield,2020-05-27,1366,8,128,county
+Middlesex,2020-05-27,1082,24,144,county
+New Haven,2020-05-27,11198,232,946,county
+New London,2020-05-27,1067,12,83,county
+Tolland,2020-05-27,822,2,57,county
+Windham,2020-05-27,375,1,14,county
+Connecticut,2020-05-28,41762,577,3868,state
+Fairfield,2020-05-28,15409,188,1257,county
+Hartford,2020-05-28,10146,138,1222,county
+Litchfield,2020-05-28,1375,5,130,county
+Middlesex,2020-05-28,1090,22,146,county
+New Haven,2020-05-28,11241,207,957,county
+New London,2020-05-28,1068,12,85,county
+Tolland,2020-05-28,827,2,57,county
+Windham,2020-05-28,380,3,14,county
+Connecticut,2020-05-29,42022,533,3912,state
+Fairfield,2020-05-29,15502,176,1267,county
+Hartford,2020-05-29,10207,120,1238,county
+Litchfield,2020-05-29,1381,3,131,county
+Middlesex,2020-05-29,1104,22,150,county
+New Haven,2020-05-29,11309,195,966,county
+New London,2020-05-29,1076,13,89,county
+Tolland,2020-05-29,833,2,57,county
+Windham,2020-05-29,381,2,14,county
+Connecticut,2020-05-30,42201,481,3944,state
+Fairfield,2020-05-30,15549,163,1277,county
+Hartford,2020-05-30,10296,107,1250,county
+Litchfield,2020-05-30,1397,2,133,county
+Middlesex,2020-05-30,1104,23,152,county
+New Haven,2020-05-30,11323,170,972,county
+New London,2020-05-30,1078,11,89,county
+Tolland,2020-05-30,836,2,57,county
+Windham,2020-05-30,384,3,14,county
+Connecticut,2020-05-31,42743,454,3970,state
+Fairfield,2020-05-31,15709,157,1288,county
+Hartford,2020-05-31,10445,100,1254,county
+Litchfield,2020-05-31,1400,4,136,county
+Middlesex,2020-05-31,1143,21,153,county
+New Haven,2020-05-31,11479,160,973,county
+New London,2020-05-31,1091,9,89,county
+Tolland,2020-05-31,845,2,58,county
+Windham,2020-05-31,388,1,13,county
+Connecticut,2020-06-01,42979,434,3972,state
+Fairfield,2020-06-01,15776,153,1287,county
+Hartford,2020-06-01,10536,93,1253,county
+Litchfield,2020-06-01,1402,4,133,county
+Middlesex,2020-06-01,1154,24,150,county
+New Haven,2020-06-01,11525,149,985,county
+New London,2020-06-01,1094,9,90,county
+Tolland,2020-06-01,848,1,60,county
+Windham,2020-06-01,393,1,14,county
+Connecticut,2020-06-02,43091,406,3989,state
+Fairfield,2020-06-02,15789,134,1289,county
+Hartford,2020-06-02,10593,92,1259,county
+Litchfield,2020-06-02,1404,5,133,county
+Middlesex,2020-06-02,1161,16,152,county
+New Haven,2020-06-02,11548,150,990,county
+New London,2020-06-02,1100,8,92,county
+Tolland,2020-06-02,856,0,60,county
+Windham,2020-06-02,392,1,14,county
+Connecticut,2020-06-03,43239,373,4007,state
+Fairfield,2020-06-03,15843,126,1293,county
+Hartford,2020-06-03,10636,90,1266,county
+Litchfield,2020-06-03,1406,3,134,county
+Middlesex,2020-06-03,1171,15,154,county
+New Haven,2020-06-03,11582,128,992,county
+New London,2020-06-03,1104,8,94,county
+Tolland,2020-06-03,859,0,60,county
+Windham,2020-06-03,397,3,14,county
+Connecticut,2020-06-04,43460,350,4038,state
+Fairfield,2020-06-04,15914,111,1304,county
+Hartford,2020-06-04,10677,83,1277,county
+Litchfield,2020-06-04,1409,2,134,county
+Middlesex,2020-06-04,1170,14,155,county
+New Haven,2020-06-04,11673,127,999,county
+New London,2020-06-04,1108,8,95,county
+Tolland,2020-06-04,859,0,60,county
+Windham,2020-06-04,405,5,14,county
+Connecticut,2020-06-05,43818,333,4055,state
+Fairfield,2020-06-05,16020,108,1309,county
+Hartford,2020-06-05,10747,78,1279,county
+Litchfield,2020-06-05,1413,1,134,county
+Middlesex,2020-06-05,1174,14,157,county
+New Haven,2020-06-05,11817,121,1007,county
+New London,2020-06-05,1112,7,95,county
+Tolland,2020-06-05,864,0,60,county
+Windham,2020-06-05,416,4,14,county
+Connecticut,2020-06-06,43968,333,4071,state
+Fairfield,2020-06-06,16056,111,1312,county
+Hartford,2020-06-06,10809,87,1287,county
+Litchfield,2020-06-06,1419,1,134,county
+Middlesex,2020-06-06,1185,15,159,county
+New Haven,2020-06-06,11828,110,1010,county
+New London,2020-06-06,1119,6,95,county
+Tolland,2020-06-06,864,0,60,county
+Windham,2020-06-06,420,3,14,county
+Connecticut,2020-06-07,44092,324,4084,state
+Fairfield,2020-06-07,16092,114,1316,county
+Hartford,2020-06-07,10844,77,1291,county
+Litchfield,2020-06-07,1426,2,134,county
+Middlesex,2020-06-07,1187,14,160,county
+New Haven,2020-06-07,11860,108,1013,county
+New London,2020-06-07,1120,7,96,county
+Tolland,2020-06-07,863,0,60,county
+Windham,2020-06-07,428,2,14,county
