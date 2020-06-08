@@ -37,6 +37,10 @@ table.table tfoot td {
   padding-top: 1em !important;
 }
 
+div.paging_simple_numbers > ul.pagination > li > a {
+    padding: 6px 10px;
+}
+
 text.bb-title {
   font-size: 1.1em;
 }
