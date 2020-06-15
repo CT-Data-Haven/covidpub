@@ -162,7 +162,7 @@ Data show higher rates of detected cases and deaths among Black and Latino resid
 
 ::: {.col-sm-6}
 
-### Age-adjusted rate of detected cases per 10,000 residents by race/ethnicity, statewide as of `r race_date_fmt` {.viz-title}
+### Age-adjusted rate of detected cases per 10,000 residents by race/ethnicity, statewide as of `r race_date_fmt` {.viz-title .minheight}
 
 ```{r out_race_bars1}
 # keep same colors regardless of order
@@ -178,7 +178,7 @@ billboarder(data = age_adj_race, height = 350) %>%
 
 ::: {.col-sm-6}
 
-### Age-adjusted rate of COVID-19-related deaths per 10,000 residents by race/ethnicity, statewide as of `r race_date_fmt` {.viz-title}
+### Age-adjusted rate of COVID-19-related deaths per 10,000 residents by race/ethnicity, statewide as of `r race_date_fmt` {.viz-title .minheight}
 
 ```{r out_race_bars2}
 billboarder(list(), data = age_adj_race, height = 350) %>%
