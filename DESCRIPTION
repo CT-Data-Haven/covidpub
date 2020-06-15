@@ -32,6 +32,7 @@ Imports:
     rcartocolor,
     classInt
 Remotes:
+    CT-Data-Haven/cwi,
     cran/units@0.6-6,
     cran/rgdal@1.4-8,
     cran/sf@0.9-3

@@ -28,13 +28,11 @@ library(htmltools)
 source("scripts/plotting_utils.R")
 ```
 
-```{r}
+```{r meta_n_main}
 dfs <- list.files("input_data", pattern = ".csv", full.names = TRUE) %>%
   set_names(str_extract, "(?<=covid_)(\\w+)(?=\\.csv)") %>%
   map(read_csv)
-```
 
-```{r meta}
 town_county <- read_csv("input_data/county2town.csv")
 
 counties <- unique(town_county$county) %>%
@@ -42,9 +40,7 @@ counties <- unique(town_county$county) %>%
 
 pal <- vivid %>%
   purrr::set_names(c("Connecticut", counties))
-```
 
-```{r main_vars}
 county <- dfs[["county"]] %>%
   mutate_at(vars(name, level), as_factor)
 
@@ -79,7 +75,7 @@ For the latest information from the Connecticut Department of Public Health, vis
 
 ::: {#infoContainer .panel .panel-default .collapse }
 
-- Current testing protocols restrict tests to contact tracing and specimen sampling of individuals exhibiting severe symptoms. Test results also take several days to return after a specimen is collected and received. As such, counts of detected cases almost certainly underestimate the true number of people infected with COVID-19.
+- While previous testing protocols restricted tests to contact tracing and specimen sampling of individuals exhibiting severe symptoms, these have since changed. For current information on testing, see [state guidance](https://portal.ct.gov/Coronavirus/Covid-19-Knowledge-Base/COVID-19-Testing). Note that because testing coverage is still limited, *counts of detected cases almost certainly underestimate the true number of people infected with COVID-19.*
 
 - **Detected cases** refer to individuals who tested positive for COVID-19 as confirmed by the State of Connecticut. *Due to current testing protocols, this number likely underestimates—possibly to a very large degree—the number of people who may currently have or have recovered from the disease.*
 
@@ -93,7 +89,7 @@ For the latest information from the Connecticut Department of Public Health, vis
 
 ## Statewide case counts and rates
 
-```{r county_line_plot, fig.width=7, fig.height=5}
+```{r county_setup}
 set.seed(1)
 
 county_to_plot <- county %>%
@@ -105,11 +101,7 @@ mondays <- seq(date_range[1], date_range[2], by = 1) %>%
   floor_date(unit = "week", week_start = 1) %>%
   unique()
 mondays <- mondays[mondays >= min(county_to_plot$date)]
-```
 
-
-
-```{r}
 # only showing places with at least X number of cases
 reg_thresh <- 50
 ```
@@ -120,7 +112,7 @@ reg_thresh <- 50
 Rates are given here per 10,000 people by location—that is, a rate of 20 per 10,000 people in a town would mean that for every 10,000 residents of that town, an average of 20 people have tested positive for COVID-19.
 
 
-```{r region_cases}
+```{r out_region_case_table}
 counts_table <- bind_rows(
   county %>% 
     select(level, name, date, cases) %>%
@@ -147,7 +139,7 @@ datatable(counts_table,
   formatRound(4, digits = 1)
 ```
 
-```{r}
+```{r race_setup}
 age_adj_race <- dfs[["age_adjusted_race"]] %>%
   mutate_at(vars(race, measure), as_factor) %>%
   filter(race %in% c("Average", "White", "Black", "Latino", "Asian")) %>%
@@ -172,7 +164,7 @@ Data show higher rates of detected cases and deaths among Black and Latino resid
 
 ### Age-adjusted rate of detected cases per 10,000 residents by race/ethnicity, statewide as of `r race_date_fmt` {.viz-title}
 
-```{r}
+```{r out_race_bars1}
 # keep same colors regardless of order
 race_pal <- setNames(c("#888888", pal[c(2, 4, 9, 3)]), c("Total", "Black", "Latino", "White", "Asian"))
 billboarder(data = age_adj_race, height = 350) %>%
@@ -188,7 +180,7 @@ billboarder(data = age_adj_race, height = 350) %>%
 
 ### Age-adjusted rate of COVID-19-related deaths per 10,000 residents by race/ethnicity, statewide as of `r race_date_fmt` {.viz-title}
 
-```{r}
+```{r out_race_bars2}
 billboarder(list(), data = age_adj_race, height = 350) %>%
   bb_barchart(mapping = bbaes(x = race, y = deaths_rate_10k, group = race), stack = TRUE, width = list(ratio = 0.5)) %>%
   bb_colors_manual(race_pal) %>%
@@ -204,7 +196,7 @@ billboarder(list(), data = age_adj_race, height = 350) %>%
 
 ### Counts of detected COVID-19 cases by county, `r date_range_fmt[1]` to `r date_range_fmt[2]` {.viz-title}
 
-```{r county_bars, fig.width=7, fig.height=4}
+```{r out_county_bars, fig.width=7, fig.height=4}
 county_to_plot %>%
   filter(name != "Connecticut") %>%
   arrange(date, name) %>%
@@ -228,7 +220,7 @@ county_to_plot %>%
 Values shown here are rates per 10,000 people by town.
 
 
-```{r case_map, fig.height=5, fig.width=7, include=FALSE}
+```{r map_setup}
 rad_scale <- function(x, max_rad = 25) {
   s <- sqrt(x)
   s / max(s) * max_rad
@@ -243,13 +235,11 @@ map_lbllr <- function(name, rate_10k, cases) {
 }
 map_thresh <- 10
 cases_sf <- cwi::town_sf %>%
-  select(-GEOID) %>%
+  # select(-GEOID) %>%
   sf::st_transform(4326) %>%
-  # sf::st_centroid() %>%
-  left_join(town %>% 
-              filter(date == date_range[2]), 
-            by = "name") %>%
-  left_join(pops %>% select(name, total_pop), by = "name") %>%
+  left_join(town, by = "name") %>%
+  top_n(1, date) %>%
+  left_join(pops, by = "name") %>%
   mutate(rate_10k = round(cases / total_pop * 1e4, digits = 1))
 
 bbox <- cwi::town_sf %>%
@@ -260,7 +250,9 @@ bbox <- cwi::town_sf %>%
 ```
 
 
-```{r case_chor, fig.height=5, fig.width=7}
+
+
+```{r out_case_chor, fig.height=5, fig.width=7}
 chor_brks <- ceiling(classInt::classIntervals(cases_sf$rate_10k, n = 5, style = "jenks")$brk)
 chor_pal <- colorBin(RColorBrewer::brewer.pal(5, "BuPu"), domain = cases_sf$rate_10k, bins = chor_brks)
 leaflet(cases_sf, width = "100%", height = 500, 
@@ -281,14 +273,14 @@ leaflet(cases_sf, width = "100%", height = 500,
 
 ::: {.nomargin}
 
-```{r state_stats, fig.width=7, fig.height=5.5}
+```{r out_state_trendlines, fig.width=7, fig.height=5.5}
 test_x_cases <- county %>%
   inner_join(tests %>% select(-daily_tests), by = c("name", "date")) %>%
   select(-level) %>%
   pivot_longer(-c(date, name), names_to = "measure") %>%
   mutate(measure = as_factor(measure) %>%
            fct_relevel("tests", "cases", "hospitalizations") %>%
-           fct_recode("detected cases" = "cases", "individuals tested" = "tests") %>%
+           fct_recode("detected cases" = "cases", "tests completed" = "tests") %>%
            fct_relabel(str_to_sentence)) %>%
   filter(!is.na(value)) %>%
   arrange(measure) %>%
@@ -331,7 +323,7 @@ test_case_charts[[3]]
 
 Note that counts of COVID-19-related hospitalizations are only available from March 21 onward.
 
-```{r}
+```{r streak_setup}
 # need to fill any possible gaps in data in order to mark off streaks accurately? or ok to assume direction continues across any possible gaps? currently aren't any anyways
 hospital_change <- test_x_cases %>%
   filter(measure == "Hospitalizations") %>%
@@ -383,7 +375,7 @@ The longest continuous decrease in hospitalizations was between `r streak_fmt[1]
 
 ### Change in number of COVID-19-related hospitalizations from previous day, `r hosp_date_range[1]` to `r hosp_date_range[2]` {.viz-title}
 
-```{r}
+```{r out_hospitalizations}
 d3_flag <- "function(value, ratio, id, index) {
   return d3.format('+,')(value);
 }"
@@ -408,19 +400,11 @@ hospital_change %>%
 
 
 
-```{r eval=FALSE, include=FALSE}
-pod <- read_csv("input_data/ct_place_of_death.csv")
-
-billboarder(data = pod) %>%
-  bb_piechart(mapping = bbaes(x = type, y = value))
-```
-
-
 Summarizing the past seven days of trends helps to smooth out daily jumps or drops in the number of reported cases. Looking at the seven days before that helps contextualize the most recent seven-day period. 
 
 ### Change in number of detected new cases over 7-day periods {.viz-title}
 
-```{r case_5day}
+```{r out_case_5day}
 # switching to 7 days
 # only including if each 5-day period involves more than N cases; otherwise have things like increases of 1700%
 t5_thresh <- 10
@@ -468,7 +452,7 @@ datatable(change_table,
 ## Mobility and policy impacts
 
 
-```{r}
+```{r wk_testing_setup}
 reopen_df <- tibble::tribble(
   ~date,        ~value, ~descr,
   "2020-06-20", 100000, "Phase 2 goal",
@@ -503,7 +487,7 @@ Governor Lamont's roadmap for the next phases of reopening ([pdf](https://portal
 
 ### Statewide total tests conducted per week, weeks starting `r wk_test_dates[1]` to `r wk_test_dates[2]` {.viz-title}
 
-```{r tests_per_wk, fig.width=7, fig.height=4.5}
+```{r out_tests_per_wk, fig.width=7, fig.height=4.5}
 billboarder(data = weekly_tests, height = 450) %>%
   bb_barchart(mapping = bbaes(x = monday, y = value, group = measure)) %>%
   bb_x_axis(label = list(text = "Week of", position = "outer-left"), type = "timeseries", 
@@ -519,7 +503,7 @@ billboarder(data = weekly_tests, height = 450) %>%
 
 
 
-```{r}
+```{r mobility_setup}
 exec_orders <- tibble::tribble(
   ~date, ~order,
   "2020-03-24", "Non-essential business closures",
@@ -553,7 +537,7 @@ Note that these executive orders took effect in the evening but are dated here w
 
 ### Residents' average daily mobility in miles, weekdays `r format(mob_date_range[1], "%m/%d/%Y")` to `r format(mob_date_range[2], "%m/%d/%Y")` {.viz-title}
 
-```{r mobility, fig.height=4.5, fig.width=7}
+```{r out_mobility, fig.height=4.5, fig.width=7}
 # mob_pal <- c(pal[c(3, 5, 7)], "gray50") %>% setNames(levels(mob$name2))
 mob_pal <- c(pal[c(3, 4, 9)], rep("gray50", 7)) %>%
   setNames(c(c("US", "Connecticut", "New Haven County"), setdiff(levels(mob$name), c("US", "Connecticut", "New Haven County"))))
@@ -572,7 +556,7 @@ billboarder(data = mob, height = 450) %>%
 
 
 
-```{r eval=FALSE, include=FALSE}
+```{r doubling, eval=FALSE, include=FALSE}
 # for now leaving out doubling time because I'm not sure how to contextualize it for a general audience
 elapsed %>%
   arrange(level, name, date) %>%
