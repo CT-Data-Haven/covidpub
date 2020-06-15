@@ -17,7 +17,6 @@ Imports:
     stringr,
     readr,
     lubridate,
-    sf,
     billboarder,
     knitr,
     kableExtra,
@@ -33,4 +32,5 @@ Imports:
     rcartocolor,
     classInt
 Remotes:
-    cran/rgdal@1.4-8
+    cran/rgdal@1.4-8,
+    cran/sf@0.9-3
