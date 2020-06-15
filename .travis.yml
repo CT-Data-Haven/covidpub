@@ -14,6 +14,11 @@ branches:
   - master
 r_packages:
 - rmarkdown
+- units
+addons:
+  homebrew:
+    packages:
+    - udunits
 script:
 - Rscript ./scripts/latest_data.R
 - Rscript -e "rmarkdown::render_site()"
