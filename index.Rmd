@@ -321,7 +321,7 @@ test_case_charts[[3]]
 
 
 
-Note that counts of COVID-19-related hospitalizations are only available from March 21 onward.
+Note that counts of COVID-19-related hospitalizations are only available from March 21 onward. Counts of tests are based on the date of specimen collection.
 
 ```{r streak_setup}
 # need to fill any possible gaps in data in order to mark off streaks accurately? or ok to assume direction continues across any possible gaps? currently aren't any anyways
