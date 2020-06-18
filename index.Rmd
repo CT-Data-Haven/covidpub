@@ -1,5 +1,10 @@
 ---
 title: "COVID-19 in Connecticut"
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
+    
 ---
 
 ```{r setup, message=FALSE, echo=FALSE}
@@ -554,22 +559,74 @@ billboarder(data = mob, height = 450) %>%
 ```
 
 
+## Economic impacts
 
-
-```{r doubling, eval=FALSE, include=FALSE}
-# for now leaving out doubling time because I'm not sure how to contextualize it for a general audience
-elapsed %>%
-  arrange(level, name, date) %>%
-  group_by(level, name) %>%
-  mutate(ratio = cases / lag(cases),
-         days_ago = as.numeric(str_remove(days_ago, "t")),
-         day_brk = cut(days_ago, breaks = c(0, 5, 10, Inf), labels = c("t00_t04", "t05_t09", "t10_plus"),
-                       include.lowest = TRUE, right = FALSE)) %>%
-  filter(day_brk != "t10_plus") %>%
-  group_by(day_brk, add = TRUE) %>%
-  summarise(mean_ratio = mean(ratio, na.rm = TRUE)) %>%
-  mutate(doubling_time = round(log(2) / log(mean_ratio), digits = 1))
+```{r}
+hhp <- list.files("input_data", pattern = "^hhp.+\\.csv", full.names = TRUE) %>%
+  set_names(str_extract, "(?<=hhp_)(\\w*?)(?=\\d?_by_race)") %>%
+  map(read_csv) %>%
+  map(filter, name == "CT") %>%
+  map(mutate, race = as_factor(race))
 ```
+
+```{r}
+housing_max <- round(max(hhp[["housing"]]$share), digits = 1)
+housing_charts <- hhp[["housing"]] %>%
+  mutate(tenure = as_factor(tenure)) %>%
+  mutate(lbl = as_factor(tenure) %>%
+           fct_recode("owned, paying mortgage" = "owned_mortgage") %>%
+           fct_relabel(str_to_sentence)) %>%
+  split(.$tenure) %>%
+  imap(function(df, tenure) {
+    lbl <- unique(df$lbl)
+    billboarder(data = df, height = 350) %>%
+      bb_barchart(mapping = bbaes(x = race, y = share, group = race), stack = TRUE, width = list(ratio = 0.5)) %>%
+      bb_colors_manual(race_pal) %>%
+      bb_legend(hide = TRUE) %>%
+      bb_y_axis(label = list(text = "% housing insecure", position = "outer-top"),
+                tick = list(format = htmlwidgets::JS("d3.format('0.0%')"),
+                            values = seq(0, housing_max, by = 0.1)),
+                max = housing_max) %>%
+      bb_title(text = lbl)
+  })
+```
+
+```{r}
+hhp[["housing"]] %>%
+  mutate(tenure = as_factor(tenure)) %>%
+  mutate(lbl = as_factor(tenure) %>%
+           fct_recode("owned, paying mortgage" = "owned_mortgage") %>%
+           fct_relabel(str_to_sentence)) %>%
+  billboarder(data = ., height = 350) %>%
+  bb_barchart(mapping = bbaes(x = race, y = share, group = lbl), stack = FALSE, width = list(ratio = 0.5)) %>%
+  bb_colors_manual(c(Rented = pal[6], "Owned, paying mortgage" = pal[8]))
+```
+
+
+
+:::: {.row}
+
+### Housing insecurity by tenure and race, 04/23/2020 to 05/26/2020 {.viz-title .minheight}
+
+::: {.col-sm-6}
+
+```{r out_housing_rent}
+housing_charts[["rented"]]
+```
+
+:::
+
+::: {.col-sm-6}
+
+```{r out_housing_own}
+housing_charts[["owned_mortgage"]]
+```
+
+:::
+
+::::
+
+
 
 
 ## Sources {.section-title}

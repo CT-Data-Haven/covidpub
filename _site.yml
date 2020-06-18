@@ -2,7 +2,7 @@ name: "dh-covid"
 output_dir: "dist"
 navbar:
   title: "DataHaven COVID-19 Analysis"
-  left:
+  right:
     - text: "Home"
       href: index.html
     - text: "Additional resources"

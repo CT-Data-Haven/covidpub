@@ -1,0 +1,17 @@
+name,race,tenure,housing_insecure,share,share_se,race_num
+US,White,rented,insecure,0.23,0.01,1
+US,White,owned_mortgage,insecure,0.09,0,1
+US,Black,rented,insecure,0.46,0.01,2
+US,Black,owned_mortgage,insecure,0.26,0.01,2
+US,Latino,rented,insecure,0.43,0.01,3
+US,Latino,owned_mortgage,insecure,0.27,0.01,3
+US,Asian,rented,insecure,0.29,0.02,4
+US,Asian,owned_mortgage,insecure,0.19,0.01,4
+CT,White,rented,insecure,0.19,0.03,1
+CT,White,owned_mortgage,insecure,0.09,0.01,1
+CT,Black,rented,insecure,0.33,0.07,2
+CT,Black,owned_mortgage,insecure,0.28,0.09,2
+CT,Latino,rented,insecure,0.47,0.07,3
+CT,Latino,owned_mortgage,insecure,0.14,0.04,3
+CT,Asian,rented,insecure,0.23,0.08,4
+CT,Asian,owned_mortgage,insecure,0.22,0.09,4
