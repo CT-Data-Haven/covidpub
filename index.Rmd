@@ -400,14 +400,14 @@ hospital_change %>%
 
 
 
-Summarizing the past seven days of trends helps to smooth out daily jumps or drops in the number of reported cases. Looking at the seven days before that helps contextualize the most recent seven-day period. 
+Summarizing the past seven days of trends helps to smooth out daily jumps or drops in the number of reported cases. Looking at the seven days before that helps contextualize the most recent seven-day period. In rare instances, counties revise their case counts retroactively; if that happens over the 14 days shown here, that county is not displayed.
 
 ### Change in number of detected new cases over 7-day periods {.viz-title}
 
 ```{r out_case_5day}
 # switching to 7 days
 # only including if each 5-day period involves more than N cases; otherwise have things like increases of 1700%
-t5_thresh <- 10
+t5_thresh <- 0
 change_incrs <- seq(0, 2) * 7
 
 elapsed <- county %>%
