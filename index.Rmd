@@ -517,7 +517,8 @@ exec_orders <- tibble::tribble(
   "2020-03-10", "State of emer. declared",
   "2020-03-24", "Non-essential business closures",
   # "2020-03-17", "Restrictions on gatherings",
-  "2020-05-20", "Phase 1 reopening (CT)"
+  "2020-05-20", "Phase 1 reopening (CT)",
+  "2020-06-17", "Phase 2 reopening"
 ) %>%
   mutate(date = as.Date(date),
          lbl = str_glue("{format(date, '%m/%d')}: {order}")) %>%
