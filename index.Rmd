@@ -1,5 +1,9 @@
 ---
 title: "COVID-19 in Connecticut"
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
 ---
 
 ```{r setup, message=FALSE, echo=FALSE}
@@ -334,6 +338,7 @@ hospital_change <- test_x_cases %>%
            change < 0 ~ "Decreasing",
            change > 0 ~ "Increasing"
          ),
+         direction2 = as.character(fct_collapse(direction, decrease_or_const = c("Constant", "Decreasing"), increase = "Increasing")),
          change_lbl = formatC(change, flag = "+"))
 
 streak <- function(x) {
@@ -341,11 +346,14 @@ streak <- function(x) {
   imap(durations, function(d, i) {
     rep(i, times = d)
   }) %>%
-    flatten_dbl()
+    flatten_dbl() %>%
+    sprintf("%02d", .) %>%
+    paste("streak", ., sep = "_")
 }
 
 hosp_streaks <- hospital_change %>%
   mutate(strk = streak(direction)) %>%
+  # filter(change <= 0) %>% use this if we want decrease or constant
   filter(change < 0) %>%
   group_by(strk) %>%
   summarise(day1 = min(date), day2 = max(date)) %>%
@@ -506,8 +514,9 @@ billboarder(data = weekly_tests, height = 450) %>%
 ```{r mobility_setup}
 exec_orders <- tibble::tribble(
   ~date, ~order,
+  "2020-03-10", "State of emer. declared",
   "2020-03-24", "Non-essential business closures",
-  "2020-03-17", "Restrictions on gatherings",
+  # "2020-03-17", "Restrictions on gatherings",
   "2020-05-20", "Phase 1 reopening (CT)"
 ) %>%
   mutate(date = as.Date(date),
@@ -533,7 +542,7 @@ mob_date_range <- range(mob$date)
 
 One way to measure the impact of social distancing measures is through the distances people travel each day. Anonymized cell phone data shows the average number of miles traveled by people within each county starting March 2. As statewide executive orders restricting public and private gatherings and limiting nonessential travel, these average distances traveled dropped steeply.
 
-Note that these executive orders took effect in the evening but are dated here with the following day, as that is when they are likely to have had an impact on people's travel.
+Note that executive orders that took effect in the evening, such as the non-essential business closure, are dated here with the following day, as that is when they are likely to have had an impact on people's travel.
 
 ### Residents' average daily mobility in miles, weekdays `r format(mob_date_range[1], "%m/%d/%Y")` to `r format(mob_date_range[2], "%m/%d/%Y")` {.viz-title}
 
