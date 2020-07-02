@@ -1,9 +1,0 @@
-name,race,food_insecure,share,share_se,race_num
-US,White,insecure,0.07,0,1
-US,Black,insecure,0.22,0.01,2
-US,Latino,insecure,0.16,0.01,3
-US,Asian,insecure,0.07,0.01,4
-CT,White,insecure,0.06,0.01,1
-CT,Black,insecure,0.14,0.04,2
-CT,Latino,insecure,0.18,0.04,3
-CT,Asian,insecure,0.15,0.06,4

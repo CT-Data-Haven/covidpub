@@ -171,7 +171,8 @@ Data show higher rates of detected cases and deaths among Black and Latino resid
 
 ```{r out_race_bars1}
 # keep same colors regardless of order
-race_pal <- setNames(c("#888888", pal[c(2, 4, 9, 3)]), c("Total", "Black", "Latino", "White", "Asian"))
+race_pal <- setNames(pal[c(1, 2, 4, 9, 3)], c("Total", "Black", "Latino", "White", "Asian"))
+
 billboarder(data = age_adj_race, height = 350) %>%
   bb_barchart(mapping = bbaes(x = race, y = cases_rate_10k, group = race), stack = TRUE, width = list(ratio = 0.5)) %>%
   bb_colors_manual(race_pal) %>%
@@ -502,7 +503,7 @@ billboarder(data = weekly_tests, height = 450) %>%
   bb_x_grid(show = TRUE) %>%
   bb_y_grid(show = TRUE,
             lines = reopen) %>%
-  bb_colors_manual(set_names(c(pal[6]), levels(weekly_tests$measure))) %>%
+  bb_colors_manual(set_names(c(pal[7]), levels(weekly_tests$measure))) %>%
   bb_legend(show = FALSE)
 ```
 
@@ -563,68 +564,73 @@ billboarder(data = mob, height = 450) %>%
 
 ```{r}
 hhp <- list.files("input_data", pattern = "^hhp.+\\.csv", full.names = TRUE) %>%
-  set_names(str_extract, "(?<=hhp_)(\\w*?)(?=\\d?_by_race)") %>%
+  set_names(str_extract, "(?<=hhp_group_)(\\w+)") %>%
   map(read_csv) %>%
-  map(filter, name == "CT") %>%
-  map(mutate, race = as_factor(race))
+  map(mutate_at, vars(dimension, group), as_factor) %>%
+  map(mutate, group = fct_recode(group, average = "CT") %>% fct_relabel(age_names) %>% fct_relabel(clean_titles)) %>%
+  map(mutate, dimension = fct_recode(dimension, CT = "total", "By race" = "race", "By presence of kids" = "kids_present", "By age" = "age_range"))
+
+hhp_dates <- unique(hhp[[1]]$date_range) %>%
+  strsplit("_") %>%
+  unlist() %>%
+  as.Date()
+
+hhp_date_fmt <- format(hhp_dates, "%m/%d/%Y")
+
+hhp_wks <- difftime(hhp_dates[2], hhp_dates[1], units = "weeks") %>%
+  as.numeric() %>%
+  floor()
+
+hhp_pal <- pal[c(1, 7, 2, 4)] %>%
+  unname() %>%
+  set_names(levels(hhp[["food_insecurity"]]$dimension))
 ```
 
-```{r}
-housing_max <- round(max(hhp[["housing"]]$share), digits = 1)
-housing_charts <- hhp[["housing"]] %>%
-  mutate(tenure = as_factor(tenure)) %>%
-  mutate(lbl = as_factor(tenure) %>%
-           fct_recode("owned, paying mortgage" = "owned_mortgage") %>%
-           fct_relabel(str_to_sentence)) %>%
-  split(.$tenure) %>%
-  imap(function(df, tenure) {
-    lbl <- unique(df$lbl)
-    billboarder(data = df, height = 350) %>%
-      bb_barchart(mapping = bbaes(x = race, y = share, group = race), stack = TRUE, width = list(ratio = 0.5)) %>%
-      bb_colors_manual(race_pal) %>%
-      bb_legend(hide = TRUE) %>%
-      bb_y_axis(label = list(text = "% housing insecure", position = "outer-top"),
-                tick = list(format = htmlwidgets::JS("d3.format('0.0%')"),
-                            values = seq(0, housing_max, by = 0.1)),
-                max = housing_max) %>%
-      bb_title(text = lbl)
-  })
-```
+The US Census Bureau launched a short-term Household Pulse Survey in April to gauge several economic and health indicators throughout the country. The survey questions summarized here are for adults in Connecticut, based on the `r hhp_wks` weeks of data released so far.
+
+Loss of income measures the share of adults for whom at least one member of their household lost work-related income (i.e. not public benefits) since March 13, 2020. Food insecurity refers to the share of adults that report having sometimes or often not had enough food at home over the previous 7 days. Housing insecurity refers to the share of adults that report having little to no confidence that their next month's housing payments can be made on time, out of adults whose households pay either rent or a mortgage.
+
+### Adults with loss of income in household, `r hhp_date_fmt[1]` to `r hhp_date_fmt[2]`, Connecticut {.viz-title}
 
 ```{r}
-hhp[["housing"]] %>%
-  mutate(tenure = as_factor(tenure)) %>%
-  mutate(lbl = as_factor(tenure) %>%
-           fct_recode("owned, paying mortgage" = "owned_mortgage") %>%
-           fct_relabel(str_to_sentence)) %>%
+billboarder(data = hhp[["loss_of_work"]], height = 350) %>%
+  bb_barchart(mapping = bbaes(x = group, y = share, group = dimension), stack = TRUE) %>%
+  bb_colors_manual(hhp_pal) %>%
+  bb_legend(hide = TRUE) %>%
+  bb_y_axis(label = list(text = "% lost income", position = "outer-top"),
+            tick = list(format = htmlwidgets::JS("d3.format('0.0%')"),
+                        values = seq(0, 1, by = 0.1)))
+```
+
+
+### Adults experiencing food insecurity in past 7 days, `r hhp_date_fmt[1]` to `r hhp_date_fmt[2]`, Connecticut {.viz-title}
+
+```{r}
+billboarder(data = hhp[["food_insecurity"]], height = 350) %>%
+  bb_barchart(mapping = bbaes(x = group, y = share, group = dimension), stack = TRUE) %>%
+  bb_colors_manual(hhp_pal) %>%
+  bb_legend(hide = TRUE) %>%
+  bb_y_axis(label = list(text = "% food insecure", position = "outer-top"),
+            tick = list(format = htmlwidgets::JS("d3.format('0.0%')"),
+                        values = seq(0, 1, by = 0.05)))
+```
+
+### Adults experiencing housing insecurity, `r hhp_date_fmt[1]` to `r hhp_date_fmt[2]`, Connecticut {.viz-title}
+
+```{r}
+housing_pal <- unname(pal[c(1, 7)]) %>% set_names(c("All adults", "Renters"))
+hhp[c("housing_insecurity", "rent_insecurity")] %>%
+  set_names(c("all_adults", "renters")) %>%
+  bind_rows(.id = "tenure") %>%
+  filter(dimension != "By age") %>%
+  mutate(tenure = as_factor(tenure) %>% fct_relabel(clean_titles)) %>%
   billboarder(data = ., height = 350) %>%
-  bb_barchart(mapping = bbaes(x = race, y = share, group = lbl), stack = FALSE, width = list(ratio = 0.5)) %>%
-  bb_colors_manual(c(Rented = pal[6], "Owned, paying mortgage" = pal[8]))
+  bb_barchart(mapping = bbaes(x = group, y = share, group = tenure), padding = 4) %>%
+  bb_colors_manual(housing_pal) %>%
+  bb_y_axis(label = list(text = "% housing insecure", position = "outer-top"),
+            tick = list(format = htmlwidgets::JS("d3.format('0.0%')"),
+                        values = seq(0, 1, by = 0.1)))
 ```
-
-
-
-:::: {.row}
-
-### Housing insecurity by tenure and race, 04/23/2020 to 05/26/2020 {.viz-title .minheight}
-
-::: {.col-sm-6}
-
-```{r out_housing_rent}
-housing_charts[["rented"]]
-```
-
-:::
-
-::: {.col-sm-6}
-
-```{r out_housing_own}
-housing_charts[["owned_mortgage"]]
-```
-
-:::
-
-::::
 
 
 
@@ -632,6 +638,7 @@ housing_charts[["owned_mortgage"]]
 ## Sources {.section-title}
 
 * DataHaven analysis of data reported by the State of Connecticut daily and posted to the COVID-19 information portal, https://portal.ct.gov/Coronavirus
+* DataHaven analysis of US Census Bureau Household Pulse Survey public use microdata, weeks 1 through `r hhp_wks`, https://www.census.gov/householdpulsedata
 * Data from Descartes Lab, "Mobility Changes in Response to COVID-19," https://descarteslabs.com/mobility/
 
 

@@ -1,0 +1,11 @@
+current_food,share,dimension,group,date_range
+insecure,0.098,total,CT,2020-04-23_2020-06-16
+insecure,0.14,age_range,ages18_34,2020-04-23_2020-06-16
+insecure,0.11,age_range,ages35_64,2020-04-23_2020-06-16
+insecure,0.023,age_range,ages65plus,2020-04-23_2020-06-16
+insecure,0.064,race,white,2020-04-23_2020-06-16
+insecure,0.14,race,black,2020-04-23_2020-06-16
+insecure,0.21,race,latino,2020-04-23_2020-06-16
+insecure,0.11,race,asian,2020-04-23_2020-06-16
+insecure,0.12,kids_present,kids_in_house,2020-04-23_2020-06-16
+insecure,0.084,kids_present,no_kids,2020-04-23_2020-06-16

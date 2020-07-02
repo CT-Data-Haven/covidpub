@@ -1,9 +1,0 @@
-name,race,income_loss,share,share_se,race_num
-US,White,loss,0.43,0,1
-US,Black,loss,0.55,0.01,2
-US,Latino,loss,0.6,0.01,3
-US,Asian,loss,0.48,0.01,4
-CT,White,loss,0.42,0.02,1
-CT,Black,loss,0.47,0.07,2
-CT,Latino,loss,0.67,0.04,3
-CT,Asian,loss,0.52,0.06,4

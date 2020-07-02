@@ -5,7 +5,7 @@ clean_titles <- function(x) {
 }
 
 set.seed(1)
-vivid <- c("gray20", rcartocolor::carto_pal(9, "Vivid")[sample.int(8)])
+vivid <- c("#888888", rcartocolor::carto_pal(9, "Vivid")[sample.int(8)])
 seq_pal <- rcartocolor::carto_pal(5, "SunsetDark")
 # div_pal <- chroma::interp_colors(5, colors = c(pal[7], "#b8566d"))
 div_pal <- c("#52BCA3", "#7EA595", "#988E87", "#AA747A", "#B8566D")
@@ -29,3 +29,11 @@ billboarder::set_theme("insight")
 
 # update_geom_defaults("text", list(family = "source", fontface = "bold"))
 # theme_set(theme_din2())
+
+age_names <- function(x) {
+  x <- stringr::str_replace_all(x, "(?<=\\d)_(?=\\d)", "-")
+  x <- clean_titles(x)
+  x <- stringr::str_replace(x, "plus", "+")
+  x <- stringr::str_replace_all(x, "(?<=[A-Za-z])(\\d)", " \\1")
+  x
+}
