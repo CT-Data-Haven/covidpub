@@ -281,7 +281,7 @@ leaflet(cases_sf, width = "100%", height = 500,
 
 ```{r out_state_trendlines, fig.width=7, fig.height=5.5}
 test_x_cases <- county %>%
-  inner_join(tests %>% select(-daily_tests), by = c("name", "date")) %>%
+  inner_join(tests %>% select(-daily_tests, -positive_tests), by = c("name", "date")) %>%
   select(-level) %>%
   pivot_longer(-c(date, name), names_to = "measure") %>%
   mutate(measure = as_factor(measure) %>%
@@ -304,14 +304,20 @@ test_case_charts <- list(
     brks <- scales::breaks_extended(n = 5)(y_range)
     billboarder(data = df, height = h) %>%
       bb_linechart(mapping = bbaes(x = date, y = value, group = measure), type = "step") %>%
-      bb_x_axis(label = list(text = NULL), type = "timeseries",
-                tick = list(format = "%m/%d", values = mondays)) %>%
-      bb_y_axis(label = list(text = "Count", position = "outer-top"),
-                tick = list(format = htmlwidgets::JS("d3.format(',')")),
-                padding = list(bottom = 0)) %>%
-      bb_axis(y = list(tick = list(values = brks))) %>%
-      bb_x_grid(show = TRUE) %>%
-      bb_y_grid(show = TRUE) %>%
+      bb_axis(
+        y = list(
+          tick = list(values = brks, format = htmlwidgets::JS("d3.format(',')")),
+          label = list(text = "Count", position = "outer-top"),
+          padding = list(bottom = 0)
+        ),
+        x = list(
+          tick = list(values = mondays),
+          label = list(text = NULL),
+          type = "timeseries",
+          padding = list(left = 0)
+        )
+      ) %>%
+      bb_grid(x = list(show = TRUE), y = list(show = TRUE, ticks = 5)) %>%
       bb_colors_manual(set_names(pal[c(2:4, 9)], levels(test_x_cases$measure))) %>%
       bb_title(position = "top-center", text = title) %>%
       bb_legend(show = has_legend) %>%
@@ -328,6 +334,47 @@ test_case_charts[[3]]
 
 
 Note that counts of COVID-19-related hospitalizations are only available from March 21 onward. Counts of tests are based on the date of specimen collection.
+
+As access to testing expands with fewer restrictions blocking asymptomatic people from being tested, the test positivity rate (the percentage of tests administered that come back positive) has become another useful metric for measuring the response to the pandemic. Increasing the number of tests administered across the population means health officials have a better chance of detecting cases with few or no symptoms. Widespread, robust testing means the positivity rate should become very low; WHO guidance recommends maintaining a positivity rate below 5 percent as a target. 
+
+Because test results may take several days to come back, the value shown here is a rolling average over 7 days.
+
+### Test positivity rate, statewide 7-day rolling mean, `r test_date_range_fmt[1]` to `r test_date_range_fmt[2]` {.viz-title}
+
+
+```{r}
+lt1 <- "
+  function(value) {
+    // return value < 0.01 ? '<1%' : d3.format('0.0%')(value);
+    var fmt = value < 0.1 ? '.1f' : '.0f';
+    return d3.format(fmt)(value * 100) + '%';
+  }
+"
+
+test_pos <- tests %>%
+  mutate(positive_rate = positive_tests / daily_tests,
+         avg_positive_rate = slider::slide_dbl(positive_rate, mean, .before = 6, .complete = TRUE)) %>%
+  filter(!is.na(avg_positive_rate)) %>%
+  select(name, date, avg_positive_rate) %>%
+  pivot_longer(-name:-date, names_to = "measure") %>%
+  mutate(measure = fct_relabel(measure, clean_titles))
+
+billboarder(data = test_pos, height = 300) %>%
+  bb_linechart(mapping = bbaes(x = date, y = value, group = measure)) %>%
+  bb_x_axis(label = list(text = NULL), type = "timeseries",
+            tick = list(format = "%m/%d", values = mondays)) %>%
+  bb_y_axis(label = list(text = "Percent positive", position = "outer-top"),
+            tick = list(format = htmlwidgets::JS("d3.format('0.0%')"), values = seq(0, 1, by = 0.1)),
+            padding = list(bottom = 0),
+            min = 0) %>%
+  bb_x_grid(show = TRUE) %>%
+  bb_y_grid(show = TRUE) %>%
+  bb_colors_manual(set_names(pal[5], levels(test_pos$measure))) %>%
+  bb_title(position = "top-center", text = title) %>%
+  bb_legend(show = FALSE) %>%
+  bb_tooltip(format = list(value = htmlwidgets::JS(lt1)))
+```
+
 
 ```{r streak_setup}
 # need to fill any possible gaps in data in order to mark off streaks accurately? or ok to assume direction continues across any possible gaps? currently aren't any anyways
@@ -535,9 +582,11 @@ mob <- read_csv("https://raw.githubusercontent.com/descarteslabs/DL-COVID-19/mas
            as_factor() %>%
            fct_recode(US = "0"),
          m50_miles = round(measurements::conv_unit(m50, "km", "mi"), digit = 1)) %>%
-  select(level = admin_level, name, date, samples, m50_miles, m50_index) %>%
-  mutate(wkday = lubridate::wday(date, label = F)) %>%
-  filter(between(wkday, 2, 6)) %>%
+  group_by(name) %>%
+  mutate(miles_7day = slider::slide_dbl(m50_miles, mean, .before = 6, .complete = TRUE)) %>%
+  select(level = admin_level, name, date, miles_7day) %>%
+  # mutate(wkday = lubridate::wday(date, label = F)) %>%
+  # filter(between(wkday, 2, 6)) %>%
   filter(name %in% c("US", "Connecticut", "New Haven County"))
 
 mob_date_range <- range(mob$date)
@@ -545,9 +594,9 @@ mob_date_range <- range(mob$date)
 
 One way to measure the impact of social distancing measures is through the distances people travel each day. Anonymized cell phone data shows the average number of miles traveled by people within each county starting March 2. As statewide executive orders restricting public and private gatherings and limiting nonessential travel, these average distances traveled dropped steeply.
 
-Note that executive orders that took effect in the evening, such as the non-essential business closure, are dated here with the following day, as that is when they are likely to have had an impact on people's travel.
+Note that executive orders that took effect in the evening, such as the non-essential business closure, are dated here with the following day, as that is when they are likely to have had an impact on people's travel. To smooth out the day-to-day fluctuations in travel, including patterns of less travel on weekends and holidays, values here are shown as 7-day rolling averages.
 
-### Residents' average daily mobility in miles, weekdays `r format(mob_date_range[1], "%m/%d/%Y")` to `r format(mob_date_range[2], "%m/%d/%Y")` {.viz-title}
+### Residents' average daily mobility in miles, 7-day rolling mean `r format(mob_date_range[1], "%m/%d/%Y")` to `r format(mob_date_range[2], "%m/%d/%Y")` {.viz-title}
 
 ```{r out_mobility, fig.height=4.5, fig.width=7}
 # mob_pal <- c(pal[c(3, 5, 7)], "gray50") %>% setNames(levels(mob$name2))
@@ -555,7 +604,7 @@ mob_pal <- c(pal[c(3, 4, 9)], rep("gray50", 7)) %>%
   setNames(c(c("US", "Connecticut", "New Haven County"), setdiff(levels(mob$name), c("US", "Connecticut", "New Haven County"))))
 
 billboarder(data = mob, height = 450) %>%
-  bb_linechart(mapping = bbaes(x = date, y = m50_miles, group = name)) %>%
+  bb_linechart(mapping = bbaes(x = date, y = miles_7day, group = name)) %>%
   bb_x_axis(label = list(text = NULL), type = "timeseries", 
             tick = list(format = "%m/%d", values = mondays[mondays <= max(mob$date)])) %>%
   bb_y_axis(label = list(text = "Avg. mobility (miles)", position = "outer-top"), padding = list(bottom = 0)) %>%

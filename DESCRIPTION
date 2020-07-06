@@ -31,7 +31,8 @@ Imports:
     measurements,
     rcartocolor,
     classInt,
-    cwi
+    cwi,
+    slider
 Remotes:
     CT-Data-Haven/cwi,
     cran/units@0.6-6,
