@@ -581,7 +581,7 @@ mob <- read_csv("https://raw.githubusercontent.com/descarteslabs/DL-COVID-19/mas
   mutate(name = coalesce(admin2, admin1, as.character(admin_level)) %>%
            as_factor() %>%
            fct_recode(US = "0"),
-         m50_miles = round(measurements::conv_unit(m50, "km", "mi"), digit = 1)) %>%
+         m50_miles = round(measurements::conv_unit(m50, "km", "mi"), digits = 1)) %>%
   group_by(name) %>%
   mutate(miles_7day = slider::slide_dbl(m50_miles, mean, .before = 6, .complete = TRUE)) %>%
   select(level = admin_level, name, date, miles_7day) %>%
@@ -607,7 +607,10 @@ billboarder(data = mob, height = 450) %>%
   bb_linechart(mapping = bbaes(x = date, y = miles_7day, group = name)) %>%
   bb_x_axis(label = list(text = NULL), type = "timeseries", 
             tick = list(format = "%m/%d", values = mondays[mondays <= max(mob$date)])) %>%
-  bb_y_axis(label = list(text = "Avg. mobility (miles)", position = "outer-top"), padding = list(bottom = 0)) %>%
+  bb_y_axis(label = list(text = "Avg. mobility (miles)", position = "outer-top"), 
+            padding = list(bottom = 0),
+            tick = list(format = htmlwidgets::JS("d3.format('0.1f')")),
+            min = 0) %>%
   bb_x_grid(show = TRUE, 
             lines = exec_orders) %>%
   bb_y_grid(show = TRUE) %>%
