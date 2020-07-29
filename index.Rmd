@@ -29,6 +29,7 @@ library(knitr)
 library(leaflet)
 library(DT)
 library(htmltools)
+library(tsibble)
 
 source("scripts/plotting_utils.R")
 ```
@@ -43,8 +44,6 @@ town_county <- read_csv("input_data/county2town.csv")
 counties <- unique(town_county$county) %>%
   str_remove(" County")
 
-pal <- vivid %>%
-  purrr::set_names(c("Connecticut", counties))
 
 county <- dfs[["county"]] %>%
   mutate_at(vars(name, level), as_factor)
@@ -61,6 +60,11 @@ test_date_range <- range(tests$date)
 test_date_range_fmt <- format(test_date_range, "%m/%d/%Y")
 
 pops <- read_csv("input_data/total_pop_2018.csv")
+
+pal <- vivid %>%
+  purrr::set_names(c("Connecticut", counties))
+race_pal <- setNames(pal[c(1, 2, 4, 9, 3)], c("Total", "Black", "Latino", "White", "Asian"))
+
 ```
 
 ::: {.text-info #date-heading}
@@ -171,7 +175,6 @@ Data show higher rates of detected cases and deaths among Black and Latino resid
 
 ```{r out_race_bars1}
 # keep same colors regardless of order
-race_pal <- setNames(pal[c(1, 2, 4, 9, 3)], c("Total", "Black", "Latino", "White", "Asian"))
 
 billboarder(data = age_adj_race, height = 350) %>%
   bb_barchart(mapping = bbaes(x = race, y = cases_rate_10k, group = race), stack = TRUE, width = list(ratio = 0.5)) %>%
@@ -220,6 +223,8 @@ county_to_plot %>%
   bb_tooltip(grouped = FALSE) %>%
   bb_title(padding = list(bottom = 20, top = 10), position = "top-left")
 ```
+
+Note that beginning in July, the state began releasing county-level case numbers on weekdays only. As such, weekends appear as gaps in the chart.
 
 ### Rate of detected cases by town, as of `r town_latest_fmt` {.viz-title}
 
@@ -343,14 +348,6 @@ Because test results may take several days to come back, the value shown here is
 
 
 ```{r}
-lt1 <- "
-  function(value) {
-    // return value < 0.01 ? '<1%' : d3.format('0.0%')(value);
-    var fmt = value < 0.1 ? '.1f' : '.0f';
-    return d3.format(fmt)(value * 100) + '%';
-  }
-"
-
 test_pos <- tests %>%
   mutate(positive_rate = positive_tests / daily_tests,
          avg_positive_rate = slider::slide_dbl(positive_rate, mean, .before = 6, .complete = TRUE)) %>%
@@ -433,14 +430,11 @@ The longest continuous decrease in hospitalizations was between `r streak_fmt[1]
 ### Change in number of COVID-19-related hospitalizations from previous day, `r hosp_date_range[1]` to `r hosp_date_range[2]` {.viz-title}
 
 ```{r out_hospitalizations}
-d3_flag <- "function(value, ratio, id, index) {
-  return d3.format('+,')(value);
-}"
 hospital_change %>%
   filter(!is.na(change)) %>%
   billboarder(data = ., height = 300) %>%
   bb_barchart(mapping = bbaes(x = date, y = change, group = direction), 
-              width = list(ratio = 1)) %>%
+              width = list(ratio = 0.6), stacked = TRUE) %>%
   bb_x_axis(label = list(text = NULL), type = "timeseries", 
             tick = list(format = "%m/%d", values = mondays)) %>%
   bb_y_axis(label = list(text = "Change in # hospitalized", position = "outer-top"),
@@ -461,50 +455,221 @@ Summarizing the past seven days of trends helps to smooth out daily jumps or dro
 
 ### Change in number of detected new cases over 7-day periods {.viz-title}
 
-```{r out_case_5day}
+```{r out_case_5day, message=TRUE, warning=TRUE}
 # switching to 7 days
 # only including if each 5-day period involves more than N cases; otherwise have things like increases of 1700%
+# WATCH OUT: adding in town-level, but we only have that going back to 3/21
 t5_thresh <- 0
 change_incrs <- seq(0, 2) * 7
 
 elapsed <- county %>%
-  mutate(days_ago = sprintf("t%02d", (date_range[2] - date)))
-
-dates_elapsed <- elapsed %>%
-  distinct(days_ago, date) %>%
-  mutate(date = format(date, "%m/%d")) %>%
-  tibble::deframe()
-
-case_change <- elapsed %>%
-  filter(level != "noid", parse_number(days_ago) %in% change_incrs) %>%
-  select(days_ago, level, name, cases) %>%
-  pivot_wider(names_from = days_ago, values_from = cases) %>%
-  mutate(new_cases_t07_t14 = t07 - t14,
-         new_cases_t00_t07 = t00 - t07,
-         pct_change = (new_cases_t00_t07 - new_cases_t07_t14) / new_cases_t07_t14) %>%
-  filter_at(vars(starts_with("new_cases")), ~ . >= t5_thresh)
-
-change_table <- case_change %>%
-  arrange(level, name) %>%
-  select(-matches("^t\\d")) %>%
-  pivot_longer(-c(level, name), names_to = "variable") %>%
-  extract(variable, into = c("type", "end", "start"), "(^\\w+)_(t\\d{2})_(t\\d{2}$)", remove = FALSE) %>%
-  # broken with new dplyr
-  # mutate_at(vars(end, start), recode, !!!dates_elapsed) %>%
-  mutate_at(vars(end, start), function(x) map_chr(x, ~ifelse(!is.na(.), names(dates_elapsed)[which(dates_elapsed == .)], NA))) %>%
-  mutate(type = coalesce(type, variable),
-         lbl = ifelse(is.na(end), type, str_glue("{type}, {start} to {end}")) %>%
-           clean_titles(),
+  select(-hospitalizations, -deaths) %>%
+  bind_rows(town %>% mutate(level = "town")) %>%
+  as_tsibble(index = date, key = c(level, name)) %>%
+  fill_gaps(.full = TRUE) %>%
+  mutate(days_ago = sprintf("t%02d", (date_range[2] - date)),
          name = ifelse(level == "county", paste(name, "County"), as.character(name))) %>%
-  select(Name = name, lbl, value) %>%
-  pivot_wider(names_from = lbl)
+  group_by(level, name) %>%
+  fill(cases, .direction = "down")
+
+case_changes <- elapsed %>%
+  select(days_ago, date, level, name, cases) %>%
+  group_by_key() %>%
+  mutate(new_cases_7d = difference(cases, lag = 7),
+         new_cases_14d = difference(cases, lag = 14))
+
+change_table <- case_changes %>%
+  as_tibble() %>%
+  filter(parse_number(days_ago) %in% change_incrs, level != "town") %>%
+  group_by(name) %>%
+  mutate(date_fmt = format(date, "%m/%d"),
+         period = str_c(lag(date_fmt), date_fmt, sep = " to "),
+         period_pct = paste(range(date_fmt), collapse = " through ")) %>%
+  slice(-1) %>%
+  mutate(pct_change = difference(new_cases_7d, lag = 1) / new_cases_7d) %>%
+  select(period, period_pct, name, new_cases = new_cases_7d, pct_change) %>%
+  pivot_longer(c(-period, -period_pct, -name), names_to = "type") %>%
+  mutate(lbl = ifelse(type == "new_cases", period, period_pct)) %>%
+  filter(!is.na(value)) %>%
+  pivot_wider(id_cols = name, names_from = c(type, lbl), names_glue = "{type}, {lbl}") %>%
+  janitor::remove_empty("cols") %>%
+  rename_all(clean_titles)
 
 datatable(change_table,
           options = list(searching = FALSE, paging = FALSE, info = FALSE),
           rownames = FALSE, style = "bootstrap", class = "table table-striped") %>%
   formatRound(2:3, digits = 0) %>%
   formatPercentage(4)
+
+
+
 ```
+
+```{r}
+case_change_state <- case_changes %>%
+  filter(date %in% mondays, level == "state") %>%
+  mutate(change = difference(new_cases_7d),
+         pct_change = round(change / lag(new_cases_7d), 2),
+         direction = case_when(
+           change == 0 ~ "Constant",
+           change < 0 ~ "Decreasing",
+           change > 0 ~ "Increasing"
+         ),
+         pct_brk = cut(pct_change, breaks = c(-Inf, -0.1, 0, 0.1, Inf), labels = c("Decrease", "Slight decrease", "Slight increase", "Increase"))) %>%
+  filter(!is.na(change))
+
+case_change_fmt <- format(range(case_change_state$date), "%m/%d/%Y")
+
+```
+
+
+### Number of detected new cases over 7-day periods, Connecticut, `r case_change_fmt[1]` to `r case_change_fmt[2]` {.viz-title}
+
+::: {.viz-subtitle}
+
+With direction of percent change since previous week 
+
+:::
+
+```{r out_case_change_bars}
+case_change_state %>%
+  arrange(pct_brk) %>%
+  billboarder(data = ., height = 300) %>%
+  bb_barchart(mapping = bbaes(x = date, y = new_cases_7d, group = pct_brk),
+              width = list(ratio = 0.6), stack = TRUE) %>%
+  bb_x_axis(label = list(text = NULL), type = "timeseries", 
+            tick = list(format = "%m/%d", values = mondays[mondays >= min(case_change_state$date)])) %>%
+  bb_y_axis(label = list(text = "# new cases", position = "outer-top"),
+            tick = list(format = htmlwidgets::JS("d3.format(',')"))) %>%
+  bb_x_grid(show = TRUE) %>%
+  bb_y_grid(show = TRUE) %>%
+  # bb_title("Number of new cases") %>%
+  bb_colors_manual(set_names(div_pal2[c(1:2, 4:5)], c("Decrease", "Slight decrease", "Slight increase", "Increase"))) %>%
+  bb_tooltip(format = list(
+    value = htmlwidgets::JS(d3_flag)
+  ), linked = list(name = "change-tip"))
+```
+
+```{r eval=FALSE, include=FALSE}
+# pct_change_ticks <- classInt::classIntervals(case_change_state$pct_change, n = 5, style = "pretty")$brk
+case_change_suppr <- case_change_state %>%
+  arrange(pct_brk) %>%
+  mutate(suppr = pct_change > 2,
+         pct_change = ifelse(suppr, 2, pct_change))
+pct_change_ticks <- scales::breaks_extended(n = 5)(range(case_change_suppr$pct_change))
+
+case_change_suppr %>%
+  billboarder(data = ., height = 200) %>%
+  bb_barchart(mapping = bbaes(x = date, y = pct_change, group = pct_brk),
+              width = list(ratio = 0.6), stack = TRUE) %>%
+  bb_x_axis(label = list(text = NULL), type = "timeseries", 
+            tick = list(format = "%m/%d", values = mondays[mondays >= min(case_change_state$date)])) %>%
+  bb_y_axis(label = list(text = "% change", position = "outer-top"),
+            tick = list(format = htmlwidgets::JS("d3.format('0.0%')"), values = pct_change_ticks)) %>%
+  bb_x_grid(show = TRUE) %>%
+  bb_y_grid(show = TRUE) %>%
+  bb_colors_manual(set_names(div_pal2[c(1:2, 4:5)], c("Decrease", "Slight decrease", "Slight increase", "Increase"))) %>%
+  bb_tooltip(format = list(
+    value = htmlwidgets::JS(d3_percent)
+  ), linked = list(name = "change-tip")) %>%
+  bb_title("Percent change") %>%
+  bb_legend(show = FALSE)
+```
+
+
+```{r eval=FALSE, include=FALSE}
+### Number of detected new cases over 7-day periods by county {.viz-title}
+case_changes %>%
+  filter(date %in% mondays, level == "county") %>%
+  mutate(name = str_remove(name, " County")) %>%
+  filter(!is.na(new_cases_7d)) %>%
+  billboarder(list(data = list(order = "asc")), data = ., height = 300) %>%
+  bb_barchart(mapping = bbaes(x = date, y = new_cases_7d, group = name), 
+              width = list(ratio = 0.6), stack = TRUE) %>%
+  bb_x_axis(label = list(text = NULL), type = "timeseries", 
+            tick = list(format = "%m/%d", values = mondays[mondays >= min(case_change_state$date)])) %>%
+  bb_y_axis(label = list(text = "# new cases", position = "outer-top"),
+            tick = list(format = htmlwidgets::JS("d3.format(',')")), padding = list(bottom = 0)) %>%
+  bb_x_grid(show = TRUE) %>%
+  bb_y_grid(show = TRUE) %>%
+  bb_colors_manual(pal) %>%
+  bb_tooltip(format = list(
+    value = htmlwidgets::JS(d3_flag)
+  ), grouped = FALSE)
+```
+
+
+```{r eval=FALSE, include=FALSE}
+### Number of detected new cases over 14-day periods by county {.viz-title}
+case_changes %>%
+  filter(date %in% mondays, level == "county") %>%
+  mutate(name = str_remove(name, " County")) %>%
+  filter(!is.na(new_cases_14d)) %>%
+  billboarder(list(data = list(order = "asc")), data = ., height = 300) %>%
+  bb_barchart(mapping = bbaes(x = date, y = new_cases_14d, group = name), 
+              width = list(ratio = 0.6), stack = TRUE) %>%
+  bb_x_axis(label = list(text = NULL), type = "timeseries", 
+            tick = list(format = "%m/%d", values = mondays[mondays >= min(case_change_state$date)])) %>%
+  bb_y_axis(label = list(text = "# new cases", position = "outer-top"),
+            tick = list(format = htmlwidgets::JS("d3.format(',')")), padding = list(bottom = 0)) %>%
+  bb_x_grid(show = TRUE) %>%
+  bb_y_grid(show = TRUE) %>%
+  bb_colors_manual(pal) %>%
+  bb_tooltip(format = list(
+    value = htmlwidgets::JS(d3_flag)
+  ), grouped = FALSE)
+```
+
+
+```{r eval=FALSE, include=FALSE}
+### Number of detected new cases over 14-day periods by town, last 6 weeks {.viz-title}
+# inefficent but I'm tired & need to fill in missing dates
+# weird huge jump in Danbury numbers, but won't show up in most recent mondays
+latest_mondays <- mondays[(length(mondays) - 6):length(mondays)]
+ntowns <- 7
+
+# some really small towns have unreliable counts and end up with negative changes, so recalculating after lumping town names
+case_change_towns <- case_changes %>%
+  as_tibble() %>%
+  filter(level == "town") %>%
+  filter(!is.na(cases)) %>%
+  mutate(name2 = as_factor(name) %>%
+           fct_lump(n = ntowns, w = cases, other_level = "Other towns")) %>%
+  group_by(name = name2, date) %>%
+  summarise(cases = sum(cases)) %>%
+  mutate(new_cases_7d = difference(cases, lag = 7),
+         new_cases_14d = difference(cases, lag = 14)) %>%
+  ungroup() %>%
+  mutate(name = fct_reorder2(name, date, new_cases_14d)) %>%
+  arrange(name) %>%
+  filter(date %in% latest_mondays)
+
+towns_pal <- pal[1:(ntowns + 1)] %>%
+  # rev() %>% 
+  unname() %>% 
+  set_names(levels(case_change_towns$name))
+
+case_change_towns %>%
+  billboarder(list(data = list(order = "desc")), data = ., height = 300) %>%
+  bb_barchart(mapping = bbaes(x = date, y = new_cases_14d, group = name), 
+              width = list(ratio = 0.6), stack = TRUE) %>%
+  bb_x_axis(label = list(text = NULL), type = "timeseries", 
+            tick = list(format = "%m/%d", values = mondays[mondays >= min(case_change_towns$date)])) %>%
+  bb_y_axis(label = list(text = "# new cases", position = "outer-top"),
+            tick = list(format = htmlwidgets::JS("d3.format(',')"))) %>%
+  bb_x_grid(show = TRUE) %>%
+  bb_y_grid(show = TRUE) %>%
+  bb_colors_manual(towns_pal) %>%
+  bb_tooltip(format = list(
+    value = htmlwidgets::JS(d3_flag)
+  ), grouped = FALSE)
+
+```
+
+
+
+
+
 
 ## Mobility and policy impacts
 
