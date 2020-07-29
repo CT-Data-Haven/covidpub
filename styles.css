@@ -58,6 +58,11 @@ h2.viz-title, h3.viz-title {
   padding-top: 0 !important;
 }
 
+.viz-subtitle {
+  font-weight: 500;
+  font-size: 1.2em;
+}
+
 @media only screen and (min-width: 769px) and (max-width: 991px) {
   .viz-title.minheight {
     min-height: 4em;
