@@ -486,7 +486,7 @@ change_table <- case_changes %>%
          period = str_c(lag(date_fmt), date_fmt, sep = " to "),
          period_pct = paste(range(date_fmt), collapse = " through ")) %>%
   slice(-1) %>%
-  mutate(pct_change = difference(new_cases_7d, lag = 1) / new_cases_7d) %>%
+  mutate(pct_change = difference(new_cases_7d, lag = 1) / lag(new_cases_7d)) %>% #changed denominator from new_cases_7d to lag(new_cases_7d) --  nathan 7/30
   select(period, period_pct, name, new_cases = new_cases_7d, pct_change) %>%
   pivot_longer(c(-period, -period_pct, -name), names_to = "type") %>%
   mutate(lbl = ifelse(type == "new_cases", period, period_pct)) %>%
