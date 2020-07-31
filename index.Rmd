@@ -455,6 +455,10 @@ Summarizing the past seven days of trends helps to smooth out daily jumps or dro
 
 ### Change in number of detected new cases over 7-day periods {.viz-title}
 
+On [July 24th](https://portal.ct.gov/Office-of-the-Governor/News/Press-Releases/2020/07-2020/Governor-Lamont-Coronavirus-Update-July-24) and [July 29th](https://portal.ct.gov/Office-of-the-Governor/News/Press-Releases/2020/07-2020/Governor-Lamont-Coronavirus-Update-July-29), 389 and 440 cases respectively were newly reported by out-of-state regional laboratories to the Connecticut Department of Public Health. As a result, new case rates around these dates are considerably inflated and should be treated with caution. 
+
+Spikes in reported cases during this period 
+
 ```{r out_case_5day, message=TRUE, warning=TRUE}
 # switching to 7 days
 # only including if each 5-day period involves more than N cases; otherwise have things like increases of 1700%
