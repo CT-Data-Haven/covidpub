@@ -455,11 +455,11 @@ Summarizing the past seven days of trends helps to smooth out daily jumps or dro
 
 ### Change in number of detected new cases over 7-day periods {.viz-title}
 
-On [July 24th](https://portal.ct.gov/Office-of-the-Governor/News/Press-Releases/2020/07-2020/Governor-Lamont-Coronavirus-Update-July-24) and [July 29th](https://portal.ct.gov/Office-of-the-Governor/News/Press-Releases/2020/07-2020/Governor-Lamont-Coronavirus-Update-July-29), 389 and 440 cases respectively were newly reported by out-of-state regional laboratories to the Connecticut Department of Public Health. As a result, new case rates around these dates are considerably inflated and should be treated with caution. 
+On [July 24th](https://portal.ct.gov/Office-of-the-Governor/News/Press-Releases/2020/07-2020/Governor-Lamont-Coronavirus-Update-July-24) and [July 29th](https://portal.ct.gov/Office-of-the-Governor/News/Press-Releases/2020/07-2020/Governor-Lamont-Coronavirus-Update-July-29), 440 and 384 cases respectively were newly reported by out-of-state regional laboratories to the Connecticut Department of Public Health. As a result, new case rates around these dates are considerably inflated and should be treated with caution. 
 
-Spikes in reported cases during this period 
+Spikes in reported cases during this period.
 
-```{r out_case_5day, message=TRUE, warning=TRUE}
+```{r out_case_5day}
 # switching to 7 days
 # only including if each 5-day period involves more than N cases; otherwise have things like increases of 1700%
 # WATCH OUT: adding in town-level, but we only have that going back to 3/21
@@ -541,7 +541,7 @@ case_change_state %>%
   billboarder(data = ., height = 300) %>%
   bb_barchart(mapping = bbaes(x = date, y = new_cases_7d, group = pct_brk),
               width = list(ratio = 0.6), stack = TRUE) %>%
-  bb_x_axis(label = list(text = NULL), type = "timeseries", 
+  bb_x_axis(label = list(text = "Week of", position = "outer-left"), type = "timeseries", 
             tick = list(format = "%m/%d", values = mondays[mondays >= min(case_change_state$date)])) %>%
   bb_y_axis(label = list(text = "# new cases", position = "outer-top"),
             tick = list(format = htmlwidgets::JS("d3.format(',')"))) %>%
@@ -550,7 +550,7 @@ case_change_state %>%
   # bb_title("Number of new cases") %>%
   bb_colors_manual(set_names(div_pal2[c(1:2, 4:5)], c("Decrease", "Slight decrease", "Slight increase", "Increase"))) %>%
   bb_tooltip(format = list(
-    value = htmlwidgets::JS(d3_flag)
+    value = htmlwidgets::JS("d3.format(',')")
   ), linked = list(name = "change-tip"))
 ```
 
