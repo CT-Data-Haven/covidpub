@@ -18,14 +18,18 @@ d3_flag <- "function(value, ratio, id, index) {
 }"
 
 d3_percent <- "function(value, ratio, id, index) {
+  return d3.format('0.0%')(value);
+}"
+
+d3_percent_flag <- "function(value, ratio, id, index) {
   return d3.format('+0.0%')(value);
 }"
 
 lt1 <- "
   function(value) {
     // return value < 0.01 ? '<1%' : d3.format('0.0%')(value);
-    var fmt = value < 0.1 ? '.1f' : '.0f';
-    return d3.format(fmt)(value * 100) + '%';
+    var fmt = value < 0.1 ? '.1%' : '.0%';
+    return value < 0.01 ? '<1%' : d3.format(fmt)(value);
   }
 "
 
