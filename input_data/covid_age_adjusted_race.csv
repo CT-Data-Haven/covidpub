@@ -1,5 +1,4 @@
 date,race,measure,rate_10k
-<<<<<<< HEAD
 2020-08-24,Average,cases,135.5
 2020-08-24,Average,deaths,9.2
 2020-08-24,White,cases,58.6
@@ -12,17 +11,3 @@ date,race,measure,rate_10k
 2020-08-24,Asian,deaths,4
 2020-08-24,AIAN,cases,57.5
 2020-08-24,AIAN,deaths,NA
-=======
-2020-08-23,Average,cases,135.4
-2020-08-23,Average,deaths,9.2
-2020-08-23,White,cases,58.5
-2020-08-23,White,deaths,7.4
-2020-08-23,Black,cases,179.2
-2020-08-23,Black,deaths,19.9
-2020-08-23,Latino,cases,189.7
-2020-08-23,Latino,deaths,12.5
-2020-08-23,Asian,cases,42.7
-2020-08-23,Asian,deaths,4
-2020-08-23,AIAN,cases,57.5
-2020-08-23,AIAN,deaths,NA
->>>>>>> 32a4b259f2ea82ac2ed5a8b17b024862f3cf0173
