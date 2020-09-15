@@ -65,6 +65,8 @@ pal <- vivid %>%
   purrr::set_names(c("Connecticut", counties))
 race_pal <- setNames(pal[c(1, 2, 4, 9, 3)], c("Total", "Black", "Latino", "White", "Asian"))
 
+cws <- read_csv("input_data/cws_2020_covid_basic_profile.csv") %>%
+  mutate_at(vars(category, group), as_factor)
 ```
 
 ::: {.text-info #date-heading}
@@ -346,7 +348,7 @@ Because test results may take several days to come back, the value shown here is
 
 ### Test positivity rate, statewide 7-day rolling mean, `r test_date_range_fmt[1]` to `r test_date_range_fmt[2]` {.viz-title}
 
-```{r}
+```{r test_pos_chart}
 test_pos <- tests %>%
   mutate_at(vars(daily_tests, positive_tests), list(roll = ~slider::slide_dbl(., sum, .before = 6, .complete = TRUE))) %>%
   mutate(avg_positive_rate = positive_tests_roll / daily_tests_roll) %>%
@@ -508,7 +510,7 @@ datatable(change_table,
 
 ```
 
-```{r}
+```{r case_change_prep}
 case_change_state <- case_changes %>%
   filter(date %in% mondays, level == "state") %>%
   mutate(change = difference(new_cases_7d),
@@ -667,10 +669,73 @@ billboarder(data = mob, height = 450) %>%
   bb_colors_manual(mob_pal) 
 ```
 
+## Community well-being
+
+DataHaven recently completed its [2020 Community Wellbeing Survey](https://ctdatahaven.org/reports/datahaven-community-wellbeing-survey), with a statewide sample of more than 1,100 adult participants. The 2020 survey included a set of questions related to COVID-19 and its impacts on residents' well-being, resources, and quality of life. 
+
+Survey participants were asked to rate the amount of trust they have in each of several public institutions to keep themselves and their families safe. Below are the shares of adults who reported having a great amount or a fair amount of trust in each institution. 
+
+### Adults reporting great/fair amount of trust in public institutions to keep them safe, Connecticut, 2020 {.viz-title}
+
+
+```{r cws_trust}
+cws_trust <- cws %>%
+  select(category, group, matches("^trust")) %>%
+  pivot_longer(-category:-group, names_to = "indicator") %>%
+  filter(category == "All adults") %>%
+  arrange(desc(value)) %>%
+  mutate_if(is.factor, fct_drop) %>%
+  mutate(group = fct_recode(group, "Share of adults" = "Total"),
+         indicator = as_factor(indicator) %>%
+           fct_relabel(str_remove, "trust_") %>%
+           fct_relabel(clean_titles))
+
+billboarder(data = cws_trust, height = 350) %>%
+  bb_barchart(mapping = bbaes(x = indicator, y = value, group = group)) %>%
+  bb_legend(hide = TRUE) %>%
+  bb_y_axis(label = list(text = "% who trust", position = "outer-top"),
+            tick = list(format = htmlwidgets::JS("d3.format('0.0%')"),
+                        values = seq(0, 1, by = 0.1))) %>%
+  bb_colors_manual(set_names(c(pal[7]), levels(cws_trust$group)))
+```
+
+Survey participants were also asked how often they leave their home for work. Out of currently working adults, the shares saying they leave for work very often are below.
+
+### Share of working adults who leave home for work very often, Connecticut, 2020 {.viz-title}
+
+
+```{r cws_work}
+cws_work <- cws %>%
+  select(category, group, leave_for_work_very_often) %>%
+  pivot_longer(-category:-group, names_to = "indicator") %>%
+  filter(category %in% c("All adults", "Race/Ethnicity", "Children in household", "Income")) %>%
+  mutate_if(is.factor, fct_drop) %>%
+  mutate(category = category %>%
+           fct_relevel("Income", after = 1) %>%
+           fct_recode(CT = "All adults", "By race" = "Race/Ethnicity", "By household income" = "Income", "By presence of kids" = "Children in household"),
+         group = group %>% 
+           fct_relabel(str_replace, "^\\b(?=\\d)", "Ages ") %>%
+           fct_relabel(str_replace, "^(?=.?\\$)", "Income ")) %>%
+  arrange(category)
+
+cws_pal <- pal[c(1, 9, 2, 4)] %>%
+  unname() %>%
+  set_names(levels(cws_work$category))
+
+billboarder(data = cws_work, height = 350) %>%
+  bb_barchart(mapping = bbaes(x = group, y = value, group = category), stack = TRUE) %>%
+  bb_colors_manual(cws_pal) %>%
+  bb_legend(hide = TRUE) %>%
+  bb_y_axis(label = list(text = "% workers who leave for work", position = "outer-top"),
+            tick = list(format = htmlwidgets::JS("d3.format('0.0%')"),
+                        values = seq(0, 1, by = 0.1)))
+```
+
+See data from this and previous years of the Community Wellbeing Survey on [DataHaven's website](https://www.ctdatahaven.org/wellbeingsurvey).
 
 ## Economic impacts
 
-```{r}
+```{r hhp_prep}
 hhp <- list.files("input_data", pattern = "^hhp.+\\.csv", full.names = TRUE) %>%
   set_names(str_extract, "(?<=hhp_group_)(\\w+)") %>%
   map(read_csv) %>%
@@ -694,13 +759,13 @@ hhp_pal <- pal[c(1, 7, 2, 4)] %>%
   set_names(levels(hhp[["food_insecurity"]]$dimension))
 ```
 
-The US Census Bureau launched a short-term Household Pulse Survey in April to gauge several economic and health indicators throughout the country. The survey questions summarized here are for adults in Connecticut, based on the `r hhp_wks` weeks of data released so far.
+The US Census Bureau conducted a Household Pulse Survey between April and July to gauge several economic and health indicators throughout the country. The survey questions summarized here are for adults in Connecticut, based on the 12 weeks of data released.
 
 Loss of income measures the share of adults for whom at least one member of their household lost work-related income (i.e. not public benefits) since March 13, 2020. Food insecurity refers to the share of adults that report having sometimes or often not had enough food at home over the previous 7 days. Housing insecurity refers to the share of adults that report having little to no confidence that their next month's housing payments can be made on time, out of adults whose households pay either rent or a mortgage.
 
 ### Adults with loss of income in household, `r hhp_date_fmt[1]` to `r hhp_date_fmt[2]`, Connecticut {.viz-title}
 
-```{r}
+```{r hhp_lost_income}
 billboarder(data = hhp[["loss_of_work"]], height = 350) %>%
   bb_barchart(mapping = bbaes(x = group, y = share, group = dimension), stack = TRUE) %>%
   bb_colors_manual(hhp_pal) %>%
@@ -713,7 +778,7 @@ billboarder(data = hhp[["loss_of_work"]], height = 350) %>%
 
 ### Adults experiencing food insecurity in past 7 days, `r hhp_date_fmt[1]` to `r hhp_date_fmt[2]`, Connecticut {.viz-title}
 
-```{r}
+```{r hhp_food}
 billboarder(data = hhp[["food_insecurity"]], height = 350) %>%
   bb_barchart(mapping = bbaes(x = group, y = share, group = dimension), stack = TRUE) %>%
   bb_colors_manual(hhp_pal) %>%
@@ -725,7 +790,7 @@ billboarder(data = hhp[["food_insecurity"]], height = 350) %>%
 
 ### Adults experiencing housing insecurity, `r hhp_date_fmt[1]` to `r hhp_date_fmt[2]`, Connecticut {.viz-title}
 
-```{r}
+```{r hhp_housing}
 housing_pal <- unname(pal[c(1, 7)]) %>% set_names(c("All adults", "Renters"))
 hhp[c("housing_insecurity", "rent_insecurity")] %>%
   set_names(c("all_adults", "renters")) %>%
@@ -746,6 +811,7 @@ hhp[c("housing_insecurity", "rent_insecurity")] %>%
 ## Sources {.section-title}
 
 * DataHaven analysis of data reported by the State of Connecticut daily and posted to the COVID-19 information portal, https://portal.ct.gov/Coronavirus
+* 2020 DataHaven Community Wellbeing Survey, https://ctdatahaven.org/wellbeingsurvey
 * DataHaven analysis of US Census Bureau Household Pulse Survey public use microdata, weeks 1 through `r hhp_wks`, https://www.census.gov/householdpulsedata
 * Data from Descartes Lab, "Mobility Changes in Response to COVID-19," https://descarteslabs.com/mobility/
 
