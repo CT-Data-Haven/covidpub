@@ -601,7 +601,7 @@ billboarder(data = weekly_tests, height = 450) %>%
   bb_barchart(mapping = bbaes(x = monday, y = value, group = measure)) %>%
   bb_x_axis(label = list(text = "Week of", position = "outer-left"), type = "timeseries", 
             tick = list(format = "%m/%d", values = mondays)) %>%
-  bb_y_axis(label = list(text = "Weekly tests", position = "outer-top"), max = max(reopen_df$value),
+  bb_y_axis(label = list(text = "Weekly tests", position = "outer-top"), max = max(weekly_tests$value),
             tick = list(format = htmlwidgets::JS("d3.format(',')"))) %>%
   bb_x_grid(show = TRUE) %>%
   bb_y_grid(show = TRUE,
