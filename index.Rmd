@@ -34,6 +34,8 @@ library(tsibble)
 source("scripts/plotting_utils.R")
 ```
 
+<script src="https://d3js.org/d3-time-format.v3.min.js"></script>
+
 ```{r meta_n_main}
 dfs <- list.files("input_data", pattern = ".csv", full.names = TRUE) %>%
   set_names(str_extract, "(?<=covid_)(\\w+)(?=\\.csv)") %>%
@@ -67,6 +69,8 @@ race_pal <- setNames(pal[c(1, 2, 4, 9, 3)], c("Total", "Black", "Latino", "White
 
 cws <- read_csv("input_data/cws_2020_covid_basic_profile.csv") %>%
   mutate_at(vars(category, group), as_factor)
+
+excess <- read_csv("input_data/cdc_weekly_excess_deaths.csv")
 ```
 
 ::: {.text-info #date-heading}
@@ -213,11 +217,12 @@ county_to_plot %>%
   arrange(date, name) %>%
   billboarder(list(data = list(order = "asc")), data = ., height = 400) %>%
   bb_barchart(mapping = bbaes(x = date, y = cases, group = name), stacked = TRUE, width = list(ratio = 1)) %>%
-  # bb_linechart(mapping = bbaes(x = date, y = cases, group = name), type = "area") %>%
+  # bb_linechart(mapping = bbaes(x = date, y = cases, group = name), zerobased = TRUE) %>%
   bb_x_axis(label = list(text = NULL), type = "timeseries", 
             tick = list(format = "%m/%d", values = mondays)) %>%
   bb_y_axis(label = list(text = "Cases", position = "outer-top"),
-            tick = list(format = htmlwidgets::JS("d3.format(',')"))) %>%
+            tick = list(format = htmlwidgets::JS("d3.format(',')")),
+            padding = list(bottom = 0)) %>%
   bb_x_grid(show = TRUE) %>%
   bb_y_grid(show = TRUE) %>%
   bb_colors_manual(pal) %>%
@@ -505,9 +510,6 @@ datatable(change_table,
           rownames = FALSE, style = "bootstrap", class = "table table-striped") %>%
   formatRound(2:3, digits = 0) %>%
   formatPercentage(4)
-
-
-
 ```
 
 ```{r case_change_prep}
@@ -524,7 +526,6 @@ case_change_state <- case_changes %>%
   filter(!is.na(change))
 
 case_change_fmt <- format(range(case_change_state$date), "%m/%d/%Y")
-
 ```
 
 
@@ -541,7 +542,7 @@ case_change_state %>%
   arrange(pct_brk) %>%
   billboarder(data = ., height = 300) %>%
   bb_barchart(mapping = bbaes(x = date, y = new_cases_7d, group = pct_brk),
-              width = list(ratio = 0.6), stack = TRUE) %>%
+              width = list(ratio = 0.6), stacked = TRUE) %>%
   bb_x_axis(label = list(text = "Week of", position = "outer-left"), type = "timeseries", 
             tick = list(format = "%m/%d", values = mondays[mondays >= min(case_change_state$date)])) %>%
   bb_y_axis(label = list(text = "# new cases", position = "outer-top"),
@@ -555,6 +556,69 @@ case_change_state %>%
   ), linked = list(name = "change-tip"))
 ```
 
+
+```{r}
+# from https://github.com/dreamRs/billboarder/issues/21
+billboarder() %>%
+  bb_data(json = as.list(excess %>% select(date, observed, avg_expected)),
+          x = "date",
+          names = list(observed = "Observed", avg_expected = "Avg. expected"),
+          types = list(observed = "bar", avg_expected = "line")) %>%
+  bb_x_axis(label = list(text = "Week of", position = "outer-left"), type = "timeseries",
+            tick = list(format = "%m/%d")) %>%
+  bb_y_axis(label = list(text = "# deaths", position = "outer-top"),
+            tick = list(format = htmlwidgets::JS("d3.format(',')"))) %>%
+  bb_x_grid(show = TRUE) %>%
+  bb_y_grid(show = TRUE) %>%
+  bb_colors_manual(set_names(c(pal[7], "#44444f"), c("observed", "avg_expected")))
+```
+
+```{r}
+excess2 <- excess %>%
+  mutate(above = if_else(observed > upper_thresh, observed - upper_thresh, 0),
+         normal = observed - above) %>%
+  select(date, normal, above, observed) %>%
+  pivot_longer(normal:observed, names_to = "type") %>%
+  mutate(type = as_factor(type) %>% fct_relevel("above"),
+         grp = fct_other(type, keep = "observed", other_level = "split")) %>%
+  arrange(date, type) %>%
+  filter(value > 0)
+
+billboarder(list(data = list(order = NULL)), data = excess2, height = 400) %>%
+  bb_data(names = list(observed = "Total observed", above = "Excess"),
+          groups = list(list(c("normal"), c("above")))) %>%
+  bb_barchart(mapping = bbaes(x = date, y = value, group = type), width = list(ratio = 1)) %>%
+  bb_colors_manual(set_names(c(pal[c(7, 6)], "white"), "normal", "above", "observed")) %>%
+  bb_x_axis(label = list(text = "Week of", position = "outer-left"), type = "timeseries",
+            tick = list(format = "%m/%d")) %>%
+  bb_y_axis(label = list(text = "# deaths", position = "outer-top"),
+            tick = list(format = htmlwidgets::JS("d3.format(',')"))) %>%
+  bb_x_grid(show = TRUE) %>%
+  bb_y_grid(show = TRUE) %>%
+  bb_legend(hide = c("normal", "observed"),
+            item = list(onclick = htmlwidgets::JS("function(id) { return null; }"))) %>%
+  bb_tooltip(contents = htmlwidgets::JS(
+    "function(data, defaultTitleFormat, defaultValueFormat, color) {
+      var commaFormat = d3.format(',d');
+      var excess = data[2].value;
+      var total = data[1].value;
+      var day = d3.timeFormat('%m/%d')(data[0].x);
+      var tip = '<table class=\"bb-tooltip\">' +
+        '<tbody>' +
+          '<tr><th colspan=\"2\">' + day + '</th></tr>' +
+          '<tr class=\"bb-tooltip-name-observed\"><td class=\"name\">Total observed</td><td class=\"value\">' + commaFormat(total) + '</td></tr>';
+      if (excess) {
+        tip = tip + 
+          '<tr class=\"bb-tooltip-name-excess\"><td class=\"name\"><span style=\"background-color:#24796C\"></span>Excess</td><td class=\"value\">' + commaFormat(excess) + '</td></tr>';
+      }
+      tip = tip +
+        '</tbody>' +
+        '</table>';
+      return tip;
+    }"
+  ), order = NULL)
+# I hate hard-coding stuff like this :(
+```
 
 
 
