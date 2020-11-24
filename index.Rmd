@@ -253,19 +253,12 @@ map_lbllr <- function(name, rate_10k, cases) {
     htmltools::htmlEscape()
 }
 map_thresh <- 10
-cases_sf <- cwi::town_sf %>%
-  # select(-GEOID) %>%
-  sf::st_transform(4326) %>%
+# from plotting_utils
+cases_sf <- town_sf %>%
   left_join(town, by = "name") %>%
   top_n(1, date) %>%
   left_join(pops, by = "name") %>%
   mutate(rate_10k = round(cases / total_pop * 1e4, digits = 1))
-
-bbox <- cwi::town_sf %>%
-  sf::st_transform(4326) %>%
-  sf::st_buffer(1e-2) %>%
-  sf::st_bbox() %>%
-  as.numeric()
 ```
 
 
@@ -559,7 +552,7 @@ case_change_state %>%
 
 
 
-```{r}
+```{r excess_setup}
 ex_dates <- seq(min(excess$date), max(excess$date), by = "2 weeks")
 
 ex_date_fmt <- format(range(excess$date), "%m/%d/%Y")
@@ -577,7 +570,7 @@ During the week of April 18, at the pandemic’s early peak, the number of death
 
 ### Observed and expected number of deaths per week, Connecticut, `r ex_date_fmt[1]` to `r ex_date_fmt[2]` {.viz-title}
 
-```{r}
+```{r out_excess}
 excess %>%
   billboarder(data = ., height = 360) %>%
   bb_barchart(mapping = bbaes(x = date, y = observed, group = above_upper),

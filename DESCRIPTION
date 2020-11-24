@@ -19,23 +19,18 @@ Imports:
     lubridate,
     billboarder,
     knitr,
-    kableExtra,
     leaflet,
-    tidycensus,
     janitor,
     scales,
     DT,
-    htmlwidgets,
     htmltools,
     tibble,
     measurements,
-    rcartocolor,
     classInt,
     cwi,
     slider,
-    tsibble
+    tsibble,
+    sf
 Remotes:
-    CT-Data-Haven/cwi,
     cran/units@0.6-6,
-    cran/rgdal@1.4-8,
-    cran/sf@0.9-3
+    cran/rgdal@1.4-8

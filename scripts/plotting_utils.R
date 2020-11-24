@@ -42,3 +42,12 @@ age_names <- function(x) {
   x <- stringr::str_replace_all(x, "(?<=[A-Za-z])(\\d)", " \\1")
   x
 }
+
+####### mapping
+town_sf <- cwi::town_sf %>%
+  sf::st_transform(4326)
+
+bbox <- town_sf %>%
+  sf::st_buffer(1e-2) %>%
+  sf::st_bbox() %>%
+  as.numeric()
