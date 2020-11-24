@@ -27,7 +27,6 @@ Imports:
     tibble,
     measurements,
     classInt,
-    cwi,
     slider,
     tsibble,
     sf
