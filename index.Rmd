@@ -34,6 +34,7 @@ library(tsibble)
 source("scripts/plotting_utils.R")
 ```
 
+
 ```{r meta_n_main}
 dfs <- list.files("input_data", pattern = ".csv", full.names = TRUE) %>%
   set_names(str_extract, "(?<=covid_)(\\w+)(?=\\.csv)") %>%
@@ -67,6 +68,10 @@ race_pal <- setNames(pal[c(1, 2, 4, 9, 3)], c("Total", "Black", "Latino", "White
 
 cws <- read_csv("input_data/cws_2020_covid_basic_profile.csv") %>%
   mutate_at(vars(category, group), as_factor)
+
+excess <- read_csv("input_data/covid_excess_deaths_wkly.csv") %>%
+  mutate(above_upper = ifelse(observed > upper_thresh, "Above expected", "Within / below expected range"),
+         percent_above_avg = (observed - avg_expected) / avg_expected)
 ```
 
 ::: {.text-info #date-heading}
@@ -213,11 +218,12 @@ county_to_plot %>%
   arrange(date, name) %>%
   billboarder(list(data = list(order = "asc")), data = ., height = 400) %>%
   bb_barchart(mapping = bbaes(x = date, y = cases, group = name), stacked = TRUE, width = list(ratio = 1)) %>%
-  # bb_linechart(mapping = bbaes(x = date, y = cases, group = name), type = "area") %>%
+  # bb_linechart(mapping = bbaes(x = date, y = cases, group = name), zerobased = TRUE) %>%
   bb_x_axis(label = list(text = NULL), type = "timeseries", 
             tick = list(format = "%m/%d", values = mondays)) %>%
   bb_y_axis(label = list(text = "Cases", position = "outer-top"),
-            tick = list(format = htmlwidgets::JS("d3.format(',')"))) %>%
+            tick = list(format = htmlwidgets::JS("d3.format(',')")),
+            padding = list(bottom = 0)) %>%
   bb_x_grid(show = TRUE) %>%
   bb_y_grid(show = TRUE) %>%
   bb_colors_manual(pal) %>%
@@ -505,9 +511,6 @@ datatable(change_table,
           rownames = FALSE, style = "bootstrap", class = "table table-striped") %>%
   formatRound(2:3, digits = 0) %>%
   formatPercentage(4)
-
-
-
 ```
 
 ```{r case_change_prep}
@@ -524,7 +527,6 @@ case_change_state <- case_changes %>%
   filter(!is.na(change))
 
 case_change_fmt <- format(range(case_change_state$date), "%m/%d/%Y")
-
 ```
 
 
@@ -541,7 +543,7 @@ case_change_state %>%
   arrange(pct_brk) %>%
   billboarder(data = ., height = 300) %>%
   bb_barchart(mapping = bbaes(x = date, y = new_cases_7d, group = pct_brk),
-              width = list(ratio = 0.6), stack = TRUE) %>%
+              width = list(ratio = 0.6), stacked = TRUE) %>%
   bb_x_axis(label = list(text = "Week of", position = "outer-left"), type = "timeseries", 
             tick = list(format = "%m/%d", values = mondays[mondays >= min(case_change_state$date)])) %>%
   bb_y_axis(label = list(text = "# new cases", position = "outer-top"),
@@ -554,6 +556,44 @@ case_change_state %>%
     value = htmlwidgets::JS("d3.format(',')")
   ), linked = list(name = "change-tip"))
 ```
+
+
+
+```{r}
+ex_dates <- seq(min(excess$date), max(excess$date), by = "2 weeks")
+
+ex_date_fmt <- format(range(excess$date), "%m/%d/%Y")
+
+ex_recent <- excess %>%
+  filter(above_upper == "Above expected") %>%
+  top_n(1, date)
+ex_rec_fmt <- format(ex_recent$date, "%b %d")
+ex_percent_fmt <- round(ex_recent$percent_above_avg * 100)
+```
+
+Another way of calculating the number of deaths related to COVID-19 is to estimate how many deaths might be expected to occur in any given week, based on several years of recent trends, and then compare those to the observed number of COVID-19 deaths that reported week. This assumes, in the absence of other deadly events, that COVID-19 accounts for a large part of the unexplained excess. This [excess deaths estimation method](https://www.cdc.gov/nchs/nvss/vsrr/covid19/excess_deaths.htm) helps mitigate issues with limited access to testing, particularly in the earlier months of the pandemic, inconsistent testing protocols, and differences in record keeping across municipalities and hospitals, all of which have made it difficult to know the pandemic's exact death toll.
+
+During the week of April 18, at the pandemic’s early peak, the number of deaths observed in Connecticut was more than twice the number that would be expected based on recent years. The most recent week in which deaths were above the expected range was the week of `r ex_rec_fmt`, when the observed number of deaths was `r ex_percent_fmt` percent above average. Note that this dataset has a lag of a few weeks.
+
+### Observed and expected number of deaths per week, Connecticut, `r ex_date_fmt[1]` to `r ex_date_fmt[2]` {.viz-title}
+
+```{r}
+excess %>%
+  billboarder(data = ., height = 360) %>%
+  bb_barchart(mapping = bbaes(x = date, y = observed, group = above_upper),
+              width = list(ratio = 1), stacked = TRUE) %>%
+  bb_linechart(mapping = bbaes(x = date, y = avg_expected), show_point = FALSE) %>%
+  bb_x_axis(label = list(text = "Week of", position = "outer-left"), type = "timeseries",
+            tick = list(format = "%m/%d", values = ex_dates)) %>%
+  bb_y_axis(label = list(text = "# deaths", position = "outer-top"),
+            tick = list(format = htmlwidgets::JS("d3.format(',')"))) %>%
+  bb_x_grid(show = TRUE) %>%
+  bb_y_grid(show = TRUE) %>%
+  bb_colors_manual(set_names(c(div_pal2[2], div_pal2[5], "#44444f"), c("Within / below expected range", "Above expected", "avg_expected"))) %>%
+  bb_legend(hide = c("bb-x")) %>%
+  bb_data(names = list(avg_expected = "Avg. expected"))
+```
+
 
 
 
@@ -813,7 +853,8 @@ hhp[c("housing_insecurity", "rent_insecurity")] %>%
 * DataHaven analysis of data reported by the State of Connecticut daily and posted to the COVID-19 information portal, https://portal.ct.gov/Coronavirus
 * 2020 DataHaven Community Wellbeing Survey, https://ctdatahaven.org/wellbeingsurvey
 * DataHaven analysis of US Census Bureau Household Pulse Survey public use microdata, weeks 1 through `r hhp_wks`, https://www.census.gov/householdpulsedata
-* Data from Descartes Lab, "Mobility Changes in Response to COVID-19," https://descarteslabs.com/mobility/
+* Data from Descartes Lab, "Mobility Changes in Response to COVID-19," https://descarteslabs.com/mobility
+* CDC National Center for Health Statistics, "Excess Deaths Associated with COVID-19," https://www.cdc.gov/nchs/nvss/vsrr/covid19/excess_deaths.htm
 
 
 
