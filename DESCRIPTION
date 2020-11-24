@@ -27,6 +27,7 @@ Imports:
     tibble,
     measurements,
     classInt,
+    rcartocolor,
     slider,
     tsibble,
     sf
