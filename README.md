@@ -1,5 +1,6 @@
 <!-- badges: start -->
 [![Travis build status](https://travis-ci.org/CT-Data-Haven/covidpub.svg?branch=master)](https://travis-ci.org/CT-Data-Haven/covidpub)
+[![R build status](https://github.com/CT-Data-Haven/covidpub/workflows/R-CMD-check/badge.svg)](https://github.com/CT-Data-Haven/covidpub/actions)
 <!-- badges: end -->
 
 # covidpub

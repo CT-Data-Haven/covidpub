@@ -1,0 +1,31 @@
+name: Render and Deploy RMarkdown Website
+'on': push
+jobs:
+  build:
+    runs-on: macOS-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@master
+      - name: Install dependencies
+        run: |
+          remotes::install_deps(dependencies = TRUE)
+          install.packages(c("remotes", "renv", "rmarkdown"))
+        shell: Rscript {0}
+        
+      - name: Install project packages
+        run: |
+          renv::restore()
+        shell: Rscript {0}
+      
+      - name: Render site
+        run: |-
+          Rscript -e "rmarkdown::render_site(encoding = 'UTF-8')"
+          echo "::set-env name=DEPLOY_PATH::$(Rscript -e "cat(rmarkdown::site_config()[['output_dir']])")"
+      
+      - name: Deploy to GitHub Pages
+        if: github.ref == 'refs/heads/master'
+        uses: maxheld83/ghpages@v0.2.0
+        env:
+          BUILD_DIR: $DEPLOY_PATH
+          GH_PAT: ${{ secrets.GH_PAT }}
+    container: rocker/verse:latest
