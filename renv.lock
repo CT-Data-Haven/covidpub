@@ -753,15 +753,10 @@
     },
     "sf": {
       "Package": "sf",
-      "Version": "0.9-7",
-      "Source": "GitHub",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteUsername": "r-spatial",
-      "RemoteRepo": "sf",
-      "RemoteRef": "master",
-      "RemoteSha": "0e5042381449b41e698943428577dd6360616e79",
-      "Hash": "84d9187ddc1bfa30ffc814e07b34b558"
+      "Version": "0.9-6",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "bf0ef23231efe31576e08d69772892ef"
     },
     "shiny": {
       "Package": "shiny",
