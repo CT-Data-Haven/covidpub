@@ -1,5 +1,8 @@
 name: Render and Deploy RMarkdown Website
-'on': push
+on:
+  push:
+    branches:
+      - master
 jobs:
   build:
     runs-on: macOS-latest
