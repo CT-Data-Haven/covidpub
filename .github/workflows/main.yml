@@ -24,12 +24,12 @@ jobs:
         shell: Rscript {0}
       
       - name: Render site
-        run: |-
-          Rscript -e "rmarkdown::render_site(encoding = 'UTF-8')"
-          echo "::set-env name=DEPLOY_PATH::$(Rscript -e "cat(rmarkdown::site_config()[['output_dir']])")"
-      
+        run: |
+          rmarkdown::render_site()
+        shell: Rscript {0}
+
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@3.7.1
         env:
-          BUILD_DIR: $DEPLOY_PATH
+          BUILD_DIR: dist
           GH_PAT: ${{ secrets.GH_PAT }}
