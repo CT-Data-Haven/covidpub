@@ -9,6 +9,10 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@master
+      
+      - name: Install pandoc
+        uses: r-lib/actions/setup-pandoc@v1
+      
       - name: Install dependencies
         run: |
           install.packages(c("remotes", "renv", "rmarkdown"))
