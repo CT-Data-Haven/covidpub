@@ -11,8 +11,8 @@ jobs:
         uses: actions/checkout@master
       - name: Install dependencies
         run: |
-          remotes::install_deps(dependencies = TRUE)
           install.packages(c("remotes", "renv", "rmarkdown"))
+          remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
         
       - name: Install project packages
