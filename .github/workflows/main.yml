@@ -31,4 +31,3 @@ jobs:
         env:
           BUILD_DIR: $DEPLOY_PATH
           GH_PAT: ${{ secrets.GH_PAT }}
-    container: rocker/verse:latest
