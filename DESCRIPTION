@@ -32,5 +32,4 @@ Imports:
     tsibble,
     sf
 Remotes:
-    cran/units@0.6-6,
     cran/rgdal@1.4-8
