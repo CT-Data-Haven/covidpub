@@ -117,12 +117,12 @@
       "Version": "3.2.0",
       "Source": "GitHub",
       "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteRepo": "blscrapeR",
       "RemoteUsername": "keberwein",
+      "RemoteRepo": "blscrapeR",
       "RemoteRef": "HEAD",
-      "RemoteSha": "f9b666cca405e0d0b23e4b5af5446f41d08c37d8",
-      "Hash": "2e61b03091c6286a420af6e28e8b6f75"
+      "RemoteSha": "db918aa085ed0b110ab6b318e86fb81c358e4825",
+      "RemoteHost": "api.github.com",
+      "Hash": "0c533b398adbbff7fd4767e97cbfd3fd"
     },
     "brio": {
       "Package": "brio",
@@ -143,12 +143,12 @@
       "Version": "0.1.0",
       "Source": "GitHub",
       "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteRepo": "camiller",
       "RemoteUsername": "camille-s",
+      "RemoteRepo": "camiller",
       "RemoteRef": "HEAD",
-      "RemoteSha": "bb993dae5c37f021e488758bf4dce40c84643efb",
-      "Hash": "d45f00bf9eb923d99d6caac6aad63d53"
+      "RemoteSha": "0de8a9aed264003cbc1524fe8778a3a07a767a87",
+      "RemoteHost": "api.github.com",
+      "Hash": "81a8c703175211ed35adf5c034b3ef92"
     },
     "cellranger": {
       "Package": "cellranger",
@@ -410,10 +410,10 @@
     },
     "isoband": {
       "Package": "isoband",
-      "Version": "0.2.2",
+      "Version": "0.2.3",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "6e58bd3d6b3dd82a944cd6f05ade228f"
+      "Hash": "53647fb507373700028b2ce6cd30751a"
     },
     "janitor": {
       "Package": "janitor",
@@ -606,10 +606,10 @@
     },
     "processx": {
       "Package": "processx",
-      "Version": "3.4.4",
+      "Version": "3.4.5",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "03446ed0b8129916f73676726cb3c48f"
+      "Hash": "22aab6098cb14edd0a5973a8438b569b"
     },
     "progress": {
       "Package": "progress",
@@ -690,10 +690,10 @@
     },
     "renv": {
       "Package": "renv",
-      "Version": "0.12.2",
+      "Version": "0.12.3",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "398cc1ea892e1aade66d1ecbb2874d24"
+      "Hash": "b5510c50c7f31d453c385c7b460af2b9"
     },
     "rgdal": {
       "Package": "rgdal",
@@ -704,10 +704,10 @@
     },
     "rlang": {
       "Package": "rlang",
-      "Version": "0.4.8",
+      "Version": "0.4.9",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "843a6af51414bce7f8a8e372f11d6cd0"
+      "Hash": "9d7aba7bed9a79e2403b4777428a2b12"
     },
     "rmarkdown": {
       "Package": "rmarkdown",
