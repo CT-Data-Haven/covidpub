@@ -1,4 +1,4 @@
-date,observed,upper_thresh,avg_expected,excess_lower,excess_upper
+"date","observed","upper_thresh","avg_expected","excess_lower","excess_upper"
 2020-01-04,632,724,657,0,0
 2020-01-11,630,730,664,0,0
 2020-01-18,638,733,670,0,0
