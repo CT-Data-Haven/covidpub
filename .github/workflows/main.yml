@@ -14,7 +14,7 @@ jobs:
         uses: actions/checkout@master
 
       - name: setup R
-      - uses: r-lib/actions/setup-r@master
+        uses: r-lib/actions/setup-r@master
         with:
           r-version: ${{ matrix.r }}
           
