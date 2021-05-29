@@ -13,6 +13,11 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@master
 
+      - name: setup R
+      - uses: r-lib/actions/setup-r@master
+        with:
+          r-version: ${{ matrix.r }}
+          
       - name: Install pandoc
         uses: r-lib/actions/setup-pandoc@v1
 
@@ -20,23 +25,16 @@ jobs:
         run: |
           install.packages(c("remotes", "renv", "rmarkdown"))
         shell: Rscript {0}
-        with: 
-          r-version: ${{ matrix.r }}
-        
+
       - name: Install project packages
         run: |
           renv::restore()
         shell: Rscript {0}
-        with: 
-          r-version: ${{ matrix.r }}
 
-      
       - name: Render site
         run: |
           rmarkdown::render_site()
         shell: Rscript {0}
-        with: 
-          r-version: ${{ matrix.r }}
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@3.7.1
