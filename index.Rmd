@@ -53,6 +53,11 @@ town <- dfs[["town"]]
 
 tests <- dfs[["tests"]]
 
+vaccines <- dfs[["vaccines"]]
+#saving ct5 clusters to a file to avoid cwi dependency in this file (in keeping with previous state)
+#pretty sure the repo still loads cwi in the renv snapshot though
+#write_csv(cwi::ct5_clusters, "input_data/ct5_clusters.csv")
+ct5_clusters <- read_csv("input_data/ct5_clusters.csv")
 date_range <- range(county$date)
 date_range_fmt <- format(date_range, "%m/%d/%Y")
 town_latest <- max(town$date)
@@ -102,6 +107,73 @@ For the latest information from the Connecticut Department of Public Health, vis
 - Some values are given as rates and are marked as such, where the number of cases is divided by population in order to meaningfully compare the relative magnitude of cases across areas.
 
 :::
+
+## Vaccination rates and disparities
+
+### Disparities across the [Five Connecticuts](https://ctdatahaven.org/data-resources/changing-demographics-connecticut-%e2%80%94%c2%a01900-2000-part-2-five-connecticuts) over time. 
+
+Data here include those who have received one or more doses of any vaccines. 
+
+
+```{r vaccines_5cts}
+#"first_dose" here refers to 1+ doses, not just one dose
+vaccines_5cts <- vaccines %>% 
+  left_join(ct5_clusters, by = "town") %>% 
+  group_by(cluster, date) %>% 
+  summarize(first_dose_rate = sum(first_doses, na.rm=T)/sum(pop, na.rm=T)) 
+
+
+#many things here copied from below chunks,,,, 
+mondays <- seq(min(vaccines$date), max(vaccines$date), by = 1) %>%
+  floor_date(unit = "week", week_start = 1) %>%
+  unique()
+
+vac_pal <- pal[2:6] %>% 
+  set_names(unique(ct5_clusters$cluster))
+
+billboarder(data = vaccines_5cts, height = 400) %>% 
+  bb_linechart(mapping = bbaes(x = date, y = first_dose_rate, group = cluster)) %>% 
+  bb_x_axis(label = list(text = NULL), type = "timeseries",
+            tick = list(format = "%m/%d", values = mondays)) %>% 
+  bb_y_axis(label = list(text = "Percent vaccinated", position = "outer-top"),
+            tick = list(format = htmlwidgets::JS(d3_percent), values = seq(0, 1, by = 0.1)),
+            padding = list(bottom = 0),
+            min = 0) %>%
+  bb_x_grid(show = TRUE) %>%
+  bb_y_grid(show = TRUE) %>%
+  bb_colors_manual(vac_pal)
+```
+
+
+### Vaccinations in Connecticut by town, as of `r format(max(vaccines$date), "%B %d, %Y")`
+
+```{r vaccines_map, fig.height=5, fig.width=7}
+
+vaccines_sf <- town_sf %>% 
+  left_join(vaccines, by = c("name" = "town")) %>% 
+  top_n(1, date) %>% 
+  mutate(vaccines_rate = 100*round(first_doses/pop, digits = 3)) 
+
+vac_buckets <- seq(10*floor(min(vaccines_sf$vaccines_rate)/10), 
+               10*ceiling(max(vaccines_sf$vaccines_rate)/10), 
+               by = 10) #to get buckets in multiples of 10 around the vaccination percent range
+vac_pal <- colorBin(RColorBrewer::brewer.pal(length(vac_buckets), "Blues"), 
+                    domain = vaccines_sf$vaccines_rate, bins = vac_buckets)
+#why does vac_pal(28) not return a warning? if 28 < min(vaccines_sf$vaccines_rate)
+leaflet(vaccines_sf, width = "100%", height = 500, 
+        options = leafletOptions(zoomSnap = 0.25, zoomDelta = 0.5, scrollWheelZoom = FALSE)) %>%  
+  setMaxBounds(bbox[1], bbox[2], bbox[3], bbox[4]) %>%
+  addProviderTiles(providers$CartoDB.Positron) %>%
+  addPolygons(color = "#333333", weight = 0.6, fillOpacity = 0.8, 
+              fillColor = ~vac_pal(vaccines_rate),
+              label = ~str_glue("{name}: {vaccines_rate}% vaccinated"),
+              labelOptions = labelOptions(className = "tooltip", direction = "top", offset = c(0, -20)),
+              highlightOptions = highlightOptions(fillOpacity = 1, bringToFront = TRUE, weight = 2)) %>%
+  addLegend("bottomright", pal = vac_pal, values = ~vaccines_rate, opacity = 0.9, title = "% with at least one dose")
+
+```
+
+
 
 ## Statewide case counts and rates
 
