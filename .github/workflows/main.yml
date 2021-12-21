@@ -5,13 +5,13 @@ on:
       - master
 jobs:
   build:
-    runs-on: macOS-latest
-    strategy: 
-      matrix:
-        r: ['4.0.3']
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+      CRAN: "https://packagemanager.rstudio.com/all/__linux__/focal/latest"
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@master
+        uses: actions/checkout@v2
 
       - name: set up R
         uses: r-lib/actions/setup-r@master
