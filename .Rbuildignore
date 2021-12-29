@@ -5,3 +5,7 @@
 ^\.Rproj\.user$
 ^\.github$
 ^\.github/workflows$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^data-raw$
