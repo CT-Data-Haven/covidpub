@@ -114,18 +114,6 @@
       "Repository": "CRAN",
       "Hash": "461aa75a11ce2400245190ef5d3995df"
     },
-    "camiller": {
-      "Package": "camiller",
-      "Version": "0.2.3",
-      "Source": "GitHub",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteUsername": "camille-s",
-      "RemoteRepo": "camiller",
-      "RemoteRef": "main",
-      "RemoteSha": "ef90b39ff6a7006ec54e1f7782b1479516065354",
-      "Hash": "fe6f11fc7de1b211ac7ee90c14802d3b"
-    },
     "cellranger": {
       "Package": "cellranger",
       "Version": "1.1.0",
@@ -209,19 +197,6 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "2b7d10581cc730804e9ed178c8374bd6"
-    },
-    "cwi": {
-      "Package": "cwi",
-      "Version": "0.4.2",
-      "Source": "GitHub",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteUsername": "CT-Data-Haven",
-      "RemoteRepo": "cwi",
-      "RemoteRef": "main",
-      "RemoteSha": "dfb5c75065fe274da42ab7183a0dfcb8e6abef05",
-      "Remotes": "camille-s/camiller",
-      "Hash": "2a01cba6f044e946ca4717bd45c2ab22"
     },
     "desc": {
       "Package": "desc",
@@ -467,6 +442,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "61e4a10781dd00d7d81dd06ca9b94e95"
+    },
+    "measurements": {
+      "Package": "measurements",
+      "Version": "1.4.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "7d491085f997665f4e9f9735b9110979"
     },
     "mgcv": {
       "Package": "mgcv",
