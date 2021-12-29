@@ -45,12 +45,3 @@ age_names <- function(x) {
   x
 }
 
-####### mapping
-# town_sf <- cwi::town_sf %>%
-#   sf::st_transform(4326)
-# saveRDS(town_sf, "input_data/town_sf.rds")
-town_sf <- readRDS("input_data/town_sf.rds")
-bbox <- town_sf %>%
-  sf::st_buffer(1e-2) %>%
-  sf::st_bbox() %>%
-  as.numeric()

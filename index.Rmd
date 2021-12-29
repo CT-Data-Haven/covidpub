@@ -26,7 +26,6 @@ library(readr)
 library(lubridate)
 library(billboarder)
 library(knitr)
-library(leaflet)
 library(DT)
 library(htmltools)
 library(tsibble)
@@ -208,7 +207,7 @@ billboarder(list(), data = age_adj_race, height = 350) %>%
 
 :::: 
 
-## Cases by county and town
+## Cases by county
 
 ### Counts of detected COVID-19 cases by county, `r date_range_fmt[1]` to `r date_range_fmt[2]` {.viz-title}
 
@@ -234,52 +233,7 @@ county_to_plot %>%
 
 Note that beginning in July, the state began releasing county-level case numbers on weekdays only. As such, weekends appear as gaps in the chart.
 
-### Rate of detected cases by town, as of `r town_latest_fmt` {.viz-title}
 
-Values shown here are rates per 10,000 people by town.
-
-
-```{r map_setup}
-rad_scale <- function(x, max_rad = 25) {
-  s <- sqrt(x)
-  s / max(s) * max_rad
-}
-map_lbllr <- function(name, rate_10k, cases) {
-  paste(
-    htmltools::h5(name),
-    htmltools::div(str_glue("Rate: {rate_10k} per 10k")),
-    htmltools::div(str_glue("{cases} cases"))
-  ) %>%
-    htmltools::htmlEscape()
-}
-map_thresh <- 10
-# from plotting_utils
-cases_sf <- town_sf %>%
-  left_join(town, by = "name") %>%
-  top_n(1, date) %>%
-  left_join(pops, by = "name") %>%
-  mutate(rate_10k = round(cases / total_pop * 1e4, digits = 1))
-```
-
-
-
-
-```{r out_case_chor, fig.height=5, fig.width=7}
-# make sure keeps lowest value as well
-chor_brks <- classInt::classIntervals(cases_sf$rate_10k, n = 5, style = "jenks")$brk
-chor_brks <- c(floor(chor_brks[1]), ceiling(chor_brks[2:length(chor_brks)]))
-chor_pal <- colorBin(RColorBrewer::brewer.pal(5, "BuPu"), domain = cases_sf$rate_10k, bins = chor_brks)
-leaflet(cases_sf, width = "100%", height = 500, 
-        options = leafletOptions(zoomSnap = 0.25, zoomDelta = 0.5, scrollWheelZoom = FALSE)) %>%
-  setMaxBounds(bbox[1], bbox[2], bbox[3], bbox[4]) %>%
-  addProviderTiles(providers$CartoDB.Positron) %>%
-  addPolygons(color = "#333333", weight = 0.6, fillOpacity = 0.8, 
-              fillColor = ~chor_pal(rate_10k),
-              label = ~str_glue("{name}: {rate_10k} per 10k ({scales::comma(cases, accuracy = 1)} cases)"),
-              labelOptions = labelOptions(className = "tooltip", direction = "top", offset = c(0, -20)),
-              highlightOptions = highlightOptions(fillOpacity = 1, bringToFront = TRUE, weight = 2)) %>%
-  addLegend("bottomright", pal = chor_pal, values = ~rate_10k, opacity = 0.9, title = "Rate per 10k")
-```
 
 ## Statewide trends over time
 
