@@ -33,3 +33,11 @@ clean_titles <- function(x) {
     stringr::str_replace_all("_", " ") %>%
     stringr::str_to_sentence()
 }
+
+age_names <- function(x) {
+  x <- stringr::str_replace_all(x, "(?<=\\d)_(?=\\d)", "-")
+  x <- clean_titles(x)
+  x <- stringr::str_replace(x, "plus", "+")
+  x <- stringr::str_replace_all(x, "(?<=[A-Za-z])(\\d)", " \\1")
+  x
+}

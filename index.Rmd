@@ -15,13 +15,12 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 # library(covidpub)
+options(lubridate.week.start = 1)
 ```
 
 ```{r meta}
 main_dates <- fetch_main_date_range()
-counties <- geo_town_county() %>%
-  pull(county) %>%
-  unique()
+counties <- sort(unique(town_county$county))
 pals <- make_colors()
 county_pal <- setNames(pals$qual_pal, c("Connecticut", counties)) %>%
   rlang::set_names(stringr::str_remove, " County$")
@@ -34,11 +33,12 @@ make_1d_cases_table(max(main_dates))
 ```
 
 ```{r cases-by-race-bars}
-make_race_cases_chart(race_pal)
+age_adj_charts <- make_age_adj_race_charts(race_pal)
+age_adj_charts[["Cases per 10k"]]
 ```
 
 ```{r deaths-by-race-bars}
-make_race_deaths_chart(race_pal)
+age_adj_charts[["Deaths per 10k"]]
 ```
 
 ```{r cases-by-county-bars}
@@ -54,6 +54,14 @@ make_test_pos_chart(pals$qual_pal[2])
 ```
 
 ```{r hosp-change-bars}
-make_hosp_change_chart(pals$div_pal3)
+make_hosp_change_chart(rev(pals$div_pal3))
+```
+
+```{r wk-to-wk-change-table}
+make_period_change_table()
+```
+
+```{r wkly-new-cases-bars}
+make_period_change_bars(pals$div_pal5)
 ```
 

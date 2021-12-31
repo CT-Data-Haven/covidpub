@@ -10,25 +10,19 @@ make_1d_cases_table <- function(d) {
 }
 
 #' @export
-make_race_cases_chart <- function(pal) {
-  x <- fetch_age_adj()
-  billboarder(data = x, height = 350) %>%
-    bb_barchart(mapping = bbaes(x = race, y = cases_rate_10k), width = list(ratio = 0.5)) %>%
-    bb_bar_color_manual(pal) %>%
-    bb_legend(hide = TRUE) %>%
-    bb_y_axis(label = list(text = "Cases per 10k", position = "outer-top"),
-              tick = list(format = d3_comma))
-}
-
-#' @export
-make_race_deaths_chart <- function(pal) {
-  x <- fetch_age_adj()
-  billboarder(data = x, height = 350) %>%
-    bb_barchart(mapping = bbaes(x = race, y = deaths_rate_10k), width = list(ratio = 0.5)) %>%
-    bb_bar_color_manual(pal) %>%
-    bb_legend(hide = TRUE) %>%
-    bb_y_axis(label = list(text = "Deaths per 10k", position = "outer-top"),
-              tick = list(format = d3_comma))
+make_age_adj_race_charts <- function(pal) {
+  x <- fetch_age_adj() %>%
+    rename(`Rate per 10k` = rate_10k) %>%
+    mutate(measure = fct_relabel(measure, stringr::str_to_sentence)) %>%
+    split(.$measure)
+  purrr::imap(x, function(df, indicator) {
+    billboarder(data = df, height = 350) %>%
+      bb_barchart(mapping = bbaes(x = race, y = `Rate per 10k`), width = list(ratio = 0.5)) %>%
+      bb_bar_color_manual(pal) %>%
+      bb_legend(hide = TRUE) %>%
+      bb_y_axis(label = list(text = indicator, position = "outer-top"),
+                tick = list(format = d3_comma))
+  })
 }
 
 #' @export
@@ -132,7 +126,7 @@ make_hosp_change_chart <- function(pal) {
   
   billboarder(data = x, height = 300) %>%
     bb_barchart(mapping = bbaes(x = week, y = change, group = direction),
-                width = list(ratio = 0.6), stacked = TRUE) %>%
+                width = list(ratio = 0.6), stack = TRUE) %>%
     bb_x_axis(label = list(text = NULL), type = "timeseries",
               tick = list(format = "%m/%d/%y")) %>%
     bb_y_axis(label = list(text = "Change in # hospitalized", position = "outer-top"),
@@ -140,7 +134,6 @@ make_hosp_change_chart <- function(pal) {
     bb_x_grid(show = TRUE) %>%
     bb_y_grid(show = TRUE) %>%
     bb_colors_manual(pal) %>%
-    bb_legend(hide = c("Constant")) %>%
     bb_tooltip(format = list(value = d3_flag))
 }
 
@@ -149,4 +142,44 @@ make_hosp_streak_txt <- function() {
   # give most recent decrease of more than 1 week
   calc_hosp_streak() %>%
     slice_max(end_week)
+}
+
+#' @export
+make_period_change_table <- function(n = 7) {
+  x <- calc_rolling_diff(n = n)
+  
+  x_wide <- x %>%
+    mutate(across(c(date, start_date), format, "%m/%d"),
+           period = paste(start_date, date, sep = " to ")) %>%
+    tidyr::pivot_wider(id_cols = c(name), names_from = period, values_from = c(new_cases, pct_change))
+  
+  x_wide[ , colSums(!is.na(x_wide)) > 0] %>%
+    rename_with(clean_titles) %>%
+    rename_with(~stringr::str_replace(., "(?<=[a-z])(\\s)(?=\\d)", ", ")) %>%
+    rename("Pct change in weekly new cases" = 4) %>%
+    DT::datatable(options = list(searching = FALSE, paging = FALSE, info = FALSE),
+                  rownames = FALSE, style = "bootstrap", class = "table table-striped") %>%
+    DT::formatRound(2:3, digits = 0) %>%
+    DT::formatPercentage(4)
+}
+
+#' @export
+make_period_change_bars <- function(pal, n = 7) {
+  x <- calc_rolling_change(n = n) %>%
+    arrange(pct_change)
+  
+  pal <- named_pal(x$direction, pal)
+  
+  billboarder(data = x, height = 300) %>%
+    bb_barchart(mapping = bbaes(x = date, y = new_cases, group = direction),
+                width = list(ratio = 0.6), stack = TRUE) %>%
+    bb_x_axis(label = list(text = NULL), type = "timeseries",
+              tick = list(format = "%m/%d/%y")) %>%
+    bb_y_axis(label = list(text = "# new cases", position = "outer-top"),
+              tick = list(format = d3_flag),
+              max = max(x$new_cases)) %>%
+    bb_x_grid(show = TRUE) %>%
+    bb_y_grid(show = TRUE) %>%
+    bb_colors_manual(pal) %>%
+    bb_tooltip(format = list(value = d3_comma))
 }

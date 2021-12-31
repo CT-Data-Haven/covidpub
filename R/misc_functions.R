@@ -17,10 +17,7 @@ named_pal <- function(x, pal) {
 }
 
 ## GEOGRAPHY ----
-geo_town_county <- function() {
-  cwi::xwalk %>%
-    distinct(county, town)
-}
+# town_county is a package dataset now
 
 ## DATES ----
 streak <- function(x) {
