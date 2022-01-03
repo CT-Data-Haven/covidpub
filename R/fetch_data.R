@@ -48,6 +48,30 @@ fetch_age_adj <- function() {
            measure = fct_relabel(measure, paste, "per 10k"))
 }
 
+fetch_cws <- function() {
+  readr::read_csv(here::here("input_data/cws_2020_covid_basic_profile.csv")) %>%
+    mutate(across(c(category, group), as_factor),
+           group = group %>%
+             fct_relabel(stringr::str_replace_all, 
+                         c("(^\\b)(?=\\d)" = "Ages ",
+                           "(^)(?=\\<?\\$)" = "Income ")) %>%
+             fct_recode(Men = "Male", Women = "Female"))
+}
+
+fetch_hhp <- function() {
+  list.files(here::here("input_data"), "^hhp_", full.names = TRUE) %>%
+    rlang::set_names(stringr::str_extract, "(?<=hhp_group_)(\\w+)(?=\\.csv)") %>%
+    rlang::set_names(recode, food_insecurity = "food_insecure", loss_of_work = "lost_work") %>%
+    purrr::map(readr::read_csv) %>%
+    purrr::map(mutate, across(c(dimension, group), as_factor),
+               group = group %>%
+                 fct_recode(Total = "CT") %>%
+                 fct_relabel(age_names) %>%
+                 fct_relabel(clean_titles),
+               dimension = fct_recode(dimension, CT = "total", "By race/ethnicity" = "race", "By presence of kids" = "kids_present", "By age" = "age_range")) %>%
+    purrr::map(rename, category = dimension)
+}
+
 ## AGGREGATE & CALC ----
 # use tsibble to verify completeness of data
 # TODO: add note that weekly aggs are end of week or avg
@@ -125,7 +149,9 @@ calc_test_pos <- function() {
     select(-tests) %>%
     mutate(test_positivity_rate = positive_tests / weekly_tests) %>%
     as_tibble() %>%
-    mutate(week = as.Date(week))
+    tidyr::pivot_longer(-name:-positive_tests, names_to = "measure") %>%
+    mutate(measure = fct_relabel(measure, clean_titles),
+           week = as.Date(week))
 }
 
 calc_hospital_change <- function() {
@@ -189,4 +215,42 @@ calc_rolling_change <- function(n = 7) {
            !is.na(pct_change), 
            is.finite(pct_change)) %>%
     mutate(week = as.Date(week))
+}
+
+calc_cws_trust <- function() {
+  fetch_cws() %>%
+    select(category, group, matches("^trust_")) %>%
+    filter(category == "All adults") %>%
+    tidyr::pivot_longer(-category:-group, names_to = "indicator") %>%
+    mutate(group = fct_recode(group, "Share of adults" = "Total"),
+           indicator = as_factor(indicator) %>%
+             fct_relabel(stringr::str_remove, "^trust_") %>%
+             fct_relabel(clean_titles))
+}
+
+calc_cws_leave_home <- function() {
+  fetch_cws() %>%
+    select(category, group, leave_for_work_very_often) %>%
+    tidyr::pivot_longer(-category:-group, names_to = "indicator") %>%
+    filter(category %in% c("All adults", "Race/Ethnicity", "Children in household", "Income")) %>%
+    mutate(category = category %>%
+             fct_relevel("Income", after = 1) %>%
+             fct_recode(CT = "All adults", "By race/ethnicity" = "Race/Ethnicity", "By income" = "Income", "By presence of kids" = "Children in household")) %>%
+    arrange(category)
+}
+
+# combine housing insecurity
+calc_hhp_housing <- function() {
+  fetch_hhp()[c("housing_insecurity", "rent_insecurity")] %>%
+    setNames(c("all_adults", "renters")) %>%
+    bind_rows(.id = "tenure") %>%
+    filter(category %in% c("CT", "By race/ethnicity", "By presence of kids")) %>%
+    mutate(tenure = as_factor(tenure) %>%
+             fct_relabel(clean_titles))
+}
+
+# single indicator
+calc_hhp_single <- function() {
+  x <- fetch_hhp()
+  x[!names(x) %in% c("housing_insecurity", "rent_insecurity")]
 }

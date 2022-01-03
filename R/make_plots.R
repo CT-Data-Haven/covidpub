@@ -97,9 +97,7 @@ make_metrics_trend_chart <- function(pal) {
 
 #' @export
 make_test_pos_chart <- function(pal) {
-  x <- calc_test_pos() %>%
-    tidyr::pivot_longer(-name:-positive_tests, names_to = "measure") %>%
-    mutate(measure = fct_relabel(measure, clean_titles))
+  x <- calc_test_pos()
   
   pal <- named_pal(x$measure, pal)
   
@@ -122,7 +120,7 @@ make_test_pos_chart <- function(pal) {
 make_hosp_change_chart <- function(pal) {
   x <- calc_hospital_change()
   
-  pal <- named_pal(x$direction, pal)
+  pal <- named_pal(x$direction, pal, drop = FALSE)
   
   billboarder(data = x, height = 300) %>%
     bb_barchart(mapping = bbaes(x = week, y = change, group = direction),
@@ -182,4 +180,73 @@ make_period_change_bars <- function(pal, n = 7) {
     bb_y_grid(show = TRUE) %>%
     bb_colors_manual(pal) %>%
     bb_tooltip(format = list(value = d3_comma))
+}
+
+#' @export
+make_cws_trust_bars <- function(pal) {
+  x <- calc_cws_trust() %>%
+    arrange(-value)
+  
+  pal <- named_pal(x$group, pal)
+  
+  billboarder(data = x, height = 350) %>%
+    bb_barchart(mapping = bbaes(x = indicator, y = value, group = group)) %>%
+    bb_legend(hide = TRUE) %>%
+    bb_y_axis(label = list(text = "% who trust", position = "outer-top"),
+              tick = list(format = d3_percent,
+                          values = seq(0, 1, by = 0.1))) %>%
+    bb_colors_manual(pal)
+}
+
+#' @export
+make_cws_leave_home_bars <- function(pal) {
+  x <- calc_cws_leave_home()
+  
+  # pal <- named_pal(x$category, pal, drop = FALSE)
+  
+  billboarder(data = x, height = 350) %>%
+    bb_barchart(mapping = bbaes(x = group, y = value, group = category), 
+                width = list(ratio = 0.5), stack = TRUE) %>%
+    bb_colors_manual(pal) %>%
+    bb_y_axis(label = list(text = "% workers who leave for work", position = "outer-top"),
+              tick = list(format = d3_percent,
+                          values = seq(0, 1, by = 0.1)),
+              max = max(x$value)) %>%
+    bb_legend(hide = TRUE)
+}
+
+#' @export
+make_hhp_single_bars <- function(pal) {
+  x <- calc_hhp_single()
+  
+  # pal <- named_pal(x[[1]]$category, pal, drop = FALSE)
+  
+  x %>%
+    purrr::imap(function(df, indicator) {
+      title <- stringr::str_replace_all(indicator, "_", " ")
+      billboarder(data = df, height = 350) %>%
+        bb_barchart(mapping = bbaes(x = group, y = share, group = category),
+                    width = list(ratio = 0.5), stack = TRUE) %>%
+        bb_colors_manual(pal) %>%
+        bb_y_axis(label = list(text = paste("%", title), position = "outer-top"),
+                  tick = list(format = d3_percent),
+                  max = max(df$share)) %>%
+        bb_legend(hide = TRUE)
+    })
+}
+
+#' @export
+make_hhp_housing_bars <- function(pal) {
+  x <- calc_hhp_housing()
+  
+  # pal <- named_pal(x$tenure, pal, drop = FALSE)
+  
+  billboarder(data = x, height = 350) %>%
+    bb_barchart(mapping = bbaes(x = group, y = share, group = tenure), 
+                width = list(ratio = 0.6), stack = FALSE, padding = 4) %>%
+    bb_colors_manual(pal) %>%
+    bb_y_axis(label = list(text = "% housing insecure", position = "outer-top"),
+              tick = list(format = d3_percent),
+              values = seq(0, 1, by = 0.1)) %>%
+    bb_tooltip(grouped = FALSE)
 }

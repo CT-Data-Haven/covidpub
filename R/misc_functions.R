@@ -7,9 +7,13 @@ make_colors <- function() {
   tibble::lst(qual_pal, div_pal3, div_pal5)
 }
 
-named_pal <- function(x, pal) {
+named_pal <- function(x, pal, drop = TRUE) {
   if (is.factor(x)) {
-    lvls <- levels(x)
+    if (drop) {
+      lvls <- levels(forcats::fct_drop(x))
+    } else {
+      lvls <- levels(x)
+    }
   } else {
     lvls <- unique(x)
   }

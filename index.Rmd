@@ -25,6 +25,7 @@ pals <- make_colors()
 county_pal <- setNames(pals$qual_pal, c("Connecticut", counties)) %>%
   rlang::set_names(stringr::str_remove, " County$")
 race_pal <- setNames(pals$qual_pal[c(1, 8, 5, 6, 7)], c("Total", "Black", "Latino", "White", "Asian"))
+cat_pal <- setNames(pals$qual_pal[c(1, 3, 6, 5, 8)], c("CT", "By age", "By income", "By race/ethnicity", "By presence of kids"))
 ```
 
 
@@ -64,4 +65,26 @@ make_period_change_table()
 ```{r wkly-new-cases-bars}
 make_period_change_bars(pals$div_pal5)
 ```
+
+```{r cws-trust-bars}
+make_cws_trust_bars(pals$qual_pal[1])
+```
+
+```{r cws-leave-home-bars}
+make_cws_leave_home_bars(cat_pal)
+```
+
+```{r hhp-lost-work-bars}
+hhp_bars <- make_hhp_single_bars(cat_pal)
+hhp_bars[["lost_work"]]
+```
+
+```{r hhp-food-bars}
+hhp_bars[["food_insecure"]]
+```
+
+```{r hhp-housing-bars}
+make_hhp_housing_bars(pals$qual_pal[c(1, 3)])
+```
+
 
