@@ -1,10 +1,30 @@
-## READ DATA ----
+## DATES ----
+#' @export
 fetch_main_date_range <- function() {
-  fetch_county_cases() %>%
-    pull(date) %>%
-    range()
+  range(fetch_county_cases()$date)
 }
 
+fetch_race_date <- function() {
+  unique(fetch_age_adj()$date)
+}
+
+fetch_test_date <- function() {
+  range(calc_metrics_trend()$week)
+}
+
+fetch_hosp_date_range <- function() {
+  range(calc_hospital_change()$week)
+}
+
+fetch_excess_date_range <- function() {
+  range(fetch_excess_deaths()$date)
+}
+
+fetch_hhp_date_range <- function() {
+  fetch_hhp()[[1]]$dates[[1]]
+}
+
+## READ DATA ----
 fetch_county_cases <- function() {
   readr::read_csv(here::here("input_data/covid_county.csv")) %>%
     mutate(level = as_factor(level),
@@ -68,8 +88,20 @@ fetch_hhp <- function() {
                  fct_recode(Total = "CT") %>%
                  fct_relabel(age_names) %>%
                  fct_relabel(clean_titles),
-               dimension = fct_recode(dimension, CT = "total", "By race/ethnicity" = "race", "By presence of kids" = "kids_present", "By age" = "age_range")) %>%
+               dimension = fct_recode(dimension, CT = "total", "By race/ethnicity" = "race", "By presence of kids" = "kids_present", "By age" = "age_range"),
+               dates = strsplit(date_range, "_", fixed = TRUE) %>%
+                 purrr::map(lubridate::ymd)) %>%
     purrr::map(rename, category = dimension)
+}
+
+fetch_excess_deaths <- function() {
+  readr::read_csv(here::here("input_data/covid_excess_deaths_wkly.csv")) %>%
+    mutate(is_high = observed > upper_thresh,
+           range = ifelse(is_high, "Above expected range", "Within / below expected range") %>%
+             as_factor() %>%
+             fct_relevel("Above expected range", after = Inf)) %>%
+    select(-upper_thresh) %>%
+    filter(lubridate::year(date) >= 2020)
 }
 
 ## AGGREGATE & CALC ----
@@ -177,7 +209,11 @@ calc_hosp_streak <- function() {
     group_by(streak, direction) %>%
     summarise(across(c(week, hospitalizations), list(start = first, end = last), .names = "{.fn}_{.col}")) %>%
     mutate(duration = difftime(end_week, start_week, units = "weeks")) %>%
-    filter(direction == "Decreasing", duration > 1)
+    filter(direction == "Decreasing", duration > 1) %>%
+    ungroup() %>%
+    slice_max(end_week) %>%
+    tidyr::pivot_longer(start_week:end_week) %>%
+    pull(value)
 }
 
 
@@ -254,3 +290,11 @@ calc_hhp_single <- function() {
   x <- fetch_hhp()
   x[!names(x) %in% c("housing_insecurity", "rent_insecurity")]
 }
+
+calc_excess_high <- function() {
+  fetch_excess_deaths() %>%
+    filter(is_high) %>%
+    mutate(percent = (observed - avg_expected) / avg_expected) %>%
+    slice_max(date, n = 1)
+}
+

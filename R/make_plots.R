@@ -1,3 +1,5 @@
+## CHARTS & TABLES ----
+
 #' @export
 make_1d_cases_table <- function(d) {
   x <- fetch_1d_cases(d)
@@ -34,15 +36,16 @@ make_county_trend_chart <- function(pal) {
   
   billboarder(list(data = list(order = "asc")), data = x, height = 400) %>%
     bb_barchart(mapping = bbaes(x = week, y = cases, group = name), stacked = TRUE, width = list(ratio = 0.8)) %>%
-    bb_x_axis(label = list(text = NULL), type = "timeseries",
-              tick = list(format = "%m/%d/%y")) %>%
+    bb_x_axis(label = list(text = NULL, position = "outer-left"), type = "timeseries",
+              tick = list(format = "%b %Y")) %>%
     bb_y_axis(label = list(text = "Cases", position = "outer-top"),
               tick = list(format = d3_comma),
               padding = list(bottom = 0)) %>%
     bb_colors_manual(pal) %>%
     bb_x_grid(show = TRUE) %>%
     bb_y_grid(show = TRUE) %>%
-    bb_tooltip(grouped = FALSE) %>%
+    bb_tooltip(grouped = FALSE,
+               format = list(title = d3_bdy)) %>%
     bb_title(padding = list(bottom = 20, top = 10), position = "top-left")
 }
 
@@ -78,9 +81,9 @@ make_metrics_trend_chart <- function(pal) {
           padding = list(bottom = 0)
         ),
         x = list(
-          tick = list(format = "%m/%d/%y"),
+          tick = list(format = "%b %Y"),
           # tick = list(format = htmlwidgets::JS("d3.format('%m %d')")),
-          label = list(text = NULL),
+          label = list(text = NULL, position = "outer-left"),
           type = "timeseries",
           padding = list(left = 0)
         )
@@ -88,7 +91,8 @@ make_metrics_trend_chart <- function(pal) {
       bb_grid(x = list(show = TRUE), y = list(show = TRUE, ticks = 5)) %>%
       bb_colors_manual(pal) %>%
       bb_title(position = "top-center", text = title) %>%
-      bb_legend(show = has_legend) %>%
+      bb_legend(show = has_legend,
+                format = list(title = d3_bdy)) %>%
       bb_tooltip(linked = list(name = "trend-tip"))
   })
 
@@ -103,8 +107,8 @@ make_test_pos_chart <- function(pal) {
   
   billboarder(data = x, height = 300) %>%
     bb_linechart(mapping = bbaes(x = week, y = value, group = measure)) %>%
-    bb_x_axis(label = list(text = NULL), type = "timeseries",
-              tick = list(format = "%m/%d/%y")) %>%
+    bb_x_axis(label = list(text = NULL, position = "outer-left"), type = "timeseries",
+              tick = list(format = "%b %Y")) %>%
     bb_y_axis(label = list(text = "Percent positive", position = "outer-top"),
               tick = list(format = d3_percent),
               padding = list(bottom = 0),
@@ -113,7 +117,7 @@ make_test_pos_chart <- function(pal) {
     bb_y_grid(show = TRUE) %>%
     bb_colors_manual(pal) %>%
     bb_legend(show = FALSE) %>%
-    bb_tooltip(format = list(value = d3_lt1))
+    bb_tooltip(format = list(value = d3_lt1, title = d3_bdy))
 }
 
 #' @export
@@ -125,21 +129,14 @@ make_hosp_change_chart <- function(pal) {
   billboarder(data = x, height = 300) %>%
     bb_barchart(mapping = bbaes(x = week, y = change, group = direction),
                 width = list(ratio = 0.6), stack = TRUE) %>%
-    bb_x_axis(label = list(text = NULL), type = "timeseries",
-              tick = list(format = "%m/%d/%y")) %>%
+    bb_x_axis(label = list(text = NULL, position = "outer-left"), type = "timeseries",
+              tick = list(format = "%b %Y")) %>%
     bb_y_axis(label = list(text = "Change in # hospitalized", position = "outer-top"),
               tick = list(format = d3_flag)) %>%
     bb_x_grid(show = TRUE) %>%
     bb_y_grid(show = TRUE) %>%
     bb_colors_manual(pal) %>%
-    bb_tooltip(format = list(value = d3_flag))
-}
-
-#' @export
-make_hosp_streak_txt <- function() {
-  # give most recent decrease of more than 1 week
-  calc_hosp_streak() %>%
-    slice_max(end_week)
+    bb_tooltip(format = list(value = d3_flag, title = d3_bdy))
 }
 
 #' @export
@@ -147,7 +144,7 @@ make_period_change_table <- function(n = 7) {
   x <- calc_rolling_diff(n = n)
   
   x_wide <- x %>%
-    mutate(across(c(date, start_date), format, "%m/%d"),
+    mutate(across(c(date, start_date), format, "%m/%d/%Y"),
            period = paste(start_date, date, sep = " to ")) %>%
     tidyr::pivot_wider(id_cols = c(name), names_from = period, values_from = c(new_cases, pct_change))
   
@@ -162,7 +159,7 @@ make_period_change_table <- function(n = 7) {
 }
 
 #' @export
-make_period_change_bars <- function(pal, n = 7) {
+make_period_change_chart <- function(pal, n = 7) {
   x <- calc_rolling_change(n = n) %>%
     arrange(pct_change)
   
@@ -172,18 +169,41 @@ make_period_change_bars <- function(pal, n = 7) {
     bb_barchart(mapping = bbaes(x = date, y = new_cases, group = direction),
                 width = list(ratio = 0.6), stack = TRUE) %>%
     bb_x_axis(label = list(text = NULL), type = "timeseries",
-              tick = list(format = "%m/%d/%y")) %>%
+              tick = list(format = "%b %Y")) %>%
     bb_y_axis(label = list(text = "# new cases", position = "outer-top"),
               tick = list(format = d3_flag),
               max = max(x$new_cases)) %>%
     bb_x_grid(show = TRUE) %>%
     bb_y_grid(show = TRUE) %>%
     bb_colors_manual(pal) %>%
-    bb_tooltip(format = list(value = d3_comma))
+    bb_tooltip(format = list(value = d3_comma, title = d3_bdy))
 }
 
 #' @export
-make_cws_trust_bars <- function(pal) {
+make_excess_deaths_chart <- function(pal) {
+  x <- fetch_excess_deaths()
+  
+  pal <- c(named_pal(x$range, pal), list(avg_expected = "#44444f"))
+  
+  billboarder(data = x, height = 360) %>%
+    bb_barchart(mapping = bbaes(x = date, y = observed, group = range),
+                width = list(ratio = 1), stacked = TRUE) %>%
+    bb_linechart(mapping = bbaes(x = date, y = avg_expected), show_point = FALSE) %>%
+    bb_x_axis(label = list(text = NULL, position = "outer-left"), type = "timeseries",
+              tick = list(format = "%b %Y")) %>%
+    bb_y_axis(label = list(text = "# deaths", position = "outer-top"),
+              tick = list(format = d3_comma),
+              max = max(x$observed)) %>%
+    bb_x_grid(show = TRUE) %>%
+    bb_y_grid(show = TRUE) %>%
+    bb_colors_manual(pal) %>%
+    bb_legend(hide = "bb-x") %>%
+    bb_tooltip(format = list(title = d3_bdy)) %>%
+    bb_data(names = list(avg_expected = "Avg. expected"))
+}
+
+#' @export
+make_cws_trust_chart <- function(pal) {
   x <- calc_cws_trust() %>%
     arrange(-value)
   
@@ -199,7 +219,7 @@ make_cws_trust_bars <- function(pal) {
 }
 
 #' @export
-make_cws_leave_home_bars <- function(pal) {
+make_cws_leave_home_chart <- function(pal) {
   x <- calc_cws_leave_home()
   
   # pal <- named_pal(x$category, pal, drop = FALSE)
@@ -216,7 +236,7 @@ make_cws_leave_home_bars <- function(pal) {
 }
 
 #' @export
-make_hhp_single_bars <- function(pal) {
+make_hhp_single_chart <- function(pal) {
   x <- calc_hhp_single()
   
   # pal <- named_pal(x[[1]]$category, pal, drop = FALSE)
@@ -236,10 +256,10 @@ make_hhp_single_bars <- function(pal) {
 }
 
 #' @export
-make_hhp_housing_bars <- function(pal) {
+make_hhp_housing_chart <- function(pal) {
   x <- calc_hhp_housing()
   
-  # pal <- named_pal(x$tenure, pal, drop = FALSE)
+  pal <- named_pal(x$tenure, pal, drop = FALSE)
   
   billboarder(data = x, height = 350) %>%
     bb_barchart(mapping = bbaes(x = group, y = share, group = tenure), 
@@ -250,3 +270,5 @@ make_hhp_housing_bars <- function(pal) {
               values = seq(0, 1, by = 0.1)) %>%
     bb_tooltip(grouped = FALSE)
 }
+
+

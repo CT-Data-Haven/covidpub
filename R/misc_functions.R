@@ -29,3 +29,13 @@ streak <- function(x) {
   durations <- rle(x)$lengths
   unlist(purrr::imap(durations, function(d, i) rep(i, times = d)))
 }
+
+#' @export
+duration_wks <- function(x, count_first = FALSE) {
+  out <- floor(as.numeric(diff(x), units = "weeks"))
+  if (count_first) {
+    out + 1
+  } else {
+    out
+  }
+}
