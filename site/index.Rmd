@@ -50,15 +50,13 @@ hhp_wks <- duration_wks(hhp_dates, count_first = FALSE)
 ```{r colors}
 counties <- sort(unique(town_county$county))
 pals <- make_colors()
-county_pal <- setNames(pals$qual_pal, c("Connecticut", counties)) %>%
+county_pal <- stats::setNames(pals$qual_pal, c("Connecticut", counties)) %>%
   rlang::set_names(stringr::str_remove, " County$")
-race_pal <- setNames(pals$qual_pal[c(1, 8, 5, 6, 7)], c("Total", "Black", "Latino", "White", "Asian"))
-cat_pal <- setNames(pals$qual_pal[c(1, 3, 6, 5, 8)], c("CT", "By age", "By income", "By race/ethnicity", "By presence of kids"))
+race_pal <- stats::setNames(pals$qual_pal[c(1, 8, 5, 6, 7)], c("Total", "Black", "Latino", "White", "Asian"))
+cat_pal <- stats::setNames(pals$qual_pal[c(1, 3, 6, 5, 8)], c("CT", "By age", "By income", "By race/ethnicity", "By presence of kids"))
 ```
 
-<div id="date-heading" class="text-info">
-Latest statewide data: `r main_dates_fmt[2]` 
-</div>
+<div id="date-heading" class="text-info fs-3">Latest statewide data: `r main_dates_fmt[2]` </div>
 
 This webpage provides graphics that are intended to communicate what we know about COVID-19 (also known as SARS-CoV-2) in Connecticut. These charts are not intended to predict any scenarios about the disease or the people affected by it. They merely reflect data that [DataHaven](https://ctdatahaven.org) has already collected at the town, county, and state levels. To the extent possible, this webpage is updated weekly. 
 
@@ -66,9 +64,9 @@ For the latest information from the Connecticut Department of Public Health, vis
 
 ## Important data notes 
 
-<button class="btn btn-sm btn-default" role="button" data-bs-toggle="collapse" type="button" data-target="#infoContainer" aria-controls="infoContainer" aria-expanded="false">Show / hide</button>
+<p><button class="btn btn-sm btn-secondary" data-bs-toggle="collapse" type="button" data-bs-target="#infoContainer" aria-controls="infoContainer" aria-expanded="false">Show / hide</button></p>
 
-<div id="infoContainer" class="alert alert-info collapse" role="alert">
+<div id="infoContainer" class="alert alert-primary collapse" role="alert">
 
 - While previous testing protocols restricted tests to contact tracing and specimen sampling of individuals exhibiting severe symptoms, these have since changed. For current information on testing, see [state guidance](https://portal.ct.gov/Coronavirus/Covid-19-Knowledge-Base/COVID-19-Testing). Note that because testing coverage is still limited, *counts of detected cases almost certainly underestimate the true number of people infected with COVID-19.*
 
@@ -119,7 +117,9 @@ age_adj_charts[["Deaths per 10k"]]
   
 </div>
 
-## Cases by county and town
+---
+
+## Statewide trends over time
 
 ### Weekly counts of detected COVID-19 cases by county, `r main_dates_fmt[1]` to `r main_dates_fmt[2]` {.viz-title}
 
@@ -127,14 +127,15 @@ age_adj_charts[["Deaths per 10k"]]
 make_county_trend_chart(county_pal)
 ```
 
-## Statewide trends over time
-
 ### Trends in statewide COVID-related testing, cases, hospitalizations, and deaths, week of `r test_dates_fmt[1]` to week of `r test_dates_fmt[2]` {.viz-title}
 
 <div class="nomargin">
 
 ```{r state-metrics-lines}
-make_metrics_trend_chart(pals$qual_pal[c(5, 7, 6, 8)])
+mtx_plots <- make_metrics_trend_chart(pals$qual_pal[c(5, 7, 6, 8)])
+mtx_plots[[1]]
+mtx_plots[[2]]
+mtx_plots[[3]]
 ```
 
 </div>
@@ -187,21 +188,23 @@ During the week of April 18, 2020, at the pandemic’s early peak, the number of
 make_excess_deaths_chart(pals$div_pal5[c(2, 5)])
 ```
 
+---
+
 ## Snapshot: well-being in 2020
 
-<div id="wellbeingNotes" class="alert alert-info">
+<div id="wellbeingNotes" class="alert alert-primary">
 
 **Note:** Data included on community well-being and economic impacts are based on 2020 data sources that are not continually updated. We will keep them here as a snapshot of conditions in the first year of the pandemic.
 
 </div>
 
-### Community well-being
+## Community well-being
 
 DataHaven conducted a special version of its [2020 Community Wellbeing Survey](https://ctdatahaven.org/reports/datahaven-community-wellbeing-survey), with a statewide sample of more than 1,100 adult participants. The 2020 survey included a set of questions related to COVID-19 and its impacts on residents' well-being, resources, and quality of life. 
 
 Survey participants were asked to rate the amount of trust they have in each of several public institutions to keep themselves and their families safe. Below are the shares of adults who reported having a great amount or a fair amount of trust in each institution. 
 
-#### Adults reporting great/fair amount of trust in public institutions to keep them safe, Connecticut, 2020 {.viz-title}
+### Adults reporting great/fair amount of trust in public institutions to keep them safe, Connecticut, 2020 {.viz-title}
 
 ```{r cws-trust-bars}
 make_cws_trust_chart(pals$qual_pal[2])
@@ -209,7 +212,7 @@ make_cws_trust_chart(pals$qual_pal[2])
 
 Survey participants were also asked how often they leave their home for work. Out of currently working adults, the shares saying they leave for work very often are below.
 
-#### Share of working adults who leave home for work very often, Connecticut, 2020 {.viz-title}
+### Share of working adults who leave home for work very often, Connecticut, 2020 {.viz-title}
 
 ```{r cws-leave-home-bars}
 make_cws_leave_home_chart(cat_pal)
@@ -217,30 +220,32 @@ make_cws_leave_home_chart(cat_pal)
 
 See data from this and previous years of the Community Wellbeing Survey on [DataHaven's website](https://www.ctdatahaven.org/wellbeingsurvey).
 
-### Economic impacts
+## Economic impacts
 
 The US Census Bureau conducted a Household Pulse Survey between April and July to gauge several economic and health indicators throughout the country. The survey questions summarized here are for adults in Connecticut, based on the first wave of data released.
 
 Loss of income measures the share of adults for whom at least one member of their household lost work-related income (i.e. not public benefits) since March 13, 2020. Food insecurity refers to the share of adults that report having sometimes or often not had enough food at home over the previous 7 days. Housing insecurity refers to the share of adults that report having little to no confidence that their next month's housing payments can be made on time, out of adults whose households pay either rent or a mortgage.
 
-#### Adults with loss of income in household, `r hhp_dates_fmt[1]` to `r hhp_dates_fmt[2]`, Connecticut {.viz-title}
+### Adults with loss of income in household, `r hhp_dates_fmt[1]` to `r hhp_dates_fmt[2]`, Connecticut {.viz-title}
 
 ```{r hhp-lost-work-bars}
 hhp_bars <- make_hhp_single_chart(cat_pal)
 hhp_bars[["lost_work"]]
 ```
 
-#### Adults experiencing food insecurity in past 7 days, `r hhp_dates_fmt[1]` to `r hhp_dates_fmt[2]`, Connecticut {.viz-title}
+### Adults experiencing food insecurity in past 7 days, `r hhp_dates_fmt[1]` to `r hhp_dates_fmt[2]`, Connecticut {.viz-title}
 
 ```{r hhp-food-bars}
 hhp_bars[["food_insecure"]]
 ```
 
-#### Adults experiencing housing insecurity, `r hhp_dates_fmt[1]` to `r hhp_dates_fmt[2]`, Connecticut {.viz-title}
+### Adults experiencing housing insecurity, `r hhp_dates_fmt[1]` to `r hhp_dates_fmt[2]`, Connecticut {.viz-title}
 
 ```{r hhp-housing-bars}
 make_hhp_housing_chart(pals$qual_pal[c(1, 3)])
 ```
+
+---
 
 ## Sources {.section-title}
 
@@ -258,6 +263,6 @@ make_hhp_housing_chart(pals$qual_pal[c(1, 3)])
 
 Page last updated by DataHaven, `r fmt_bdy(lubridate::today())`
 
-![](img/25th_logo_alpha.png){ width=200px }
+![](img/25th_logo_alpha.png){ width=150px }
 
 </footer>

@@ -278,7 +278,7 @@ calc_cws_leave_home <- function() {
 # combine housing insecurity
 calc_hhp_housing <- function() {
   fetch_hhp()[c("housing_insecurity", "rent_insecurity")] %>%
-    setNames(c("all_adults", "renters")) %>%
+    stats::setNames(c("all_adults", "renters")) %>%
     bind_rows(.id = "tenure") %>%
     filter(category %in% c("CT", "By race/ethnicity", "By presence of kids")) %>%
     mutate(tenure = as_factor(tenure) %>%

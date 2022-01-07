@@ -6,6 +6,10 @@
 \alias{covidpub-package}
 \title{covidpub: COVID-19 in Connecticut}
 \description{
-DataHaven's COVID-19 data site
+DataHaven COVID-19 Analysis.
+}
+\author{
+\strong{Maintainer}: Camille Seaberry \email{camille@ctdatahaven.org}
+
 }
 \keyword{internal}

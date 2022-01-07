@@ -9,3 +9,6 @@
 ^docs$
 ^pkgdown$
 ^data-raw$
+^site$
+^dist$
+^LICENSE\.md$

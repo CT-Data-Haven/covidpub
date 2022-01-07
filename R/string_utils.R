@@ -52,12 +52,12 @@ fmt_mdy <- function(x) {
 
 #' @export
 fmt_bdy <- function(x) {
-  format(x, "%b %e, %Y")
+  gsub("\\s+", "\\u00A0", format(x, "%b %e, %Y"))
 }
 
 #' @export
 fmt_Bdy <- function(x) {
-  format(x, "%B %e, %Y")
+  gsub("\\s+", "\\u00A0", format(x, "%B %e, %Y"))
 }
 
 #' @export

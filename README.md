@@ -1,4 +1,5 @@
 <!-- badges: start -->
+[![site-build](https://github.com/CT-Data-Haven/covidpub/workflows/site-build/badge.svg)](https://github.com/CT-Data-Haven/covidpub/actions)
 <!-- badges: end -->
 
 # covidpub

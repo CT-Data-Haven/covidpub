@@ -17,7 +17,7 @@ named_pal <- function(x, pal, drop = TRUE) {
   } else {
     lvls <- unique(x)
   }
-  setNames(pal[seq_along(lvls)], lvls)
+  stats::setNames(pal[seq_along(lvls)], lvls)
 }
 
 ## GEOGRAPHY ----

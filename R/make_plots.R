@@ -5,7 +5,7 @@ make_1d_cases_table <- function(d) {
   x <- fetch_1d_cases(d)
   DT::datatable(x, 
             options = list(searching = FALSE, rowGroup = list(dataSrc = 0, emptyDataGroup = "State / counties")),
-            rownames = FALSE, style = "bootstrap", class = "table table-striped", 
+            rownames = FALSE, style = "bootstrap", class = "table table-sm table-hover", 
             plugins = c("simple_incremental_bootstrap")) %>%
     DT::formatRound("Cases", digits = 0) %>%
     DT::formatRound(4, digits = 0)
@@ -93,10 +93,10 @@ make_metrics_trend_chart <- function(pal) {
       bb_title(position = "top-center", text = title) %>%
       bb_legend(show = has_legend,
                 format = list(title = d3_bdy)) %>%
-      bb_tooltip(linked = list(name = "trend-tip"))
+      bb_tooltip(linked = list(name = "trend-tip", title = d3_bdy))
   })
 
-  purrr::walk(plts, print)
+  plts
 }
 
 #' @export
@@ -153,7 +153,7 @@ make_period_change_table <- function(n = 7) {
     rename_with(~stringr::str_replace(., "(?<=[a-z])(\\s)(?=\\d)", ", ")) %>%
     rename("Pct change in weekly new cases" = 4) %>%
     DT::datatable(options = list(searching = FALSE, paging = FALSE, info = FALSE),
-                  rownames = FALSE, style = "bootstrap", class = "table table-striped") %>%
+                  rownames = FALSE, style = "bootstrap", class = "table table-sm table-hover") %>%
     DT::formatRound(2:3, digits = 0) %>%
     DT::formatPercentage(4)
 }
