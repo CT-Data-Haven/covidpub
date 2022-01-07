@@ -1,0 +1,16 @@
+name: "dh-covid"
+output_dir: "../dist"
+navbar:
+  title: "DataHaven COVID-19 Analysis"
+  right:
+    - text: "Home"
+      href: index.html
+    - text: "Additional resources"
+      href: resources.html
+output:
+  html_document:
+    theme: 
+      version: 5
+      bootswatch: cosmo
+    css: styles/extra.scss
+    md_extensions: +raw_html

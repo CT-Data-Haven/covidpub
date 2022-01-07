@@ -1,0 +1,268 @@
+---
+title: "COVID-19 in Connecticut"
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+	echo = FALSE,
+	message = FALSE,
+	warning = FALSE,
+	collapse = TRUE,
+	comment = "#>"
+)
+```
+
+```{r libs}
+library(covidpub)
+options(lubridate.week.start = 1)
+options(readr.show_col_types = FALSE)
+billboarder::set_theme("insight")
+```
+
+<script src="https://cdn.jsdelivr.net/npm/d3-array@3"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3-time@3"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3-time-format@4"></script>
+
+```{r dates}
+main_dates <- covidpub:::fetch_main_date_range()
+main_dates_fmt <- fmt_bdy(main_dates)
+race_date_fmt <- fmt_bdy(covidpub:::fetch_race_date())
+test_dates_fmt <- fmt_bdy(covidpub:::fetch_test_date())
+streak_dates <- covidpub:::calc_hosp_streak()
+streak_dates_fmt <- fmt_bdy(streak_dates)
+streak_duration <- duration_wks(streak_dates, count_first = TRUE)
+hosp_dates_fmt <- fmt_bdy(covidpub:::fetch_hosp_date_range())
+roll_change_dates_fmt <- fmt_bdy(covidpub:::calc_rolling_change()$date)
+excess_dates_fmt <- fmt_bdy(covidpub:::fetch_excess_date_range())
+excess_high <- covidpub:::calc_excess_high()
+excess_high_date_fmt <- fmt_Bdy(excess_high$date)
+excess_high_pct <- pct_sig2(excess_high$percent)
+hhp_dates <- covidpub:::fetch_hhp_date_range()
+hhp_dates_fmt <- fmt_bdy(hhp_dates)
+hhp_wks <- duration_wks(hhp_dates, count_first = FALSE)
+```
+
+
+```{r colors}
+counties <- sort(unique(town_county$county))
+pals <- make_colors()
+county_pal <- stats::setNames(pals$qual_pal, c("Connecticut", counties)) %>%
+  rlang::set_names(stringr::str_remove, " County$")
+race_pal <- stats::setNames(pals$qual_pal[c(1, 8, 5, 6, 7)], c("Total", "Black", "Latino", "White", "Asian"))
+cat_pal <- stats::setNames(pals$qual_pal[c(1, 3, 6, 5, 8)], c("CT", "By age", "By income", "By race/ethnicity", "By presence of kids"))
+```
+
+<div id="date-heading" class="text-info fs-3">Latest statewide data: `r main_dates_fmt[2]` </div>
+
+This webpage provides graphics that are intended to communicate what we know about COVID-19 (also known as SARS-CoV-2) in Connecticut. These charts are not intended to predict any scenarios about the disease or the people affected by it. They merely reflect data that [DataHaven](https://ctdatahaven.org) has already collected at the town, county, and state levels. To the extent possible, this webpage is updated weekly. 
+
+For the latest information from the Connecticut Department of Public Health, visit http://portal.ct.gov/Coronavirus
+
+## Important data notes 
+
+<p><button class="btn btn-sm btn-secondary" data-bs-toggle="collapse" type="button" data-bs-target="#infoContainer" aria-controls="infoContainer" aria-expanded="false">Show / hide</button></p>
+
+<div id="infoContainer" class="alert alert-primary collapse" role="alert">
+
+- While previous testing protocols restricted tests to contact tracing and specimen sampling of individuals exhibiting severe symptoms, these have since changed. For current information on testing, see [state guidance](https://portal.ct.gov/Coronavirus/Covid-19-Knowledge-Base/COVID-19-Testing). Note that because testing coverage is still limited, *counts of detected cases almost certainly underestimate the true number of people infected with COVID-19.*
+
+- **Detected cases** refer to individuals who tested positive for COVID-19 as confirmed by the State of Connecticut. *Due to current testing protocols, this number likely underestimates—possibly to a very large degree—the number of people who may currently have or have recovered from the disease.*
+
+- **Hospitalizations** refer to patients who have been admitted to a hospital for complications arising from COVID-19. These are reported at the county level only and represent the county where the hospital is located, not the patient’s home county. On March 29, 2020, the State reported a change to the way hospitalizations were recorded and acknowledged that hospitalization counts prior to that date were underestimated. Hospitalization counts are only available starting on March 21.
+
+- **Deaths** refer to individuals who tested positive for COVID-19 around the time of their death. This doesn\'t necessarily mean COVID-19 symptoms or complications specifically caused that person\'s death. *Because of testing protocols, this number is likely undercounted.*
+
+- Some values are given as rates and are marked as such, where the number of cases is divided by population in order to meaningfully compare the relative magnitude of cases across areas.
+
+</div>
+
+## Overall case counts and rates
+
+### Detected cases by location as of `r main_dates_fmt[2]` {.viz-title}
+
+Rates are given here per 10,000 people by location—that is, a rate of 20 per 10,000 people in a town would mean that for every 10,000 residents of that town, an average of 20 people have tested positive for COVID-19.
+
+```{r single-day-cases-table}
+make_1d_cases_table(max(main_dates))
+```
+
+Data show higher rates of detected cases and deaths among Black and Latino residents than other groups. The statewide total rates shown include patients without race/ethnicity given. Rates are again given per 10,000 people by race/ethnicity and adjusted for age. Age-adjusted data are preferable in comparing racial groups because they account for differing age distributions in populations.
+
+<div class="row">
+
+  <div class="col-sm-6">
+
+### Age-adjusted rate of detected cases per 10,000 residents by race/ethnicity, statewide as of `r race_date_fmt` {.viz-title .minheight}
+
+```{r cases-by-race-bars}
+age_adj_charts <- make_age_adj_race_charts(race_pal)
+age_adj_charts[["Cases per 10k"]]
+```
+
+  </div>
+  
+  <div class="col-sm-6">
+
+### Age-adjusted rate of COVID-19-related deaths per 10,000 residents by race/ethnicity, statewide as of `r race_date_fmt` {.viz-title .minheight}
+
+```{r deaths-by-race-bars}
+age_adj_charts[["Deaths per 10k"]]
+```
+
+  </div>
+  
+</div>
+
+---
+
+## Statewide trends over time
+
+### Weekly counts of detected COVID-19 cases by county, `r main_dates_fmt[1]` to `r main_dates_fmt[2]` {.viz-title}
+
+```{r cases-by-county-bars}
+make_county_trend_chart(county_pal)
+```
+
+### Trends in statewide COVID-related testing, cases, hospitalizations, and deaths, week of `r test_dates_fmt[1]` to week of `r test_dates_fmt[2]` {.viz-title}
+
+<div class="nomargin">
+
+```{r state-metrics-lines}
+mtx_plots <- make_metrics_trend_chart(pals$qual_pal[c(5, 7, 6, 8)])
+mtx_plots[[1]]
+mtx_plots[[2]]
+mtx_plots[[3]]
+```
+
+</div>
+
+As access to testing expands with fewer restrictions blocking asymptomatic people from being tested, the test positivity rate (the percentage of tests administered that come back positive) has become another useful metric for measuring the response to the pandemic. Increasing the number of tests administered across the population means health officials have a better chance of detecting cases with few or no symptoms. Widespread, robust testing means the positivity rate should become very low; WHO guidance recommends maintaining a positivity rate below 5 percent as a target. 
+
+### Statewide test positivity rate, week of `r test_dates_fmt[1]` to week of `r test_dates_fmt[2]` {.viz-title}
+
+```{r test-pos-lines}
+make_test_pos_chart(pals$qual_pal[2])
+```
+
+The most recent continuous weekly decrease in average hospitalizations was between the week of `r streak_dates_fmt[1]` and the week of `r streak_dates_fmt[2]`, a streak of `r streak_duration` weeks of decline.
+
+### Change in average number of COVID-19-related hospitalizations from previous week, week of `r hosp_dates_fmt[1]` to week of `r hosp_dates_fmt[2]` {.viz-title}
+
+```{r hosp-change-bars}
+make_hosp_change_chart(rev(pals$div_pal3))
+```
+
+Summarizing the past seven days of trends helps to smooth out daily jumps or drops in the number of reported cases. Looking at the seven days before that helps contextualize the most recent seven-day period. In rare instances, counties revise their case counts retroactively; if that happens over the 14 days shown here, that county is not displayed.
+
+### Change in number of detected new cases over 7-day periods {.viz-title}
+
+Please note that during some periods, such as major holidays, testing and reporting can be limited. Around those times, a decrease in the number of new cases may simply be an artifact of those delays rather than an actual decline.
+
+```{r wk-to-wk-change-table}
+make_period_change_table()
+```
+
+### Number of detected new cases over 7-day periods, Connecticut, `r roll_change_dates_fmt[1]` to `r roll_change_dates_fmt[2]` {.viz-title}
+
+<div class="viz-subtitle">
+
+With direction of percent change since previous week 
+
+</div>
+
+```{r wkly-new-cases-bars}
+make_period_change_chart(pals$div_pal5)
+```
+
+Another way of calculating the number of deaths related to COVID-19 is to estimate how many deaths might be expected to occur in any given week, based on several years of recent trends, and then compare those to the observed number of COVID-19 deaths that reported week. This assumes, in the absence of other deadly events, that COVID-19 accounts for a large part of the unexplained excess. This [excess deaths estimation method](https://www.cdc.gov/nchs/nvss/vsrr/covid19/excess_deaths.htm) helps mitigate issues with limited access to testing, particularly in the earlier months of the pandemic, inconsistent testing protocols, and differences in record keeping across municipalities and hospitals, all of which have made it difficult to know the pandemic's exact death toll.
+
+During the week of April 18, 2020, at the pandemic’s early peak, the number of deaths observed in Connecticut was more than twice the number that would be expected based on recent years. Of the available data, the most recent week in which deaths were above the expected range was the week of `r excess_high_date_fmt`, when the observed number of deaths was `r excess_high_pct` above average. Note that this dataset has a lag of a few weeks.
+
+### Observed and expected number of deaths per week, Connecticut, `r excess_dates_fmt[1]` to `r excess_dates_fmt[2]` {.viz-title}
+
+```{r excess-deaths-bars}
+make_excess_deaths_chart(pals$div_pal5[c(2, 5)])
+```
+
+---
+
+## Snapshot: well-being in 2020
+
+<div id="wellbeingNotes" class="alert alert-primary">
+
+**Note:** Data included on community well-being and economic impacts are based on 2020 data sources that are not continually updated. We will keep them here as a snapshot of conditions in the first year of the pandemic.
+
+</div>
+
+## Community well-being
+
+DataHaven conducted a special version of its [2020 Community Wellbeing Survey](https://ctdatahaven.org/reports/datahaven-community-wellbeing-survey), with a statewide sample of more than 1,100 adult participants. The 2020 survey included a set of questions related to COVID-19 and its impacts on residents' well-being, resources, and quality of life. 
+
+Survey participants were asked to rate the amount of trust they have in each of several public institutions to keep themselves and their families safe. Below are the shares of adults who reported having a great amount or a fair amount of trust in each institution. 
+
+### Adults reporting great/fair amount of trust in public institutions to keep them safe, Connecticut, 2020 {.viz-title}
+
+```{r cws-trust-bars}
+make_cws_trust_chart(pals$qual_pal[2])
+```
+
+Survey participants were also asked how often they leave their home for work. Out of currently working adults, the shares saying they leave for work very often are below.
+
+### Share of working adults who leave home for work very often, Connecticut, 2020 {.viz-title}
+
+```{r cws-leave-home-bars}
+make_cws_leave_home_chart(cat_pal)
+```
+
+See data from this and previous years of the Community Wellbeing Survey on [DataHaven's website](https://www.ctdatahaven.org/wellbeingsurvey).
+
+## Economic impacts
+
+The US Census Bureau conducted a Household Pulse Survey between April and July to gauge several economic and health indicators throughout the country. The survey questions summarized here are for adults in Connecticut, based on the first wave of data released.
+
+Loss of income measures the share of adults for whom at least one member of their household lost work-related income (i.e. not public benefits) since March 13, 2020. Food insecurity refers to the share of adults that report having sometimes or often not had enough food at home over the previous 7 days. Housing insecurity refers to the share of adults that report having little to no confidence that their next month's housing payments can be made on time, out of adults whose households pay either rent or a mortgage.
+
+### Adults with loss of income in household, `r hhp_dates_fmt[1]` to `r hhp_dates_fmt[2]`, Connecticut {.viz-title}
+
+```{r hhp-lost-work-bars}
+hhp_bars <- make_hhp_single_chart(cat_pal)
+hhp_bars[["lost_work"]]
+```
+
+### Adults experiencing food insecurity in past 7 days, `r hhp_dates_fmt[1]` to `r hhp_dates_fmt[2]`, Connecticut {.viz-title}
+
+```{r hhp-food-bars}
+hhp_bars[["food_insecure"]]
+```
+
+### Adults experiencing housing insecurity, `r hhp_dates_fmt[1]` to `r hhp_dates_fmt[2]`, Connecticut {.viz-title}
+
+```{r hhp-housing-bars}
+make_hhp_housing_chart(pals$qual_pal[c(1, 3)])
+```
+
+---
+
+## Sources {.section-title}
+
+* DataHaven analysis of data reported by the State of Connecticut daily and posted to the COVID-19 information portal, https://portal.ct.gov/Coronavirus
+* 2020 DataHaven Community Wellbeing Survey, https://ctdatahaven.org/wellbeingsurvey
+* DataHaven analysis of US Census Bureau Household Pulse Survey public use microdata, weeks 1 through `r hhp_wks`, https://www.census.gov/householdpulsedata
+* CDC National Center for Health Statistics, "Excess Deaths Associated with COVID-19," https://www.cdc.gov/nchs/nvss/vsrr/covid19/excess_deaths.htm
+
+
+
+
+---
+
+<footer>
+
+Page last updated by DataHaven, `r fmt_bdy(lubridate::today())`
+
+![](img/25th_logo_alpha.png){ width=150px }
+
+</footer>

@@ -1,0 +1,50 @@
+$headings-font-weight: 400;
+$font-size-base: 1.1rem !default;
+
+@media only screen and (min-width: 769px) and (max-width: 991px) {
+  .viz-title.minheight {
+    min-height: 4em;
+  }
+}
+
+#header {
+  margin-top: $spacer * 4.5;
+}
+
+div.tooltip {
+  width: 100px;
+  line-height: 1.1;
+  white-space: normal;
+}
+
+.bb-lines path {
+  stroke-width: 3;
+}
+
+.section.level2 {
+  margin-bottom: $spacer * 2;
+}
+
+footer {
+  margin-top: $spacer * 2;
+}
+
+div.paging_simple_numbers > ul.pagination > li > a {
+    padding: 6px 10px;
+}
+
+.viz-title h3, .viz-title h4 {
+  font-weight: 400;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+}
+
+ h1,  h2,  h3,  h4,
+.h1, .h2, .h3, .h4 {
+  
+}
+
+hr {
+  margin: 1.75rem auto;
+  width: 75%;
+}

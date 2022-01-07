@@ -1,0 +1,36 @@
+Package: covidpub
+Title: COVID-19 in Connecticut
+Version: 0.0.0.9000
+Description: DataHaven COVID-19 Analysis.
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2
+Imports: 
+    billboarder,
+    dplyr,
+    DT,
+    forcats,
+    here,
+    htmlwidgets,
+    lubridate,
+    magrittr,
+    purrr,
+    readr,
+    rlang (>= 0.4.11),
+    scales,
+    slider,
+    stats,
+    stringr,
+    tibble,
+    tidyr,
+    tsibble
+Suggests: 
+    rmarkdown,
+    knitr,
+    roxygen2
+VignetteBuilder: knitr
+Depends: 
+    R (>= 4.1.0)
+LazyData: true
+License: CC BY 4.0
+Authors@R: person(given = "Camille", family = "Seaberry", email = "camille@ctdatahaven.org", role = c("cre", "aut"))
