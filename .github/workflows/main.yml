@@ -32,7 +32,10 @@ jobs:
         uses: r-lib/actions/setup-renv@v2
 
       - name: Install package
-        run: Rscript -e 'devtools::install(pkg = ".", build = TRUE, upgrade = FALSE)'
+        run: |
+          install.packages("devtools")
+          devtools::install(pkg = ".", build = TRUE, upgrade = FALSE)
+        shell: Rscript {0}
 
       - name: Render site
         run: Rscript -e 'rmarkdown::render_site(input = "site")'
