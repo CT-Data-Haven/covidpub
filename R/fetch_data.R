@@ -20,6 +20,11 @@ fetch_excess_date_range <- function() {
   range(fetch_excess_deaths()$date)
 }
 
+fetch_rolling_date_range <- function() {
+  d <- calc_rolling_change()$date
+  c(d[1], tail(d, n = 1))
+}
+
 fetch_hhp_date_range <- function() {
   fetch_hhp()[[1]]$dates[[1]]
 }
