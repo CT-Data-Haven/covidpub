@@ -91,9 +91,9 @@ make_metrics_trend_chart <- function(pal) {
       bb_grid(x = list(show = TRUE), y = list(show = TRUE, ticks = 5)) %>%
       bb_colors_manual(pal) %>%
       bb_title(position = "top-center", text = title) %>%
-      bb_legend(show = has_legend,
-                format = list(title = d3_bdy)) %>%
-      bb_tooltip(linked = list(name = "trend-tip", title = d3_bdy))
+      bb_legend(show = has_legend) %>%
+      bb_tooltip(linked = list(name = "trend-tip"), 
+                 format = list(title = d3_bdy))
   })
 
   plts

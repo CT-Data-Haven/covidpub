@@ -33,7 +33,6 @@ jobs:
 
       - name: Install package
         run: |
-          install.packages("devtools")
           devtools::install(pkg = ".", build = TRUE, upgrade = FALSE)
         shell: Rscript {0}
 
