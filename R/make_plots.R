@@ -163,7 +163,7 @@ make_period_change_chart <- function(pal, n = 7) {
   x <- calc_rolling_change(n = n) %>%
     arrange(pct_change)
   
-  pal <- named_pal(x$direction, pal)
+  pal <- named_pal(x$direction, pal, drop = FALSE)
   
   billboarder(data = x, height = 300) %>%
     bb_barchart(mapping = bbaes(x = date, y = new_cases, group = direction),
