@@ -31,17 +31,17 @@ fetch_hhp_date_range <- function() {
 
 ## READ DATA ----
 fetch_county_cases <- function() {
-  readr::read_csv(here::here("input_data/covid_county.csv")) %>%
+  readr::read_csv(here::here("input_data/covid_county.csv"), show_col_types = FALSE) %>%
     mutate(level = as_factor(level),
            name = ifelse(level == "county", paste(name, "County"), name))
 }
 
 fetch_town_cases <- function() {
-  readr::read_csv(here::here("input_data/covid_town.csv"))
+  readr::read_csv(here::here("input_data/covid_town.csv"), show_col_types = FALSE)
 }
 
 fetch_state_tests <- function() {
-  readr::read_csv(here::here("input_data/covid_tests.csv"))
+  readr::read_csv(here::here("input_data/covid_tests.csv"), show_col_types = FALSE)
 }
 
 fetch_1d_cases <- function(d) {
@@ -62,11 +62,11 @@ fetch_1d_cases <- function(d) {
 }
 
 fetch_pops <- function() {
-  readr::read_csv(here::here("input_data/total_pop_2019.csv"))
+  readr::read_csv(here::here("input_data/total_pop_2019.csv"), show_col_types = FALSE)
 }
 
 fetch_age_adj <- function() {
-  readr::read_csv(here::here("input_data/covid_age_adjusted_race.csv")) %>%
+  readr::read_csv(here::here("input_data/covid_age_adjusted_race.csv"), show_col_types = FALSE) %>%
     filter(race %in% c("Average", "White", "Black", "Latino", "Asian")) %>%
     mutate(across(race:measure, as_factor),
            race = fct_recode(race, Total = "Average"),
@@ -74,7 +74,7 @@ fetch_age_adj <- function() {
 }
 
 fetch_cws <- function() {
-  readr::read_csv(here::here("input_data/cws_2020_covid_basic_profile.csv")) %>%
+  readr::read_csv(here::here("input_data/cws_2020_covid_basic_profile.csv"), show_col_types = FALSE) %>%
     mutate(across(c(category, group), as_factor),
            group = group %>%
              fct_relabel(stringr::str_replace_all, 
@@ -87,7 +87,7 @@ fetch_hhp <- function() {
   list.files(here::here("input_data"), "^hhp_", full.names = TRUE) %>%
     rlang::set_names(stringr::str_extract, "(?<=hhp_group_)(\\w+)(?=\\.csv)") %>%
     rlang::set_names(recode, food_insecurity = "food_insecure", loss_of_work = "lost_work") %>%
-    purrr::map(readr::read_csv) %>%
+    purrr::map(readr::read_csv, show_col_types = FALSE) %>%
     purrr::map(mutate, across(c(dimension, group), as_factor),
                group = group %>%
                  fct_recode(Total = "CT") %>%
@@ -100,7 +100,7 @@ fetch_hhp <- function() {
 }
 
 fetch_excess_deaths <- function() {
-  readr::read_csv(here::here("input_data/covid_excess_deaths_wkly.csv")) %>%
+  readr::read_csv(here::here("input_data/covid_excess_deaths_wkly.csv"), show_col_types = FALSE) %>%
     mutate(is_high = observed > upper_thresh,
            range = ifelse(is_high, "Above expected range", "Within / below expected range") %>%
              as_factor() %>%
