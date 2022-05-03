@@ -17,7 +17,7 @@ jobs:
       - name: Rebase
         run: |
           git pull 
-          git rebase main update
+          git rebase --onto origin/main
 
       # - name: Create PR
       #   uses: peter-evans/create-pull-request@v4
