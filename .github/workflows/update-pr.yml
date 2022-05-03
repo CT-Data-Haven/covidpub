@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - update
+  workflow_dispatch:
 
 jobs:
   build:
@@ -16,5 +17,5 @@ jobs:
       - name: Create PR
         uses: peter-evans/create-pull-request@v4
         with:
-          branch: update
+          branch: update-working
           base: main
