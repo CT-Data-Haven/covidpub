@@ -16,6 +16,8 @@ jobs:
 
       - name: Rebase
         run: |
+          git config --global user.name github-actions
+          git config --global user.email github-actions@github.com
           git pull 
           git rebase --onto origin/main
           git diff-index --quiet HEAD || git commit -m "Rebase update branch for PR"
