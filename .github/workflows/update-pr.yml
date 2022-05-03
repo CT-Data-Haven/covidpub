@@ -14,8 +14,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      # - name: Create PR
+      #   uses: peter-evans/create-pull-request@v4
+      #   with:
+      #     branch: update-working
+      #     base: main
       - name: Create PR
-        uses: peter-evans/create-pull-request@v4
+        uses: repo-sync/pull-request@v2
         with:
-          branch: update-working
-          base: main
+          destination_branch: "main"
+          github_token: ${{ secrets.PR_PAT }}
