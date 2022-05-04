@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  make-pr:
+  file-pr:
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -14,14 +14,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Rebase
+      - name: Copy updated data
         run: |
+          # make a temp branch from main, checkout input_data from update, file pr
           git config --global user.name github-actions
           git config --global user.email github-actions@github.com
           git pull 
-          git rebase --onto origin/main
-          git diff-index --quiet HEAD || git commit -m "Rebase update branch for PR"
-          git push
+          git branch tmp main
+          git checkout tmp
+          git checkout update -- input_data
+          git diff-index --quiet HEAD || git commit -m "Copy update for PR"
+          git push origin tmp
+
+        # git rebase --onto origin/main
+        # git diff-index --quiet HEAD || git commit -m "Rebase update branch for PR"
+        # git push
 
       # - name: Create PR
       #   uses: peter-evans/create-pull-request@v4
@@ -31,5 +38,6 @@ jobs:
       - name: Create PR
         uses: repo-sync/pull-request@v2
         with:
+          source_branch: "tmp"
           destination_branch: "main"
           github_token: ${{ secrets.PR_PAT }}
