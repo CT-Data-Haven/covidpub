@@ -32,20 +32,13 @@ jobs:
           # get latest statewide date
           echo "LATEST_DATE=$(tail -n 1 input_data/covid_county.csv | cut -f 2 -d ,)" >> GITHUB_ENV
 
-          if ! git diff-index --quiet HEAD; then
+          if [ -n "$(git status --porcelain)" ]; then
             git commit -m "Update data to $LATEST_DATE"
             git push origin tmp
+          else
+            echo "No changes"
           fi
 
-        # git rebase --onto origin/main
-        # git diff-index --quiet HEAD || git commit -m "Rebase update branch for PR"
-        # git push
-
-      # - name: Create PR
-      #   uses: peter-evans/create-pull-request@v4
-      #   with:
-      #     branch: update-working
-      #     base: main
       - name: Create PR
         uses: repo-sync/pull-request@v2
         with:
