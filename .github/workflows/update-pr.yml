@@ -46,4 +46,4 @@ jobs:
           source_branch: "tmp"
           destination_branch: "main"
           github_token: ${{ secrets.PR_PAT }}
-          pr_title: "Pull data as of ${{ LATEST_DATE }}"
+          pr_title: "Pull data as of ${{ env.LATEST_DATE }}"
