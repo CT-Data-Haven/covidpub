@@ -15,7 +15,13 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Rebase
-        run: git rebase --onto main
+        run: |
+          git config --global user.name github-actions
+          git config --global user.email github-actions@github.com
+          git pull 
+          git rebase --onto origin/main
+          git diff-index --quiet HEAD || git commit -m "Rebase update branch for PR"
+          git push
 
       # - name: Create PR
       #   uses: peter-evans/create-pull-request@v4
