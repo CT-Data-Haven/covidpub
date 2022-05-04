@@ -19,7 +19,7 @@ jobs:
           # make a temp branch from main, checkout input_data from update, file pr
           git config --global user.name github-actions
           git config --global user.email github-actions@github.com
-          git pull 
+          git pull origin main
           git branch --list
           git branch tmp main
           git checkout tmp
