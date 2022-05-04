@@ -20,6 +20,7 @@ jobs:
           git config --global user.name github-actions
           git config --global user.email github-actions@github.com
           git pull 
+          git branch --list
           git branch tmp main
           git checkout tmp
           git checkout update -- input_data
