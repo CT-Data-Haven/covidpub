@@ -21,9 +21,12 @@ jobs:
           git config --global user.email github-actions@github.com
           git pull 
           git branch --list
-          git branch tmp origin/main
+          git branch --force tmp origin/main
           git checkout tmp
           git checkout update -- input_data
+
+          # list updated input data
+          echo "CHANGED_CSV=$(git diff --name-only | grep -E \.csv --include=input_data)" >> GITHUB_ENV
 
           # get latest statewide date
           echo "LATEST_DATE=$(tail -n 1 input_data/covid_county.csv | cut -f 2 -d ,)" >> GITHUB_ENV
@@ -47,3 +50,4 @@ jobs:
           destination_branch: "main"
           github_token: ${{ secrets.PR_PAT }}
           pr_title: "Pull data as of ${{ env.LATEST_DATE }}"
+          pr_body: "Updates:\n${{ env.CHANGED_CSV }}"
