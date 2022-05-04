@@ -19,9 +19,9 @@ jobs:
           # make a temp branch from main, checkout input_data from update, file pr
           git config --global user.name github-actions
           git config --global user.email github-actions@github.com
-          git pull origin main
+          git pull 
           git branch --list
-          git branch tmp main
+          git branch tmp origin/main
           git checkout tmp
           git checkout update -- input_data
           git diff-index --quiet HEAD || git commit -m "Copy update for PR"
