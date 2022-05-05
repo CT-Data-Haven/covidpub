@@ -47,3 +47,4 @@ jobs:
           github_token: ${{ secrets.PR_PAT }}
           pr_title: "Pull data as of ${{ env.LATEST_DATE }}"
           pr_body: "# Updates:\n\n${{ env.PR_LIST }}"
+          pr_label: "update-data,auto-pr"
