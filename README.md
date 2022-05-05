@@ -1,8 +1,8 @@
 <!-- badges: start -->
 ![GitHub Workflow Status: site-build](https://img.shields.io/github/workflow/status/ct-data-haven/covidpub/site-build?label=site-build&style=flat-square)
-![Latest data badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/ct-data-haven/418c1b0228bd7ac4f5b835fd54249a73/raw/latest_covid_data.json)
+![Latest data badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/camille-s/418c1b0228bd7ac4f5b835fd54249a73/raw/latest_covid_data.json)
 ![GitHub Workflow Status: update-data-pr](https://img.shields.io/github/workflow/status/ct-data-haven/covidpub/update-data-pr?label=update-data-pr&style=flat-square)
-![GitHub pull requests by-label: update-data](https://img.shields.io/github/issues-pr-raw/ct-data-haven/covidpub/update-data?color=yellow)
+![GitHub pull requests by-label: update-data](https://img.shields.io/github/issues-pr-raw/ct-data-haven/covidpub/update-data?color=yellow&style=flat-square)
 <!-- badges: end -->
 
 # covidpub
