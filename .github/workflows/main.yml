@@ -41,22 +41,6 @@ jobs:
       - name: Render site
         run: Rscript -e 'rmarkdown::render_site(input = "site")'
 
-      - name: Get latest date
-        run: |
-          # get latest statewide date
-          echo "LATEST_DATE=$(tail -n 1 input_data/covid_county.csv | cut -f 2 -d ,)" >> GITHUB_ENV
-
-      - name: Make update badge
-        uses: schneegans/dynamic-badges-action@v1.3.0
-        with:
-          auth: ${{ secrets.GIST_TOKEN }}
-          gistID: 418c1b0228bd7ac4f5b835fd54249a73
-          filename: latest_covid_data.json
-          label: Latest data
-          message: ${{ env.LATEST_DATE }}
-          color: pink
-          style: flat-square
-
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@4.2.0
         with:
