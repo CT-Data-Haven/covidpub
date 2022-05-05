@@ -40,8 +40,8 @@ jobs:
           else
             echo "::set-output name=make_pr::true"
             echo "No changes"
-            exit 0
           fi
+          exit 0
 
       - name: Make update badge
         uses: schneegans/dynamic-badges-action@v1.3.0
