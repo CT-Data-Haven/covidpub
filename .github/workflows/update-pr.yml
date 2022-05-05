@@ -43,6 +43,17 @@ jobs:
             exit 0
           fi
 
+      - name: Make update badge
+        uses: schneegans/dynamic-badges-action@v1.3.0
+        with:
+          auth: ${{ secrets.GIST_TOKEN }}
+          gistID: 418c1b0228bd7ac4f5b835fd54249a73
+          filename: latest_covid_data.json
+          label: Latest data
+          message: ${{ env.LATEST_DATE }}
+          color: "#f3b5e9"
+          style: flat-square
+
       - name: Create PR
         uses: repo-sync/pull-request@v2
         if: ${{ steps.copy_data.outputs.make_pr }}
