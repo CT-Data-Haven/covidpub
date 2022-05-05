@@ -24,6 +24,7 @@ jobs:
           git branch --list
           git branch --force tmp origin/main
           git checkout tmp
+          git branch --list
           git checkout update -- input_data
 
           # list updated input data
@@ -38,7 +39,7 @@ jobs:
             git commit -m "Update data to $LATEST_DATE"
             git push origin tmp
           else
-            echo "::set-output name=make_pr::true"
+            echo "::set-output name=make_pr::false"
             echo "No changes"
           fi
           exit 0
