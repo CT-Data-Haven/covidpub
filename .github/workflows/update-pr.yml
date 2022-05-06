@@ -21,22 +21,26 @@ jobs:
           git config --global user.name github-actions
           git config --global user.email github-actions@github.com
           git pull 
+          git branch --list
           git branch --force tmp origin/main
           git checkout tmp
           git branch --list
           git checkout update -- input_data
+          # git pull --rebase origin tmp
 
           # list updated input data
-          CHANGED_CSV=$(git status --porcelain | cut -f 3 -d " " | grep "csv")
-          echo "::set-output name=PR_LIST::$(for f in $CHANGED_CSV; do echo \"* $f\"; done)"
+          CHANGED_CSV=($(git status --porcelain | cut -f 3 -d " " | grep "csv"))
+          # echo "::set-output name=PR_LIST::$(for f in $CHANGED_CSV; do echo \"* $f\"; done)"
+          echo "::set-output name=CHANGED_CSV::${CHANGED_CSV[*]}"
 
           # get latest statewide date
-          echo "::set-output name=LATEST_DATE::$(tail -n 1 input_data/covid_county.csv | cut -f 2 -d ,)"
+          LATEST_DATE=$(tail -n 1 input_data/covid_county.csv | cut -f 2 -d ,)
+          echo "::set-output name=LATEST_DATE::$LATEST_DATE"
 
           if [ -n "$CHANGED_CSV" ]; then
             echo "::set-output name=MAKE_PR::true"
-            git commit -m "Update data to $LATEST_DATE"
-            git push origin tmp
+            git commit -m "Update data to ${LATEST_DATE}"
+            # git push origin tmp
             echo 0
           fi
 
@@ -59,6 +63,6 @@ jobs:
           source_branch: "tmp"
           destination_branch: "main"
           github_token: ${{ secrets.PR_PAT }}
-          pr_title: Pull data as of ${{ steps.copy_data.outputs.LATEST_DATE }}
-          pr_body: "# Updates:\n\n${{ steps.copy_data.outputs.PR_LIST }}"
+          pr_title: "Pull data as of ${{ steps.copy_data.outputs.LATEST_DATE }}"
+          pr_body: "# Updates:\n\n$( echo $(${{ steps.copy_data.outputs.CHANGED_CSV }}) | tr \" \" \"\n\" )"
           pr_label: "update-data,auto-pr"
