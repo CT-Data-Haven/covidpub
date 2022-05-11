@@ -62,7 +62,7 @@ jobs:
         with:
           source_branch: "tmp"
           destination_branch: "main"
-          github_token: ${{ secrets.PR_PAT }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           pr_title: "Pull data as of ${{ steps.copy_data.outputs.LATEST_DATE }}"
           pr_body: "# Updates:\n\n$( echo $(${{ steps.copy_data.outputs.CHANGED_CSV }}) | tr \" \" \"\n\" )"
           pr_label: "update-data,auto-pr"
