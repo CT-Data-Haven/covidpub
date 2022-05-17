@@ -18,19 +18,26 @@ jobs:
         id: copy_data
         run: |
           # make a temp branch from main, checkout input_data from update, file pr
+          # TMP_BRANCH="tmp_$(date +'%Y%m%d_%H%M')"
+          TMP_BRANCH="tmp"
           git config --global user.name github-actions
           git config --global user.email github-actions@github.com
           git pull 
           git branch --list
-          git branch --force tmp origin/main
-          git checkout tmp
+          # delete tmp if already exists
+          HAS_TMP=($(git branch --list -a | grep "$TMP_BRANCH$"))
+          # if [ -n "$HAS_TMP" ]; then
+            # git branch -D $TMP_BRANCH
+          # fi
+
+          git branch --force $TMP_BRANCH origin/main
+          git checkout $TMP_BRANCH
           git branch --list
           git checkout update -- input_data
-          # git pull --rebase origin tmp
+          # git pull --rebase origin $TMP_BRANCH
 
           # list updated input data
           CHANGED_CSV=($(git status --porcelain | cut -f 3 -d " " | grep "csv"))
-          # echo "::set-output name=PR_LIST::$(for f in $CHANGED_CSV; do echo \"* $f\"; done)"
           echo "::set-output name=CHANGED_CSV::${CHANGED_CSV[*]}"
 
           # get latest statewide date
@@ -40,7 +47,8 @@ jobs:
           if [ -n "$CHANGED_CSV" ]; then
             echo "::set-output name=MAKE_PR::true"
             git commit -m "Update data to ${LATEST_DATE}"
-            git push origin tmp
+            git push origin $TMP_BRANCH
+            echo "::set-output name=TMP_BRANCH::$TMP_BRANCH"
             echo 0
           fi
 
@@ -60,7 +68,7 @@ jobs:
         uses: repo-sync/pull-request@v2
         if: ${{ steps.copy_data.outputs.MAKE_PR }}
         with:
-          source_branch: "tmp"
+          source_branch: ${{ steps.copy_data.outputs.TMP_BRANCH }}
           destination_branch: "main"
           github_token: ${{ secrets.GITHUB_TOKEN }}
           pr_title: "Pull data as of ${{ steps.copy_data.outputs.LATEST_DATE }}"
