@@ -3,7 +3,7 @@ set -e
 
 git clone https://github.com/CT-Data-Haven/covidpub.git
 cd ./covidpub 
-git checkout $BRANCH
+git checkout "$BRANCH"
 touch .here 
 
 Rscript check_site.R
