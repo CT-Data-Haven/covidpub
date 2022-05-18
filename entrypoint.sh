@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 set -e
 
-cd /covidpub
-git checkout tmp
+git clone https://github.com/CT-Data-Haven/covidpub.git
+cd ./covidpub 
+git checkout $BRANCH
+touch .here 
+
 Rscript check_site.R
-python3 -m http.server --directory dist 8000
+python3 -m http.server --directory dist $PORT
