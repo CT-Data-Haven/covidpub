@@ -224,10 +224,13 @@ calc_hosp_streak <- function() {
 
 
 calc_rolling_diff <- function(n = 7, periods = 0:1) {
+  # since some weeks don't have every day, regularize & fill down
   x <- fetch_county_cases() %>%
     select(-hospitalizations, -deaths) %>%
     tsibble::as_tsibble(key = c(level, name), index = date) %>%
     tsibble::group_by_key() %>%
+    tsibble::fill_gaps(.full = TRUE) %>%
+    tidyr::fill(cases, .direction = "down") %>%
     mutate(new_cases = slider::slide_index_dbl(cases, date, ~last(.x) - first(.x), .before = lubridate::days(n)),
            elapse = max(date) - date,
            rem = as.numeric(elapse) %% n) %>%
