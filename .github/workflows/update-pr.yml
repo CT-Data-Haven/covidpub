@@ -24,10 +24,10 @@ jobs:
           git pull 
           git branch --list
           # delete tmp if already exists
-          HAS_TMP=($(git branch --list -a | grep "tmp"))
-          if [ -n "$HAS_TMP" ]; then
-            git branch -D tmp
-          fi
+          # HAS_TMP=($(git branch --list -a | grep "tmp"))
+          # if [ -n "$HAS_TMP" ]; then
+          #   git branch -D tmp
+          # fi
 
           # git branch --force tmp origin/main
           git checkout -B tmp origin/main
