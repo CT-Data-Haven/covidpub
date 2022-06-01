@@ -169,7 +169,8 @@ make_period_change_chart <- function(pal, n = 7) {
     bb_barchart(mapping = bbaes(x = date, y = new_cases, group = direction),
                 width = list(ratio = 0.6), stack = TRUE) %>%
     bb_x_axis(label = list(text = NULL), type = "timeseries",
-              tick = list(format = "%b %Y")) %>%
+              tick = list(format = "%b %Y", count = 8),
+              padding = list(left = 14 * 1000 * 60 * 60 * 24, right = 21 * 1000 * 60 * 60 * 24)) %>%
     bb_y_axis(label = list(text = "# new cases", position = "outer-top"),
               tick = list(format = d3_flag),
               max = max(x$new_cases)) %>%

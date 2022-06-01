@@ -26,6 +26,7 @@ billboarder::set_theme("insight")
 <script src="https://cdn.jsdelivr.net/npm/d3-array@3"></script>
 <script src="https://cdn.jsdelivr.net/npm/d3-time@3"></script>
 <script src="https://cdn.jsdelivr.net/npm/d3-time-format@4"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3-format@4"></script>
 
 ```{r dates}
 main_dates <- covidpub:::fetch_main_date_range()
