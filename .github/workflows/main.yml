@@ -46,3 +46,21 @@ jobs:
         with:
           branch: gh-pages
           folder: dist
+
+      - name: Get latest date
+        id: latest
+        run: |
+          # get latest statewide date
+          LATEST_DATE=$(tail -n 1 input_data/covid_county.csv | cut -f 2 -d ,)
+          echo "::set-output name=LATEST_DATE::$LATEST_DATE"
+
+      - name: Make update badge
+        uses: schneegans/dynamic-badges-action@v1.3.0
+        with:
+          auth: ${{ secrets.GIST_TOKEN }}
+          gistID: 418c1b0228bd7ac4f5b835fd54249a73
+          filename: latest_covid_data.json
+          label: Latest data
+          message: ${{ steps.latest.outputs.LATEST_DATE }}
+          color: "#f3b5e9"
+          style: flat-square
