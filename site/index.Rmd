@@ -8,11 +8,11 @@ output:
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
-	echo = FALSE,
-	message = FALSE,
-	warning = FALSE,
-	collapse = TRUE,
-	comment = "#>"
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  collapse = TRUE,
+  comment = "#>"
 )
 ```
 
@@ -167,8 +167,6 @@ Please note that during some periods, such as major holidays, testing and report
 make_period_change_table()
 ```
 
-<---
-
 ### Number of detected new cases over 7-day periods, Connecticut, `r roll_change_dates_fmt[1]` to `r roll_change_dates_fmt[2]` {.viz-title}
 
 <div class="viz-subtitle">
@@ -177,9 +175,7 @@ With direction of percent change since previous week
 
 </div>
 
---->
-
-```{r wkly-new-cases-bars, eval=FALSE}
+```{r wkly-new-cases-bars}
 make_period_change_chart(pals$div_pal5)
 ```
 
